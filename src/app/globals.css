@@ -3,25 +3,69 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Base surface tokens */
+  --ink: #0A0D14;
+  --paper: #F6F4EF;
+  --slate: #8A95A3;
+  --line: #1E2430;
+  --mist: #DDE3E8;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Fine Technology Secondary Palette */
+  --mango: #FFBE0B;        /* Yellow – primary accent / CTA */
+  --orange: #FB5607;       /* Orange – secondary accent / hover */
+  --winter-sky: #FF006E;   /* Hot pink – highlight / pill */
+  --blue-violet: #8338EC;  /* Purple – AI / data identity */
+  --tart-orange: #FF3333;  /* Red-orange – warning / alert tones */
+
+  /* Legacy alias – points to Mango so existing `signal` classes still work */
+  --signal: #FFBE0B;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--paper);
+  background: var(--ink);
 }
 
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mango); }
+
+/* Selection */
+::selection { background: var(--mango); color: var(--ink); }
+
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  .text-balance { text-wrap: balance; }
+
+  /* Gradient helpers */
+  .gradient-mango      { background: linear-gradient(135deg, #FFBE0B, #FB5607); }
+  .gradient-electric   { background: linear-gradient(135deg, #8338EC, #FF006E); }
+  .gradient-fire       { background: linear-gradient(135deg, #FB5607, #FF3333); }
+
+  /* Glow effects */
+  .glow-mango      { box-shadow: 0 0 40px rgba(255,190,11,0.25); }
+  .glow-violet     { box-shadow: 0 0 40px rgba(131,56,236,0.25); }
+  .glow-pink       { box-shadow: 0 0 40px rgba(255,0,110,0.20); }
 }
+
+/* Marquee animation for tech strip */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Fade-slide-up for scroll reveals */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Delay utilities */
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+.animation-delay-500 { animation-delay: 500ms; }
+
+
