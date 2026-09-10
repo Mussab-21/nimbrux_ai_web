@@ -16,6 +16,8 @@ export interface CaseStudyMeta {
   outcome: string;
   tech: string[];
   date: string;
+  githubUrl?: string;
+  liveUrl?: string;
 }
 
 export interface InsightMeta {

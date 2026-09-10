@@ -1,0 +1,40 @@
+---
+title: Discord Check-In/Check-Out Bot
+client: Community & Workspace Automation
+industry: Automation & DevOps
+category: Automation & Bots
+accentColor: "#5865F2"
+summary: Automated attendance and check-in tracking bot for remote teams and Discord communities featuring timezone-aware presence logging, session tracking, and summary exports.
+challenge: Remote teams operating in Discord servers frequently struggle to track member presence, shift durations, and meeting check-ins without cumbersome external forms.
+outcome: Event-driven Discord bot that enables instant `/checkin` and `/checkout` commands, calculates total active session durations, prevents duplicate check-ins, and exports attendance rosters.
+tech: ["Python", "Discord API", "SQLite", "Asyncio"]
+date: "2025-09-20"
+githubUrl: "https://github.com/Mussab-21/discord-checkin-out-bot"
+---
+
+## Overview
+
+The **Discord Check-In/Check-Out Bot** brings structured presence tracking directly into team Discord servers. Designed for remote teams, hackathons, and virtual clubs, it provides friction-free attendance management with Discord slash commands and interactive buttons.
+
+## Key Features
+
+### 1. Slash Command Workflows
+Members interact effortlessly using `/checkin`, `/checkout`, and `/status`. The bot records timestamps, tracks active shift duration, and notifies relevant moderators.
+
+### 2. Timezone & Duration Calculation
+Automatically computes elapsed time between check-in and check-out events, normalizing across server timezones and preventing accidental duplicate check-in loops.
+
+### 3. Persistent Storage & Export
+Logs attendance data to SQLite / database storage with exportable summaries, giving community managers actionable audit trails and weekly engagement metrics.
+
+## Tech Stack
+
+- **Platform:** Discord API (discord.py)
+- **Runtime:** Python 3.10+ (Asyncio event loop)
+- **Database:** SQLite / SQLAlchemy
+- **Scheduling:** Async tasks & background worker loops
+
+## Source Code
+
+Explore bot commands, database migrations, and setup guide on GitHub:
+[https://github.com/Mussab-21/discord-checkin-out-bot](https://github.com/Mussab-21/discord-checkin-out-bot)

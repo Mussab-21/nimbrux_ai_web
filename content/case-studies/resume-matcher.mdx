@@ -1,0 +1,42 @@
+---
+title: AI Resume Matcher & Gap Analyzer
+client: Autonomous Career Tooling
+industry: AI & HR Tech
+category: AI & NLP
+accentColor: "#8338EC"
+summary: AI-driven pipeline that parses resumes (PDF/DOCX), extracts structured entities, and computes semantic similarity against job descriptions to automate CV screening and pinpoint skill gaps.
+challenge: Manual resume screening is slow, inconsistent, and fails to systematically detect missing qualifications or domain competencies against dense job specifications.
+outcome: Automated candidate parsing and real-time semantic scoring pipeline that extracts key skills, quantifies relevance match percentage, and outputs actionable candidate gap reports.
+tech: ["Python", "NLP", "Embeddings", "FastAPI"]
+date: "2025-10-15"
+githubUrl: "https://github.com/Mussab-21/resume_matcher"
+---
+
+## Overview
+
+The **AI Resume Matcher & Gap Analyzer** is an intelligent candidate screening and matching system engineered to eliminate manual resume screening fatigue and reduce recruitment bias.
+
+By ingesting unstructured resume documents (PDF, DOCX) and pairing them with target job descriptions, the system performs entity extraction, vectorized embedding analysis, and similarity scoring.
+
+## Key Capabilities
+
+### 1. Document Ingestion & Text Normalization
+Extracts unstructured text and structural formatting from diverse resume layouts using PyPDF and python-docx, parsing experience sections, education, and skill blocks into normalized JSON payloads.
+
+### 2. Semantic Embedding & Similarity Engine
+Computes dense vector representations using state-of-the-art NLP transformers and cosine similarity calculations, moving beyond crude keyword matching to capture true contextual relevance and conceptual overlaps.
+
+### 3. Skill Gap Analysis & Recommendations
+Identifies missing critical skills, required certifications, and domain competencies demanded by the job description, producing a clear gap breakdown and match score for hiring teams.
+
+## Tech Stack
+
+- **Core Engine:** Python 3.10+
+- **NLP & Processing:** Transformers, Sentence-Transformers, SpaCy, scikit-learn
+- **Document Parsing:** PyPDF2, pdfminer.six, python-docx
+- **API & Interface:** FastAPI, Pydantic
+
+## Source Code
+
+Explore the full implementation, parsing logic, and benchmarking on GitHub:
+[https://github.com/Mussab-21/resume_matcher](https://github.com/Mussab-21/resume_matcher)

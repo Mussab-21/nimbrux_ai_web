@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ExternalLink, GitBranch } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getCaseStudies, getCaseStudyBySlug } from "@/lib/content";
+import { TechIcon } from "@/components/ui/TechIcons";
 
 interface Props {
   params: { slug: string };
@@ -58,9 +59,24 @@ export default function CaseStudyPage({ params }: Props) {
             {meta.title}
           </h1>
 
-          <p className="text-[#8A95A3] text-xl leading-relaxed mb-10 max-w-2xl">
+          <p className="text-[#8A95A3] text-xl leading-relaxed mb-6 max-w-2xl">
             {meta.summary}
           </p>
+
+          {meta.githubUrl && (
+            <div className="mb-8">
+              <a
+                href={meta.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-mono text-xs border border-[#1E2430] px-4 py-2.5 text-white hover:border-[#FFBE0B] hover:text-[#FFBE0B] transition-colors bg-[#0D1018]"
+              >
+                <GitBranch className="w-3.5 h-3.5 text-[#8A95A3]" />
+                View Repository on GitHub
+                <ExternalLink className="w-3.5 h-3.5 text-[#8A95A3]" />
+              </a>
+            </div>
+          )}
 
           {/* Meta grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#1E2430]">
@@ -78,11 +94,9 @@ export default function CaseStudyPage({ params }: Props) {
             </div>
             <div>
               <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3]/50 mb-2">Tech</div>
-              <div className="flex flex-wrap gap-1">
+              <div className="flex flex-wrap gap-1.5">
                 {meta.tech.map((t) => (
-                  <span key={t} className="font-mono text-[10px] px-1.5 py-0.5 border border-[#1E2430] text-[#8A95A3]">
-                    {t}
-                  </span>
+                  <TechIcon key={t} name={t} />
                 ))}
               </div>
             </div>

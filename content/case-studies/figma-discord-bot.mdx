@@ -1,0 +1,39 @@
+---
+title: Figma-Discord Integration Bot
+client: Design & Dev Workflow Automation
+industry: Developer Tools & Design Ops
+category: Automation & Bots
+accentColor: "#F24E1E"
+summary: Real-time notification and synchronization bot bridging Figma design workflows into Discord channels, alerting design teams to comments, version updates, and team file changes.
+challenge: Designers and developers often miss critical Figma review feedback and file updates because design activity remains siloed away from daily engineering communications on Discord.
+outcome: Live webhook listener and bot dispatcher that translates Figma comment events, file versioning, and artboard changes into rich Discord embeds with direct deep-links.
+tech: ["Discord API", "Figma API", "Python", "Webhooks"]
+date: "2025-09-15"
+githubUrl: "https://github.com/Mussab-21/figma-discord-bot"
+---
+
+## Overview
+
+The **Figma-Discord Integration Bot** bridges the communication divide between UI/UX design teams in Figma and developers in Discord. By capturing real-time webhook events from Figma's REST API, it formats and broadcasts live updates into dedicated team channels.
+
+## Key Capabilities
+
+### 1. Comment Stream & Deep Linking
+Whenever a team member leaves feedback or resolves a thread in Figma, the bot posts a rich embed with the commenter's avatar, comment snippet, file name, and a direct URL jumping directly to the canvas node.
+
+### 2. Version Release & Component Publishing
+Broadcasts team library updates and new published design system components, keeping engineers aligned on upstream design tokens.
+
+### 3. Configurable Channel Routing
+Allows server admins to route notifications from specific Figma projects or files to designated Discord discussion channels.
+
+## Tech Stack
+
+- **APIs:** Figma REST API & Webhooks v2, Discord API
+- **Language / Runtime:** Python / Node.js
+- **Network:** HTTP Webhook receivers with HMAC signature validation
+
+## Source Code
+
+Check out the webhook setup and event handler logic on GitHub:
+[https://github.com/Mussab-21/figma-discord-bot](https://github.com/Mussab-21/figma-discord-bot)

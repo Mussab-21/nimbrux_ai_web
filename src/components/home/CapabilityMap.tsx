@@ -188,15 +188,18 @@ export function CapabilityMap() {
           {/* Right: pillar cards */}
           <div className="flex-1 grid grid-cols-1 gap-3">
             {pillars.map((p) => (
-              <div
+              <Link
                 key={p.id}
-                className="relative border overflow-hidden cursor-pointer transition-all duration-300 group"
+                href={p.href}
+                className="relative block border overflow-hidden cursor-pointer transition-all duration-300 group focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FFBE0B]"
                 style={{
                   borderColor: active === p.id ? `${p.color}60` : "#1E2430",
                   backgroundColor: active === p.id ? `${p.color}06` : "transparent",
                 }}
                 onMouseEnter={() => setActive(p.id)}
                 onMouseLeave={() => setActive(null)}
+                onFocus={() => setActive(p.id)}
+                onBlur={() => setActive(null)}
               >
                 {/* Background SVG pattern */}
                 {p.bgPattern}
@@ -242,12 +245,12 @@ export function CapabilityMap() {
                     </div>
 
                     <ArrowRight
-                      className="w-4 h-4 flex-shrink-0 transition-all duration-300 opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
+                      className="w-4 h-4 flex-shrink-0 transition-all duration-300 opacity-60 md:opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
                       style={{ color: p.color }}
                     />
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

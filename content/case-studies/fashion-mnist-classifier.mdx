@@ -1,0 +1,45 @@
+---
+title: Fashion-MNIST Classifier
+client: Computer Vision Lab
+industry: Machine Learning & Vision
+category: Deep Learning & Vision
+accentColor: "#FF4B4B"
+summary: Interactive Streamlit web application classifying Fashion-MNIST garment images in real-time using a custom-trained Convolutional Neural Network (PyTorch) with confidence metrics.
+challenge: Demonstrating deep learning model inference, image preprocessing pipelines, and probability distributions in an accessible, zero-friction web interface for end users.
+outcome: High-accuracy PyTorch CNN architecture served via a responsive Streamlit dashboard with real-time class probability charts, test sample previews, and custom image uploads.
+tech: ["Python", "PyTorch", "Streamlit", "Computer Vision"]
+date: "2025-10-01"
+githubUrl: "https://github.com/Mussab-21/fashion-mnist-streamlit-cnn"
+---
+
+## Overview
+
+The **Fashion-MNIST Classifier** demonstrates an end-to-end computer vision workflow: from CNN model training and validation in PyTorch to low-latency deployment inside an interactive Streamlit web dashboard.
+
+The application allows users to sample garments from the test dataset or upload custom images to observe how the neural network perceives patterns across 10 clothing categories (T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot).
+
+## Model Architecture & Features
+
+### 1. Convolutional Neural Network (CNN)
+Built in PyTorch using multi-stage 2D convolutions, ReLU activations, batch normalization, max pooling, and dropout layers to prevent overfitting on the 28x28 grayscale dataset.
+
+### 2. Streamlit Web Dashboard
+Interactive UI that visualizes:
+- Input image rendering alongside predicted label.
+- Top-k softmax probability bar charts.
+- Confusion matrix and validation accuracy metrics.
+
+### 3. Real-Time Inference Pipeline
+Optimized tensor transformations that automatically resize, grayscale-convert, and normalize inputs to match the model's trained distribution.
+
+## Tech Stack
+
+- **Framework:** PyTorch (torch, torchvision)
+- **Frontend / Serving:** Streamlit
+- **Data & Numerical:** NumPy, Matplotlib, PIL
+- **Language:** Python
+
+## Source Code
+
+View model architecture, weights, and Streamlit app code on GitHub:
+[https://github.com/Mussab-21/fashion-mnist-streamlit-cnn](https://github.com/Mussab-21/fashion-mnist-streamlit-cnn)
