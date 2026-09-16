@@ -88,18 +88,18 @@ export function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="bg-[#0A0D14] min-h-screen flex items-center justify-center px-6 pt-[72px]">
+      <div className="bg-paper min-h-screen flex items-center justify-center px-6 pt-[72px]">
         <div className="text-center max-w-lg">
-          <div className="inline-flex items-center justify-center w-16 h-16 border border-[#FFBE0B]/30 bg-[#FFBE0B]/10 mb-8">
-            <CheckCircle className="w-8 h-8 text-[#FFBE0B]" />
+          <div className="inline-flex items-center justify-center w-16 h-16 border border-accent/30 bg-accent/10 mb-8">
+            <CheckCircle className="w-8 h-8 text-accent" />
           </div>
-          <h1 className="font-heading text-4xl text-white mb-4">We&apos;ll be in touch.</h1>
-          <p className="text-[#8A95A3] text-lg leading-relaxed mb-8">
+          <h1 className="font-heading text-4xl text-ink mb-4">We&apos;ll be in touch.</h1>
+          <p className="text-muted text-lg leading-relaxed mb-8">
             Thanks, {name.split(" ")[0]}. We&apos;ve received your message and will respond within 24 hours with an honest read on your situation.
           </p>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-mono text-sm text-[#FFBE0B] hover:text-[#FB5607] transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-sm text-accent hover:text-cat-amber transition-colors"
           >
             Back to home
             <ArrowRight className="w-4 h-4" />
@@ -110,11 +110,11 @@ export function ContactForm() {
   }
 
   return (
-    <div className="bg-[#0A0D14] min-h-screen flex flex-col">
+    <div className="bg-paper min-h-screen flex flex-col">
       {/* Progress bar */}
-      <div className="fixed top-[72px] left-0 right-0 z-40 h-px bg-[#1E2430]">
+      <div className="fixed top-[72px] left-0 right-0 z-40 h-px bg-line">
         <div
-          className="h-full bg-[#FFBE0B] transition-all duration-500"
+          className="h-full bg-accent transition-all duration-500"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -129,7 +129,7 @@ export function ContactForm() {
           </div>
 
           {/* Question */}
-          <h1 className="font-heading text-3xl md:text-4xl text-white mb-8 leading-snug">
+          <h1 className="font-heading text-3xl md:text-4xl text-ink mb-8 leading-snug">
             {step.label}
           </h1>
 
@@ -141,19 +141,19 @@ export function ContactForm() {
                 placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3.5 bg-[#0D1018] border border-[#1E2430] text-white font-mono text-sm placeholder-[#8A95A3]/40 focus:border-[#FFBE0B]/40 focus:outline-none transition-colors"
+                className="w-full px-4 py-3.5 bg-mist border border-line text-ink font-mono text-sm placeholder-muted/40 focus:border-accent/40 focus:outline-none transition-colors"
               />
               <input
                 type="email"
                 placeholder="Work email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3.5 bg-[#0D1018] border border-[#1E2430] text-white font-mono text-sm placeholder-[#8A95A3]/40 focus:border-[#FFBE0B]/40 focus:outline-none transition-colors"
+                className="w-full px-4 py-3.5 bg-mist border border-line text-ink font-mono text-sm placeholder-muted/40 focus:border-accent/40 focus:outline-none transition-colors"
               />
               <button
                 onClick={handleSubmit}
                 disabled={!name.trim() || !email.trim()}
-                className="group w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#FFBE0B] text-[#0A0D14] font-mono text-sm font-semibold hover:bg-[#FB5607] hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
+                className="group w-full flex items-center justify-center gap-2 px-6 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Send message
                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -166,12 +166,12 @@ export function ContactForm() {
                 placeholder={step.placeholder}
                 value={textValue}
                 onChange={(e) => setTextValue(e.target.value)}
-                className="w-full px-4 py-3.5 bg-[#0D1018] border border-[#1E2430] text-white font-mono text-sm placeholder-[#8A95A3]/40 focus:border-[#FFBE0B]/40 focus:outline-none transition-colors resize-none"
+                className="w-full px-4 py-3.5 bg-mist border border-line text-ink font-mono text-sm placeholder-muted/40 focus:border-accent/40 focus:outline-none transition-colors resize-none"
               />
               <button
                 onClick={handleTextNext}
                 disabled={!textValue.trim()}
-                className="group w-full flex items-center justify-center gap-2 px-6 py-4 border border-[#FFBE0B] text-[#FFBE0B] font-mono text-sm hover:bg-[#FFBE0B] hover:text-[#0A0D14] disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
+                className="group w-full flex items-center justify-center gap-2 px-6 py-4 border border-accent text-accent font-mono text-sm hover:bg-accent hover:text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300"
               >
                 Continue
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -185,8 +185,8 @@ export function ContactForm() {
                   onClick={() => handleOptionSelect(option)}
                   className={`group w-full text-left px-5 py-4 border font-mono text-sm transition-all duration-200 ${
                     answers[step.id] === option
-                      ? "border-[#FFBE0B]/60 bg-[#FFBE0B]/10 text-[#FFBE0B]"
-                      : "border-[#1E2430] text-[#8A95A3] hover:border-[#FFBE0B]/30 hover:text-white"
+                      ? "border-accent/60 bg-accent/10 text-accent"
+                      : "border-line text-muted hover:border-accent/30 hover:text-white"
                   }`}
                 >
                   <span className="flex items-center justify-between gap-4">
@@ -202,7 +202,7 @@ export function ContactForm() {
           {currentStep > 0 && (
             <button
               onClick={() => setCurrentStep((s) => s - 1)}
-              className="mt-8 font-mono text-xs text-[#8A95A3] hover:text-white transition-colors"
+              className="mt-8 font-mono text-xs text-muted hover:text-ink transition-colors"
             >
               ← Back
             </button>

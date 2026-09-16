@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { Hero } from "@/components/home/Hero";
 import { ProblemSection } from "@/components/home/ProblemSection";
 import { CapabilityMap } from "@/components/home/CapabilityMap";
@@ -8,11 +9,11 @@ import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhyNimbrix } from "@/components/home/WhyNimbrix";
 import { FinalCTA } from "@/components/home/FinalCTA";
 
-export const metadata: Metadata = {
-  title: "Nimbrix — AI-first Technology Transformation",
-  description:
-    "Nimbrix designs, builds, and operates intelligent technology systems — AI & automation, software engineering, cloud, data, and managed services for ambitious organizations worldwide.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Nimbrix — AI systems and software engineering",
+  description: "Nimbrix builds AI document automation, custom software and data systems for growing businesses. Registered in Pakistan, delivering to clients worldwide.",
+  path: "/",
+});
 
 export default function HomePage() {
   return (

@@ -39,9 +39,9 @@ export function PillarPage({
   caseStudies,
 }: PillarPageProps) {
   return (
-    <div className="bg-[#0A0D14] min-h-screen">
+    <div className="bg-paper min-h-screen">
       {/* Hero */}
-      <section className="pt-[120px] pb-24 border-b border-[#1E2430] relative overflow-hidden">
+      <section className="pt-[120px] pb-24 border-b border-line relative overflow-hidden">
         {/* Bg blob */}
         <div
           className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-[0.07]"
@@ -70,11 +70,11 @@ export function PillarPage({
               {tagline}
             </div>
 
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-white leading-[1.05] mb-8">
+            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-ink leading-[1.05] mb-8">
               {heroHeading}
             </h1>
 
-            <p className="text-[#8A95A3] text-xl leading-relaxed mb-10 max-w-2xl">
+            <p className="text-muted text-xl leading-relaxed mb-10 max-w-2xl">
               {heroDescription}
             </p>
 
@@ -84,7 +84,7 @@ export function PillarPage({
                 className="group inline-flex items-center gap-2 px-7 py-4 font-mono text-sm font-semibold transition-all duration-300"
                 style={{
                   backgroundColor: color,
-                  color: "#0A0D14",
+                  color: "#FFFFFF",
                 }}
               >
                 Start a Project
@@ -92,7 +92,7 @@ export function PillarPage({
               </Link>
               <Link
                 href="/solutions"
-                className="group inline-flex items-center gap-2 px-7 py-4 border border-[#1E2430] text-[#8A95A3] font-mono text-sm hover:border-[#1E2430] hover:text-white transition-all duration-300"
+                className="group inline-flex items-center gap-2 px-7 py-4 border border-line text-muted font-mono text-sm hover:border-line hover:text-ink transition-all duration-300"
               >
                 All Solutions
               </Link>
@@ -102,26 +102,26 @@ export function PillarPage({
       </section>
 
       {/* Services */}
-      <section className="py-24 border-b border-[#1E2430]">
+      <section className="py-24 border-b border-line">
         <div className="max-w-7xl mx-auto px-6">
           <SectionLabel>Services in this pillar</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white mb-16">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-16">
             What we <span style={{ color }}>build</span>
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1E2430]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line">
             {services.map((svc) => (
-              <div key={svc.name} className="bg-[#0A0D14] p-8 lg:p-10 group hover:bg-[#0D1018] transition-colors">
+              <div key={svc.name} className="bg-paper p-8 lg:p-10 group hover:bg-mist transition-colors">
                 <h3
                   className="font-heading text-xl font-semibold mb-3 group-hover:opacity-90 transition-opacity"
                   style={{ color }}
                 >
                   {svc.name}
                 </h3>
-                <p className="text-[#8A95A3] text-sm leading-relaxed mb-6">{svc.description}</p>
+                <p className="text-muted text-sm leading-relaxed mb-6">{svc.description}</p>
                 <ul className="space-y-2">
                   {svc.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 font-mono text-xs text-[#8A95A3]">
+                    <li key={item} className="flex items-center gap-2 font-mono text-xs text-muted">
                       <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: color, opacity: 0.6 }} />
                       {item}
                     </li>
@@ -134,13 +134,13 @@ export function PillarPage({
       </section>
 
       {/* What's included */}
-      <section className="py-24 border-b border-[#1E2430] bg-[#070A0F]">
+      <section className="py-24 border-b border-line bg-mist">
         <div className="max-w-7xl mx-auto px-6">
           <SectionLabel>Engagement scope</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white mb-6">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
             What&apos;s included
           </h2>
-          <p className="text-[#8A95A3] text-lg mb-12 max-w-xl">
+          <p className="text-muted text-lg mb-12 max-w-xl">
             Our engagements are clear-scoped from the start. Here&apos;s what every {label} project includes.
           </p>
 
@@ -148,13 +148,13 @@ export function PillarPage({
             {included.map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 p-5 border border-[#1E2430]"
+                className="flex items-start gap-3 p-5 border border-line"
               >
                 <CheckCircle
                   className="w-4 h-4 flex-shrink-0 mt-0.5"
                   style={{ color, opacity: 0.7 }}
                 />
-                <span className="font-mono text-sm text-[#8A95A3]">{item}</span>
+                <span className="font-mono text-sm text-muted">{item}</span>
               </div>
             ))}
           </div>
@@ -163,10 +163,10 @@ export function PillarPage({
 
       {/* Case studies */}
       {caseStudies.length > 0 && (
-        <section className="py-24 border-b border-[#1E2430]">
+        <section className="py-24 border-b border-line">
           <div className="max-w-7xl mx-auto px-6">
             <SectionLabel>Real projects</SectionLabel>
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white mb-12">
+            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-12">
               Related work
             </h2>
 
@@ -175,8 +175,8 @@ export function PillarPage({
                 <Link
                   key={cs.slug}
                   href={`/work/${cs.slug}`}
-                  className="group border border-[#1E2430] p-8 hover:border-[#1E2430] transition-all"
-                  style={{ borderColor: `#1E2430` }}
+                  className="group border border-line p-8 hover:border-line transition-all"
+                  style={{ borderColor: `#E3E8EF` }}
                 >
                   <h3
                     className="font-heading text-xl mb-3 transition-colors group-hover:opacity-80"
@@ -184,7 +184,7 @@ export function PillarPage({
                   >
                     {cs.title}
                   </h3>
-                  <p className="text-[#8A95A3] text-sm leading-relaxed mb-6">{cs.description}</p>
+                  <p className="text-muted text-sm leading-relaxed mb-6">{cs.description}</p>
                   <div
                     className="inline-flex items-center gap-2 font-mono text-xs transition-colors group"
                     style={{ color }}
@@ -202,17 +202,17 @@ export function PillarPage({
       {/* CTA */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white mb-6">
+          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
             Ready to{" "}
             <span style={{ color }}>get started?</span>
           </h2>
-          <p className="text-[#8A95A3] text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-muted text-lg mb-10 max-w-xl mx-auto">
             Tell us about your challenge. We&apos;ll give you an honest assessment and a clear path forward.
           </p>
           <Link
             href="/contact"
             className="group inline-flex items-center gap-2 px-8 py-4 font-mono text-sm font-semibold transition-all duration-300"
-            style={{ backgroundColor: color, color: "#0A0D14" }}
+            style={{ backgroundColor: color, color: "#FFFFFF" }}
           >
             Start a Project
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

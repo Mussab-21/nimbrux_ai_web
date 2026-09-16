@@ -1,17 +1,18 @@
 import { PillarPage } from "@/components/solutions/PillarPage";
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Managed Technology Services",
-  description:
-    "Application management, managed cloud operations, IT helpdesk, and infrastructure monitoring. Nimbrix Managed Technology pillar.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Managed technology services",
+  description: "Ongoing application management, managed cloud, monitoring and support for the systems we build — so software keeps working long after go-live.",
+  path: "/solutions/managed-technology",
+});
 
 export default function ManagedTechnologyPage() {
   return (
     <PillarPage
       pillar="03"
-      color="#FB5607"
+      color="#B45309"
       label="Managed Technology"
       tagline="We run it, so you don't have to."
       heroHeading="Your technology, reliably managed."

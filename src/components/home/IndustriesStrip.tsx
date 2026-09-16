@@ -10,7 +10,7 @@ const industries = [
     tagline: "Launch fast. Scale smart.",
     problems: ["No technical co-founder", "Manual operations", "Basic web presence"],
     solutions: ["MVP development", "Automation setup", "Digital presence"],
-    color: "#8338EC",
+    color: "#4338CA",
     emoji: "🚀",
   },
   {
@@ -19,7 +19,7 @@ const industries = [
     tagline: "Sell more. Operate less.",
     problems: ["Fragmented inventory", "Poor online experience", "Manual order processing"],
     solutions: ["E-commerce platforms", "Inventory automation", "Analytics dashboards"],
-    color: "#FFBE0B",
+    color: "#0B57D0",
     emoji: "🛍️",
   },
   {
@@ -28,7 +28,7 @@ const industries = [
     tagline: "Digitize the learning journey.",
     problems: ["Paper-based systems", "Poor engagement tracking", "Disconnected platforms"],
     solutions: ["LMS platforms", "Student portals", "Analytics & reporting"],
-    color: "#FB5607",
+    color: "#B45309",
     emoji: "📚",
   },
   {
@@ -37,7 +37,7 @@ const industries = [
     tagline: "Secure systems. Better outcomes.",
     problems: ["Manual records", "Compliance complexity", "Inefficient workflows"],
     solutions: ["Patient management", "Compliance systems", "Workflow automation"],
-    color: "#FF006E",
+    color: "#0F766E",
     emoji: "🏥",
   },
   {
@@ -46,7 +46,7 @@ const industries = [
     tagline: "Automate the numbers.",
     problems: ["Manual reporting", "Data silos", "Slow reconciliation"],
     solutions: ["BI dashboards", "Data pipelines", "Automation workflows"],
-    color: "#FFBE0B",
+    color: "#0B57D0",
     emoji: "💹",
   },
   {
@@ -55,7 +55,7 @@ const industries = [
     tagline: "Digitize operations.",
     problems: ["No real-time visibility", "Paper-based tracking", "Maintenance gaps"],
     solutions: ["Operations dashboards", "Digital tracking", "ERP integration"],
-    color: "#FB5607",
+    color: "#B45309",
     emoji: "🏭",
   },
   {
@@ -64,7 +64,7 @@ const industries = [
     tagline: "Systems for smarter property.",
     problems: ["Manual property management", "Disconnected client data", "Slow reporting"],
     solutions: ["Property portals", "CRM systems", "Reporting automation"],
-    color: "#8338EC",
+    color: "#4338CA",
     emoji: "🏗️",
   },
   {
@@ -73,7 +73,7 @@ const industries = [
     tagline: "Move things. Know everything.",
     problems: ["No tracking visibility", "Manual scheduling", "Disconnected fleet data"],
     solutions: ["Fleet dashboards", "Operations automation", "Supply chain analytics"],
-    color: "#FF3333",
+    color: "#1E40AF",
     emoji: "🚛",
   },
   {
@@ -82,27 +82,27 @@ const industries = [
     tagline: "Digital public services.",
     problems: ["Paper-heavy processes", "Outdated infrastructure", "Poor citizen experience"],
     solutions: ["Digital portals", "Process automation", "Infrastructure modernization"],
-    color: "#FF006E",
+    color: "#0F766E",
     emoji: "🏛️",
   },
 ];
 
 export function IndustriesStrip() {
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useState<string>(industries[0].id);
 
   const activeIndustry = industries.find((i) => i.id === active);
 
   return (
-    <section className="py-24 lg:py-32 border-b border-[#1E2430] bg-[#070A0F]">
+    <section className="py-24 lg:py-32 border-b border-line bg-mist">
       <div className="max-w-7xl mx-auto px-6">
         <div className="mb-12">
           <SectionLabel number="04">Industries</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-white mb-4">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-4">
             We work across{" "}
-            <span className="text-[#FFBE0B]">every sector.</span>
+            <span className="text-accent">every sector.</span>
           </h2>
-          <p className="text-[#8A95A3] text-lg max-w-xl">
-            Hover an industry to see the problems we solve and the systems we build.
+          <p className="text-muted text-lg max-w-xl">
+            Select an industry to see the problems we solve and the systems we build.
           </p>
         </div>
 
@@ -114,19 +114,19 @@ export function IndustriesStrip() {
                 key={ind.id}
                 className="flex-shrink-0 flex flex-col items-center gap-2 px-6 py-4 border transition-all duration-200 cursor-pointer"
                 style={{
-                  borderColor: active === ind.id ? `${ind.color}60` : "#1E2430",
+                  borderColor: active === ind.id ? `${ind.color}60` : "#E3E8EF",
                   backgroundColor: active === ind.id ? `${ind.color}08` : "transparent",
                 }}
+                onClick={() => setActive(ind.id)}
                 onMouseEnter={() => setActive(ind.id)}
-                onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(ind.id)}
-                onBlur={() => setActive(null)}
+                aria-pressed={active === ind.id}
                 aria-label={`${ind.label} industry`}
               >
                 <span className="text-2xl" role="img" aria-hidden>{ind.emoji}</span>
                 <span
                   className="font-mono text-xs uppercase tracking-widest whitespace-nowrap transition-colors"
-                  style={{ color: active === ind.id ? ind.color : "#8A95A3" }}
+                  style={{ color: active === ind.id ? ind.color : "#4B5768" }}
                 >
                   {ind.label}
                 </span>
@@ -139,7 +139,7 @@ export function IndustriesStrip() {
         <div
           className="mt-6 p-6 lg:p-8 border transition-all duration-300 min-h-[140px] grid grid-cols-1 md:grid-cols-3 gap-8"
           style={{
-            borderColor: activeIndustry ? `${activeIndustry.color}40` : "#1E2430",
+            borderColor: activeIndustry ? `${activeIndustry.color}40` : "#E3E8EF",
             backgroundColor: activeIndustry ? `${activeIndustry.color}06` : "transparent",
           }}
         >
@@ -152,16 +152,16 @@ export function IndustriesStrip() {
                 >
                   {activeIndustry.label}
                 </div>
-                <div className="font-mono text-xs text-[#8A95A3] italic">
+                <div className="font-mono text-xs text-muted italic">
                   {activeIndustry.tagline}
                 </div>
               </div>
               <div>
-                <div className="font-mono text-[10px] text-[#8A95A3] uppercase tracking-widest mb-3">Common Challenges</div>
+                <div className="font-mono text-[10px] text-muted uppercase tracking-widest mb-3">Common Challenges</div>
                 <ul className="space-y-1.5">
                   {activeIndustry.problems.map((p) => (
-                    <li key={p} className="flex items-center gap-2 font-mono text-xs text-[#8A95A3]">
-                      <span className="w-1 h-1 rounded-full bg-[#FF3333]/60 flex-shrink-0" />
+                    <li key={p} className="flex items-center gap-2 font-mono text-xs text-muted">
+                      <span className="w-1 h-1 rounded-full bg-cat-navy/60 flex-shrink-0" />
                       {p}
                     </li>
                   ))}
@@ -173,7 +173,7 @@ export function IndustriesStrip() {
                 </div>
                 <ul className="space-y-1.5">
                   {activeIndustry.solutions.map((s) => (
-                    <li key={s} className="flex items-center gap-2 font-mono text-xs text-white/70">
+                    <li key={s} className="flex items-center gap-2 font-mono text-xs text-ink/70">
                       <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: activeIndustry.color, opacity: 0.6 }} />
                       {s}
                     </li>
@@ -183,8 +183,8 @@ export function IndustriesStrip() {
             </>
           ) : (
             <div className="col-span-3 flex items-center justify-center">
-              <p className="font-mono text-sm text-[#8A95A3]/40 italic">
-                Hover an industry above to see what we&apos;ve solved →
+              <p className="font-mono text-sm text-muted/40 italic">
+                Select an industry above to see what we&apos;ve solved →
               </p>
             </div>
           )}

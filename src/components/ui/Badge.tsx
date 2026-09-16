@@ -1,17 +1,17 @@
 import { cn } from "@/lib/utils";
 
 const pillarColors: Record<string, string> = {
-  "01": "border-[#8338EC]/30 text-[#8338EC] bg-[#8338EC]/10",
-  "02": "border-[#FFBE0B]/30 text-[#FFBE0B] bg-[#FFBE0B]/10",
-  "03": "border-[#FB5607]/30 text-[#FB5607] bg-[#FB5607]/10",
-  "04": "border-[#FF006E]/30 text-[#FF006E] bg-[#FF006E]/10",
-  "05": "border-[#FF3333]/30 text-[#FF3333] bg-[#FF3333]/10",
-  ai: "border-[#8338EC]/30 text-[#8338EC] bg-[#8338EC]/10",
-  software: "border-[#FFBE0B]/30 text-[#FFBE0B] bg-[#FFBE0B]/10",
-  data: "border-[#FB5607]/30 text-[#FB5607] bg-[#FB5607]/10",
-  advisory: "border-[#FF006E]/30 text-[#FF006E] bg-[#FF006E]/10",
-  products: "border-[#FF3333]/30 text-[#FF3333] bg-[#FF3333]/10",
-  default: "border-[#1E2430] text-[#8A95A3] bg-transparent",
+  "01": "border-[#4338CA]/30 text-[#4338CA] bg-[#4338CA]/10",
+  "02": "border-[#0B57D0]/30 text-[#0B57D0] bg-[#0B57D0]/10",
+  "03": "border-[#B45309]/30 text-[#B45309] bg-[#B45309]/10",
+  "04": "border-[#0F766E]/30 text-[#0F766E] bg-[#0F766E]/10",
+  "05": "border-[#1E40AF]/30 text-[#1E40AF] bg-[#1E40AF]/10",
+  ai: "border-[#4338CA]/30 text-[#4338CA] bg-[#4338CA]/10",
+  software: "border-[#0B57D0]/30 text-[#0B57D0] bg-[#0B57D0]/10",
+  data: "border-[#B45309]/30 text-[#B45309] bg-[#B45309]/10",
+  advisory: "border-[#0F766E]/30 text-[#0F766E] bg-[#0F766E]/10",
+  products: "border-[#1E40AF]/30 text-[#1E40AF] bg-[#1E40AF]/10",
+  default: "border-[#E3E8EF] text-[#4B5768] bg-transparent",
 };
 
 interface BadgeProps {

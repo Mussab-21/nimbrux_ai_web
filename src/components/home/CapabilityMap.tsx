@@ -9,7 +9,7 @@ const pillars = [
   {
     id: "digital-ai",
     pillar: "01",
-    color: "#8338EC",
+    color: "#4338CA",
     label: "Digital & AI",
     tagline: "Automate. Augment. Accelerate.",
     description:
@@ -20,10 +20,10 @@ const pillars = [
       <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
         <defs>
           <pattern id="ai-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="20" cy="20" r="1" fill="#8338EC" />
-            <line x1="20" y1="20" x2="40" y2="0" stroke="#8338EC" strokeWidth="0.5" />
-            <line x1="20" y1="20" x2="0" y2="40" stroke="#8338EC" strokeWidth="0.5" />
-            <line x1="20" y1="20" x2="40" y2="40" stroke="#8338EC" strokeWidth="0.5" />
+            <circle cx="20" cy="20" r="1" fill="#4338CA" />
+            <line x1="20" y1="20" x2="40" y2="0" stroke="#4338CA" strokeWidth="0.5" />
+            <line x1="20" y1="20" x2="0" y2="40" stroke="#4338CA" strokeWidth="0.5" />
+            <line x1="20" y1="20" x2="40" y2="40" stroke="#4338CA" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#ai-pattern)" />
@@ -33,7 +33,7 @@ const pillars = [
   {
     id: "cloud-security",
     pillar: "02",
-    color: "#FFBE0B",
+    color: "#0B57D0",
     label: "Cloud & Security",
     tagline: "Build it right. Keep it safe.",
     description:
@@ -44,8 +44,8 @@ const pillars = [
       <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
         <defs>
           <pattern id="cloud-pattern" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
-            <rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="#FFBE0B" strokeWidth="0.5" />
-            <rect x="16" y="16" width="16" height="16" rx="2" fill="none" stroke="#FFBE0B" strokeWidth="0.5" />
+            <rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="#0B57D0" strokeWidth="0.5" />
+            <rect x="16" y="16" width="16" height="16" rx="2" fill="none" stroke="#0B57D0" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#cloud-pattern)" />
@@ -55,7 +55,7 @@ const pillars = [
   {
     id: "managed-technology",
     pillar: "03",
-    color: "#FB5607",
+    color: "#B45309",
     label: "Managed Technology",
     tagline: "We run it, so you don't have to.",
     description:
@@ -66,9 +66,9 @@ const pillars = [
       <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
         <defs>
           <pattern id="managed-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="20" x2="40" y2="20" stroke="#FB5607" strokeWidth="0.5" />
-            <line x1="20" y1="0" x2="20" y2="40" stroke="#FB5607" strokeWidth="0.5" />
-            <circle cx="20" cy="20" r="3" fill="none" stroke="#FB5607" strokeWidth="0.5" />
+            <line x1="0" y1="20" x2="40" y2="20" stroke="#B45309" strokeWidth="0.5" />
+            <line x1="20" y1="0" x2="20" y2="40" stroke="#B45309" strokeWidth="0.5" />
+            <circle cx="20" cy="20" r="3" fill="none" stroke="#B45309" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#managed-pattern)" />
@@ -78,7 +78,7 @@ const pillars = [
   {
     id: "consulting-advisory",
     pillar: "04",
-    color: "#FF006E",
+    color: "#0F766E",
     label: "Consulting & Advisory",
     tagline: "Strategy before execution.",
     description:
@@ -89,8 +89,8 @@ const pillars = [
       <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
         <defs>
           <pattern id="advisory-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="40" y2="40" stroke="#FF006E" strokeWidth="0.5" />
-            <line x1="40" y1="0" x2="0" y2="40" stroke="#FF006E" strokeWidth="0.5" />
+            <line x1="0" y1="0" x2="40" y2="40" stroke="#0F766E" strokeWidth="0.5" />
+            <line x1="40" y1="0" x2="0" y2="40" stroke="#0F766E" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#advisory-pattern)" />
@@ -100,7 +100,7 @@ const pillars = [
   {
     id: "products",
     pillar: "05",
-    color: "#FF3333",
+    color: "#1E40AF",
     label: "Products & IP",
     tagline: "Building what we wish existed.",
     description:
@@ -111,7 +111,7 @@ const pillars = [
       <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
         <defs>
           <pattern id="products-pattern" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-            <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="#FF3333" strokeWidth="0.5" />
+            <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="#1E40AF" strokeWidth="0.5" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#products-pattern)" />
@@ -121,30 +121,30 @@ const pillars = [
 ];
 
 export function CapabilityMap() {
-  const [active, setActive] = useState<string | null>(null);
+  const [active, setActive] = useState<string>(pillars[0].id);
 
   const activePillar = pillars.find((p) => p.id === active);
 
   return (
-    <section className="py-24 lg:py-32 border-b border-[#1E2430] bg-[#0A0D14]">
+    <section className="py-24 lg:py-32 border-b border-line bg-paper">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           {/* Left: label + detail panel */}
           <div className="lg:w-[340px] flex-shrink-0">
             <SectionLabel number="02">Capability Map</SectionLabel>
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-white mb-6">
+            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
               One partner,{" "}
-              <span className="text-[#FFBE0B]">five pillars.</span>
+              <span className="text-accent">five pillars.</span>
             </h2>
-            <p className="text-[#8A95A3] text-base leading-relaxed mb-10">
-              Strategy to software to scale. Hover a pillar to explore what we build.
+            <p className="text-muted text-base leading-relaxed mb-10">
+              Strategy to software to scale. Select a pillar to explore what we build.
             </p>
 
             {/* Detail panel */}
             <div
               className="p-6 border transition-all duration-300 min-h-[180px]"
               style={{
-                borderColor: activePillar ? `${activePillar.color}40` : "#1E2430",
+                borderColor: activePillar ? `${activePillar.color}40` : "#E3E8EF",
                 backgroundColor: activePillar ? `${activePillar.color}08` : "transparent",
               }}
             >
@@ -162,10 +162,10 @@ export function CapabilityMap() {
                   >
                     {activePillar.label}
                   </h3>
-                  <p className="font-mono text-xs text-[#8A95A3] italic mb-4">
+                  <p className="font-mono text-xs text-muted italic mb-4">
                     {activePillar.tagline}
                   </p>
-                  <p className="text-[#8A95A3] text-sm leading-relaxed mb-4">
+                  <p className="text-muted text-sm leading-relaxed mb-4">
                     {activePillar.description}
                   </p>
                   <Link
@@ -178,8 +178,8 @@ export function CapabilityMap() {
                   </Link>
                 </>
               ) : (
-                <p className="font-mono text-sm text-[#8A95A3]/50 italic">
-                  Hover a pillar on the right to explore our capabilities →
+                <p className="font-mono text-sm text-muted/50 italic">
+                  Select a pillar to explore our capabilities →
                 </p>
               )}
             </div>
@@ -191,15 +191,14 @@ export function CapabilityMap() {
               <Link
                 key={p.id}
                 href={p.href}
-                className="relative block border overflow-hidden cursor-pointer transition-all duration-300 group focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FFBE0B]"
+                className="relative block border overflow-hidden cursor-pointer transition-all duration-300 group focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
                 style={{
-                  borderColor: active === p.id ? `${p.color}60` : "#1E2430",
+                  borderColor: active === p.id ? `${p.color}60` : "#E3E8EF",
                   backgroundColor: active === p.id ? `${p.color}06` : "transparent",
                 }}
                 onMouseEnter={() => setActive(p.id)}
-                onMouseLeave={() => setActive(null)}
                 onFocus={() => setActive(p.id)}
-                onBlur={() => setActive(null)}
+                onTouchStart={() => setActive(p.id)}
               >
                 {/* Background SVG pattern */}
                 {p.bgPattern}
@@ -227,7 +226,7 @@ export function CapabilityMap() {
                     <div>
                       <h3
                         className="font-heading text-lg md:text-xl font-semibold transition-colors duration-300"
-                        style={{ color: active === p.id ? p.color : "white" }}
+                        style={{ color: active === p.id ? p.color : "var(--ink)" }}
                       >
                         {p.label}
                       </h3>
@@ -235,7 +234,7 @@ export function CapabilityMap() {
                         {p.services.map((svc) => (
                           <span
                             key={svc}
-                            className="font-mono text-[11px] text-[#8A95A3] transition-colors"
+                            className="font-mono text-[11px] text-muted transition-colors"
                             style={{ color: active === p.id ? `${p.color}90` : undefined }}
                           >
                             {svc}

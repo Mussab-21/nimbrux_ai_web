@@ -32,11 +32,11 @@ export function Button({
 
   const variants = {
     primary:
-      "px-6 py-3.5 bg-[#FFBE0B] text-[#0A0D14] hover:bg-[#FB5607] hover:text-white",
+      "px-6 py-3.5 bg-[#0B57D0] text-[#FFFFFF] hover:bg-[#B45309] hover:text-white",
     ghost:
-      "px-6 py-3.5 border border-[#1E2430] text-[#8A95A3] hover:border-[#8338EC] hover:text-[#8338EC]",
+      "px-6 py-3.5 border border-[#E3E8EF] text-[#4B5768] hover:border-[#4338CA] hover:text-[#4338CA]",
     outline:
-      "px-6 py-3.5 border border-[#FFBE0B] text-[#FFBE0B] hover:bg-[#FFBE0B] hover:text-[#0A0D14]",
+      "px-6 py-3.5 border border-[#0B57D0] text-[#0B57D0] hover:bg-[#0B57D0] hover:text-[#FFFFFF]",
   };
 
   const inner = (

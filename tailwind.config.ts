@@ -9,48 +9,49 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        /* Surface / neutrals */
-        ink:    "var(--ink)",
-        paper:  "var(--paper)",
-        slate:  "var(--slate)",
-        line:   "var(--line)",
-        mist:   "var(--mist)",
+        /* Surfaces */
+        paper: "var(--paper)",
+        mist:  "var(--mist)",
+        line:  "var(--line)",
+        navy:  "var(--navy)",
 
-        /* Legacy alias (kept for backward compat) */
-        signal: "var(--signal)",
+        /* Text */
+        ink:   "var(--ink)",
+        body:  "var(--body)",
+        muted: "var(--muted)",
 
-        /* Fine Technology Secondary Palette */
-        mango:       "var(--mango)",       /* #FFBE0B – primary CTA */
-        orange:      "var(--orange)",      /* #FB5607 – hover / secondary */
-        "winter-sky":  "var(--winter-sky)",
-        "blue-violet": "var(--blue-violet)",
-        "tart-orange": "var(--tart-orange)",
+        /* Accent */
+        accent: {
+          DEFAULT: "var(--accent)",
+          hover:   "var(--accent-hover)",
+          soft:    "var(--accent-soft)",
+        },
+
+        /* Category accents */
+        cat: {
+          blue:   "var(--cat-blue)",
+          indigo: "var(--cat-indigo)",
+          amber:  "var(--cat-amber)",
+          teal:   "var(--cat-teal)",
+          navy:   "var(--cat-navy)",
+        },
 
         /* Semantic aliases */
-        background: "var(--ink)",
-        foreground: "var(--paper)",
-        accent:     "var(--mango)",
-        "accent-2": "var(--blue-violet)",
+        background: "var(--paper)",
+        foreground: "var(--ink)",
       },
       fontFamily: {
-        sans:    ["var(--font-inter)", "sans-serif"],
-        heading: ["var(--font-space-grotesk)", "sans-serif"],
-        mono:    ["var(--font-jetbrains-mono)", "monospace"],
-      },
-      backgroundImage: {
-        "gradient-mango":    "linear-gradient(135deg, #FFBE0B, #FB5607)",
-        "gradient-electric": "linear-gradient(135deg, #8338EC, #FF006E)",
-        "gradient-fire":     "linear-gradient(135deg, #FB5607, #FF3333)",
+        sans:    ["var(--font-inter)", "system-ui", "sans-serif"],
+        heading: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+        mono:    ["var(--font-jetbrains-mono)", "ui-monospace", "monospace"],
       },
       boxShadow: {
-        "glow-mango":  "0 0 40px rgba(255,190,11,0.3)",
-        "glow-violet": "0 0 40px rgba(131,56,236,0.3)",
-        "glow-pink":   "0 0 40px rgba(255,0,110,0.25)",
-        "glow-orange": "0 0 40px rgba(251,86,7,0.3)",
+        "elev-1": "0 1px 2px rgba(10,15,28,.05), 0 1px 3px rgba(10,15,28,.06)",
+        "elev-2": "0 4px 6px -1px rgba(10,15,28,.07), 0 2px 4px -2px rgba(10,15,28,.06)",
+        "elev-3": "0 12px 24px -8px rgba(10,15,28,.12), 0 4px 8px -4px rgba(10,15,28,.06)",
       },
     },
   },
   plugins: [require("@tailwindcss/typography")],
 };
 export default config;
-

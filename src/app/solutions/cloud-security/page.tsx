@@ -1,17 +1,18 @@
 import { PillarPage } from "@/components/solutions/PillarPage";
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Cloud & Security Solutions",
-  description:
-    "Cloud architecture, DevOps, enterprise networking, cybersecurity, and infrastructure design. Nimbrix Cloud & Security pillar.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Cloud and security services",
+  description: "Cloud architecture, DevOps pipelines, infrastructure and security hardening for teams that need reliable, cost-controlled systems that scale properly.",
+  path: "/solutions/cloud-security",
+});
 
 export default function CloudSecurityPage() {
   return (
     <PillarPage
       pillar="02"
-      color="#FFBE0B"
+      color="#0B57D0"
       label="Cloud & Security"
       tagline="Build it right. Keep it safe."
       heroHeading="Infrastructure that scales and stays secure."

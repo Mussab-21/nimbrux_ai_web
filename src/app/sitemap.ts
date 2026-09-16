@@ -1,8 +1,9 @@
 import { MetadataRoute } from "next";
 import { getCaseStudies, getInsights } from "@/lib/content";
+import { SITE_URL } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://nimbrix.io";
+  const baseUrl = SITE_URL;
 
   const staticRoutes = [
     "/",
@@ -18,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/contact",
   ].map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: route === "/" ? baseUrl : `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: route === "/" ? 1 : 0.8,

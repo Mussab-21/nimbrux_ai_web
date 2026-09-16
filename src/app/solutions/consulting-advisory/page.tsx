@@ -1,17 +1,18 @@
 import { PillarPage } from "@/components/solutions/PillarPage";
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Consulting & Advisory",
-  description:
-    "AI advisory, IT strategy, technology audits, and digital transformation roadmaps. Nimbrix Consulting & Advisory pillar.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Technology consulting and advisory",
+  description: "AI advisory, technology audits and IT strategy for leaders deciding what to build, what to buy and what to leave alone. Honest assessments, not decks.",
+  path: "/solutions/consulting-advisory",
+});
 
 export default function ConsultingAdvisoryPage() {
   return (
     <PillarPage
       pillar="04"
-      color="#FF006E"
+      color="#0F766E"
       label="Consulting & Advisory"
       tagline="Strategy before execution."
       heroHeading="Know exactly where technology will actually help you."

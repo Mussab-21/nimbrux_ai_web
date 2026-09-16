@@ -141,13 +141,13 @@ export function TechIcon({ name, className = "w-3.5 h-3.5", showLabel = true }: 
 
       default:
         return (
-          <span className="w-2 h-2 rounded-full bg-[#FFBE0B]/70" />
+          <span className="w-2 h-2 rounded-full bg-accent/70" />
         );
     }
   };
 
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[11px] border border-[#1E2430] bg-[#0D1018] text-[#8A95A3] hover:border-[#FFBE0B]/30 hover:text-white transition-colors">
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 font-mono text-[11px] border border-line bg-mist text-muted hover:border-accent/30 hover:text-ink transition-colors">
       {renderSvg()}
       {showLabel && <span>{name}</span>}
     </span>

@@ -10,7 +10,7 @@ import { MobileMenu } from "./MobileMenu";
 const solutions = [
   {
     pillar: "01",
-    color: "#8338EC",
+    color: "#4338CA",
     label: "Digital & AI",
     href: "/solutions/digital-ai",
     description: "AI, automation, software & data",
@@ -18,7 +18,7 @@ const solutions = [
   },
   {
     pillar: "02",
-    color: "#FFBE0B",
+    color: "#0B57D0",
     label: "Cloud & Security",
     href: "/solutions/cloud-security",
     description: "Cloud, infrastructure & cybersecurity",
@@ -26,7 +26,7 @@ const solutions = [
   },
   {
     pillar: "03",
-    color: "#FB5607",
+    color: "#B45309",
     label: "Managed Technology",
     href: "/solutions/managed-technology",
     description: "Ongoing operations & support",
@@ -34,7 +34,7 @@ const solutions = [
   },
   {
     pillar: "04",
-    color: "#FF006E",
+    color: "#0F766E",
     label: "Consulting & Advisory",
     href: "/solutions/consulting-advisory",
     description: "Strategy, audits & AI advisory",
@@ -42,7 +42,7 @@ const solutions = [
   },
   {
     pillar: "05",
-    color: "#FF3333",
+    color: "#1E40AF",
     label: "Products & IP",
     href: "/solutions/products",
     description: "SaaS products & proprietary tech",
@@ -91,7 +91,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           scrolled || megaOpen
-            ? "bg-[#0A0D14]/95 backdrop-blur-md border-b border-[#1E2430]"
+            ? "bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E3E8EF]"
             : "bg-transparent"
         )}
       >
@@ -99,9 +99,9 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="font-heading font-bold text-xl tracking-tight text-white hover:opacity-80 transition-opacity flex-shrink-0"
+            className="font-heading font-bold text-xl tracking-tight text-ink hover:opacity-80 transition-opacity flex-shrink-0"
           >
-            Nimbrix<span className="text-[#FFBE0B]">.</span>
+            Nimbrix<span className="text-accent">.</span>
           </Link>
 
           {/* Desktop nav */}
@@ -116,7 +116,7 @@ export function Navbar() {
               <button
                 className={cn(
                   "flex items-center gap-1.5 px-4 py-2 font-mono text-sm transition-colors rounded-sm",
-                  megaOpen ? "text-white" : "text-[#8A95A3] hover:text-white"
+                  megaOpen ? "text-white" : "text-[#4B5768] hover:text-white"
                 )}
                 aria-expanded={megaOpen}
                 aria-haspopup="true"
@@ -133,7 +133,7 @@ export function Navbar() {
               {/* Mega menu panel */}
               <div
                 className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[760px] bg-[#0D1018] border border-[#1E2430] shadow-2xl transition-all duration-200 origin-top",
+                  "absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[760px] bg-[#F4F6F9] border border-[#E3E8EF] shadow-2xl transition-all duration-200 origin-top",
                   megaOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
                 )}
                 onMouseEnter={openMega}
@@ -141,24 +141,24 @@ export function Navbar() {
                 role="menu"
               >
                 {/* Top bar */}
-                <div className="px-8 py-4 border-b border-[#1E2430] flex items-center justify-between">
-                  <span className="font-mono text-xs text-[#8A95A3] uppercase tracking-widest">Our Solutions</span>
+                <div className="px-8 py-4 border-b border-line flex items-center justify-between">
+                  <span className="font-mono text-xs text-muted uppercase tracking-widest">Our Solutions</span>
                   <Link
                     href="/solutions"
-                    className="font-mono text-xs text-[#FFBE0B] hover:text-[#FB5607] transition-colors flex items-center gap-1"
+                    className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
                   >
                     View all <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
 
                 {/* Pillar grid */}
-                <div className="grid grid-cols-5 divide-x divide-[#1E2430] p-2">
+                <div className="grid grid-cols-5 divide-x divide-line p-2">
                   {solutions.map((s) => (
                     <Link
                       key={s.pillar}
                       href={s.href}
                       role="menuitem"
-                      className="group p-5 hover:bg-[#1A1F2A] transition-colors flex flex-col gap-3"
+                      className="group p-5 hover:bg-mist transition-colors flex flex-col gap-3"
                     >
                       {/* Pillar number */}
                       <span
@@ -170,13 +170,13 @@ export function Navbar() {
 
                       {/* Label */}
                       <span
-                        className="font-heading font-semibold text-sm text-white group-hover:opacity-90 transition-opacity leading-tight"
+                        className="font-heading font-semibold text-sm text-ink group-hover:opacity-90 transition-opacity leading-tight"
                       >
                         {s.label}
                       </span>
 
                       {/* Description */}
-                      <span className="font-mono text-[11px] text-[#8A95A3] leading-snug">
+                      <span className="font-mono text-[11px] text-muted leading-snug">
                         {s.description}
                       </span>
 
@@ -185,7 +185,7 @@ export function Navbar() {
                         {s.services.map((svc) => (
                           <li
                             key={svc}
-                            className="font-mono text-[11px] text-[#8A95A3] group-hover:text-[#8A95A3]/80 flex items-center gap-1.5"
+                            className="font-mono text-[11px] text-muted group-hover:text-muted/80 flex items-center gap-1.5"
                           >
                             <span
                               className="w-1 h-1 rounded-full flex-shrink-0"
@@ -206,13 +206,13 @@ export function Navbar() {
                 </div>
 
                 {/* Bottom CTA row */}
-                <div className="px-8 py-4 border-t border-[#1E2430] bg-[#0A0D14] flex items-center gap-6">
-                  <span className="font-mono text-xs text-[#8A95A3]">
+                <div className="px-8 py-4 border-t border-line bg-paper flex items-center gap-6">
+                  <span className="font-mono text-xs text-muted">
                     Not sure where to start?
                   </span>
                   <Link
                     href="/contact"
-                    className="font-mono text-xs text-[#FFBE0B] hover:text-[#FB5607] transition-colors flex items-center gap-1"
+                    className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
                   >
                     Talk to us → we&apos;ll map the right solution
                     <ArrowRight className="w-3 h-3" />
@@ -230,7 +230,7 @@ export function Navbar() {
                   "px-4 py-2 font-mono text-sm transition-colors rounded-sm",
                   pathname === link.href
                     ? "text-white"
-                    : "text-[#8A95A3] hover:text-white"
+                    : "text-[#4B5768] hover:text-white"
                 )}
               >
                 {link.label}
@@ -242,14 +242,14 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               href="/contact"
-              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-[#FFBE0B] text-[#0A0D14] font-mono text-sm font-semibold hover:bg-[#FB5607] hover:text-white transition-all duration-300 group"
+              className="hidden md:inline-flex items-center gap-2 px-5 py-2.5 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300 group"
             >
               Start a Project
               <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
             </Link>
 
             <button
-              className="lg:hidden p-2 text-[#8A95A3] hover:text-white transition-colors"
+              className="lg:hidden p-2 text-muted hover:text-ink transition-colors"
               onClick={() => setMobileOpen(true)}
               aria-label="Open navigation menu"
             >

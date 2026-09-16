@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { siteConfig } from "@/lib/seo";
 import { ArrowRight, Mail, MapPin } from "lucide-react";
 
 const footerSolutions = [
@@ -31,42 +32,43 @@ const footerCompany = [
   { label: "About", href: "/about" },
   { label: "Work", href: "/work" },
   { label: "Insights", href: "/insights" },
-  { label: "Careers", href: "/about#careers" },
   { label: "Contact", href: "/contact" },
 ];
 
 export function Footer() {
   return (
-    <footer className="border-t border-[#1E2430] bg-[#070A0F]">
+    <footer className="border-t border-line bg-mist">
       {/* Main grid */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         {/* Brand column */}
         <div className="lg:col-span-1">
           <Link href="/" className="inline-block mb-6">
-            <span className="font-heading font-bold text-xl text-white">
-              Nimbrix<span className="text-[#FFBE0B]">.</span>
+            <span className="font-heading font-bold text-xl text-ink">
+              Nimbrix<span className="text-accent">.</span>
             </span>
           </Link>
-          <p className="font-mono text-sm text-[#8A95A3] leading-relaxed mb-6 max-w-xs">
+          <p className="font-mono text-sm text-muted leading-relaxed mb-6 max-w-xs">
             AI-first technology transformation partner. We design, build and operate intelligent systems.
           </p>
-          <div className="flex items-center gap-1.5 font-mono text-xs text-[#8A95A3] mb-4">
-            <MapPin className="w-3.5 h-3.5 text-[#FFBE0B]" />
+          <div className="flex items-center gap-1.5 font-mono text-xs text-muted mb-4">
+            <MapPin className="w-3.5 h-3.5 text-accent" />
             Pakistan · Global Delivery
           </div>
           <div className="flex gap-3">
             <a
-              href="#"
-              className="p-2 border border-[#1E2430] text-[#8A95A3] hover:border-[#FFBE0B] hover:text-[#FFBE0B] transition-colors"
-              aria-label="LinkedIn"
+              href={siteConfig.social.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2 border border-line text-muted hover:border-accent hover:text-accent transition-colors"
+              aria-label="Nimbrix on LinkedIn"
             >
               <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.64 1.64 0 0 0 0-3.28 1.64 1.64 0 0 0 0 3.28m-1.4 9.74h2.81v-8.37H5.06v8.37Z" />
               </svg>
             </a>
             <a
-              href="mailto:hello@nimbrix.io"
-              className="p-2 border border-[#1E2430] text-[#8A95A3] hover:border-[#FFBE0B] hover:text-[#FFBE0B] transition-colors"
+              href={`mailto:${siteConfig.email}`}
+              className="p-2 border border-line text-muted hover:border-accent hover:text-accent transition-colors"
               aria-label="Email"
             >
               <Mail className="w-4 h-4" />
@@ -88,13 +90,13 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-[#1E2430] max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="font-mono text-xs text-[#8A95A3]">
+      <div className="border-t border-line max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p className="font-mono text-xs text-muted">
           © {new Date().getFullYear()} Nimbrix. All rights reserved.
         </p>
         <Link
           href="/contact"
-          className="group inline-flex items-center gap-2 font-mono text-xs text-[#FFBE0B] hover:text-[#FB5607] transition-colors"
+          className="group inline-flex items-center gap-2 font-mono text-xs text-accent hover:text-cat-amber transition-colors"
         >
           Start a project
           <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
@@ -113,13 +115,13 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h4 className="font-mono text-xs uppercase tracking-widest text-white mb-5">{title}</h4>
+      <h4 className="font-mono text-xs uppercase tracking-widest text-ink mb-5">{title}</h4>
       <ul className="space-y-3">
         {links.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="font-mono text-sm text-[#8A95A3] hover:text-[#FFBE0B] transition-colors"
+              className="font-mono text-sm text-muted hover:text-accent transition-colors"
             >
               {link.label}
             </Link>

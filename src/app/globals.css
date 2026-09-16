@@ -2,70 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   NIMBRIX DESIGN TOKENS - light / high-contrast
+   Single source of truth. Never hardcode a hex in a component.
+   Every text token below meets WCAG AA (>=4.5:1) on --paper.
+   ============================================================ */
+
 :root {
-  /* Base surface tokens */
-  --ink: #0A0D14;
-  --paper: #F6F4EF;
-  --slate: #8A95A3;
-  --line: #1E2430;
-  --mist: #DDE3E8;
+  /* Surfaces */
+  --paper: #FFFFFF;   /* page + card background            */
+  --mist:  #F4F6F9;   /* alternating section background    */
+  --line:  #E3E8EF;   /* hairline borders, dividers        */
+  --navy:  #0A2540;   /* inverted band (footer, dark CTA)  */
 
-  /* Fine Technology Secondary Palette */
-  --mango: #FFBE0B;        /* Yellow – primary accent / CTA */
-  --orange: #FB5607;       /* Orange – secondary accent / hover */
-  --winter-sky: #FF006E;   /* Hot pink – highlight / pill */
-  --blue-violet: #8338EC;  /* Purple – AI / data identity */
-  --tart-orange: #FF3333;  /* Red-orange – warning / alert tones */
+  /* Text */
+  --ink:   #0A0F1C;   /* headings / primary  17.9:1 on white */
+  --body:  #1C2433;   /* body copy           14.6:1          */
+  --muted: #4B5768;   /* secondary / labels   7.6:1          */
 
-  /* Legacy alias – points to Mango so existing `signal` classes still work */
-  --signal: #FFBE0B;
+  /* Primary accent */
+  --accent:       #0B57D0;  /* 6.3:1 on white - links, CTA   */
+  --accent-hover: #0842A0;
+  --accent-soft:  #EAF1FE;
+
+  /* Category accents - all >=4.5:1 on white */
+  --cat-blue:   #0B57D0;
+  --cat-indigo: #4338CA;
+  --cat-amber:  #B45309;
+  --cat-teal:   #0F766E;
+  --cat-navy:   #1E40AF;
 }
+
+html { -webkit-text-size-adjust: 100%; }
 
 body {
-  color: var(--paper);
-  background: var(--ink);
+  color: var(--body);
+  background: var(--paper);
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--ink); }
-::-webkit-scrollbar-thumb { background: var(--line); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--mango); }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--mist); }
+::-webkit-scrollbar-thumb { background: #C3CCD9; border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
 
-/* Selection */
-::selection { background: var(--mango); color: var(--ink); }
+::selection { background: var(--accent); color: #FFFFFF; }
+
+/* Visible keyboard focus - required for accessibility audits */
+:where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
 @layer utilities {
   .text-balance { text-wrap: balance; }
 
-  /* Gradient helpers */
-  .gradient-mango      { background: linear-gradient(135deg, #FFBE0B, #FB5607); }
-  .gradient-electric   { background: linear-gradient(135deg, #8338EC, #FF006E); }
-  .gradient-fire       { background: linear-gradient(135deg, #FB5607, #FF3333); }
+  /* Elevation - replaces the old neon glows */
+  .elev-1 { box-shadow: 0 1px 2px rgba(10,15,28,.05), 0 1px 3px rgba(10,15,28,.06); }
+  .elev-2 { box-shadow: 0 4px 6px -1px rgba(10,15,28,.07), 0 2px 4px -2px rgba(10,15,28,.06); }
+  .elev-3 { box-shadow: 0 12px 24px -8px rgba(10,15,28,.12), 0 4px 8px -4px rgba(10,15,28,.06); }
 
-  /* Glow effects */
-  .glow-mango      { box-shadow: 0 0 40px rgba(255,190,11,0.25); }
-  .glow-violet     { box-shadow: 0 0 40px rgba(131,56,236,0.25); }
-  .glow-pink       { box-shadow: 0 0 40px rgba(255,0,110,0.20); }
+  .gradient-accent { background: linear-gradient(135deg, #0B57D0, #4338CA); }
+  .gradient-navy   { background: linear-gradient(135deg, #0A2540, #123A63); }
+  .glow-mango, .glow-violet, .glow-pink { box-shadow: 0 12px 24px -8px rgba(10,15,28,.12); }
 }
 
-/* Marquee animation for tech strip */
 @keyframes marquee {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 
-/* Fade-slide-up for scroll reveals */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Delay utilities */
 .animation-delay-100 { animation-delay: 100ms; }
 .animation-delay-200 { animation-delay: 200ms; }
 .animation-delay-300 { animation-delay: 300ms; }
 .animation-delay-400 { animation-delay: 400ms; }
 .animation-delay-500 { animation-delay: 500ms; }
 
-
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

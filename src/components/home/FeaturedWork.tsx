@@ -29,7 +29,7 @@ const projects: ProjectItem[] = [
     challenge: "Manual resume screening is slow, error-prone, and struggles to systematically detect skill gaps.",
     outcome: "Contextual semantic scoring engine extracting entities and quantifying job match percentage in real-time.",
     tech: ["Python", "NLP", "Embeddings", "FastAPI"],
-    accentColor: "#8338EC",
+    accentColor: "#4338CA",
     category: "AI & NLP",
     githubUrl: "https://github.com/Mussab-21/resume_matcher",
     visualType: "nlp",
@@ -104,7 +104,7 @@ const projects: ProjectItem[] = [
     challenge: "Manual donation tracking in spreadsheets with zero online presence or digital donor portals.",
     outcome: "Complete digital infrastructure launched within 6 weeks, enabling online donor contributions.",
     tech: ["Next.js", "Supabase", "Tailwind CSS", "TypeScript"],
-    accentColor: "#FFBE0B",
+    accentColor: "#0B57D0",
     category: "Web & Software",
     githubUrl: "https://github.com/Mussab-21/neiki_foundation",
     visualType: "web-platform",
@@ -116,31 +116,31 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "nlp":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#8338EC]" />
-              <span className="text-[#8A95A3]">NLP Pipeline // Entity Scorer</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-cat-indigo" />
+              <span className="text-muted">NLP Pipeline // Entity Scorer</span>
             </div>
-            <span className="px-2 py-0.5 bg-[#8338EC]/20 text-[#8338EC] border border-[#8338EC]/30">94.2% Match</span>
+            <span className="px-2 py-0.5 bg-cat-indigo/20 text-cat-indigo border border-cat-indigo/30">94.2% Match</span>
           </div>
 
           <div className="space-y-3 my-auto">
-            <div className="p-3 bg-[#131824] border border-[#1E2430] rounded">
-              <div className="text-[11px] text-[#8A95A3] mb-1">Extracted Entities:</div>
+            <div className="p-3 bg-mist border border-line rounded">
+              <div className="text-[11px] text-muted mb-1">Extracted Entities:</div>
               <div className="flex flex-wrap gap-1.5">
-                <span className="px-2 py-0.5 bg-[#8338EC]/20 text-white rounded text-[10px]">Python 3.11</span>
-                <span className="px-2 py-0.5 bg-[#8338EC]/20 text-white rounded text-[10px]">PyTorch / Embeddings</span>
-                <span className="px-2 py-0.5 bg-[#8338EC]/20 text-white rounded text-[10px]">FastAPI Architecture</span>
-                <span className="px-2 py-0.5 bg-[#8338EC]/20 text-white rounded text-[10px]">Vector Cosine: 0.941</span>
+                <span className="px-2 py-0.5 bg-cat-indigo/20 text-white rounded text-[10px]">Python 3.11</span>
+                <span className="px-2 py-0.5 bg-cat-indigo/20 text-white rounded text-[10px]">PyTorch / Embeddings</span>
+                <span className="px-2 py-0.5 bg-cat-indigo/20 text-white rounded text-[10px]">FastAPI Architecture</span>
+                <span className="px-2 py-0.5 bg-cat-indigo/20 text-white rounded text-[10px]">Vector Cosine: 0.941</span>
               </div>
             </div>
 
-            <div className="h-2 bg-[#1E2430] rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-[#8338EC] to-[#3A86FF] w-[94%]" />
+            <div className="h-2 bg-line rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-cat-indigo to-[#3A86FF] w-[94%]" />
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>Cosine Similarity: SBERT Embeddings</span>
             <span className="text-emerald-400">Pass: Candidate Qualified</span>
           </div>
@@ -150,58 +150,58 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "vision":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#FF4B4B]" />
-              <span className="text-[#8A95A3]">PyTorch CNN // Fashion-MNIST</span>
+              <span className="text-muted">PyTorch CNN // Fashion-MNIST</span>
             </div>
             <span className="px-2 py-0.5 bg-[#FF4B4B]/20 text-[#FF4B4B] border border-[#FF4B4B]/30">Live Inference</span>
           </div>
 
           <div className="grid grid-cols-12 gap-4 items-center my-auto">
-            <div className="col-span-4 aspect-square bg-[#131824] border border-[#1E2430] flex flex-col items-center justify-center p-2 rounded">
+            <div className="col-span-4 aspect-square bg-mist border border-line flex flex-col items-center justify-center p-2 rounded">
               <div className="w-12 h-12 border border-[#FF4B4B]/40 rounded grid grid-cols-4 grid-rows-4 gap-0.5 p-1 bg-black/40">
                 {Array.from({ length: 16 }).map((_, idx) => (
                   <div key={idx} className="bg-[#FF4B4B]" style={{ opacity: (idx * 17) % 100 / 100 }} />
                 ))}
               </div>
-              <span className="text-[9px] text-[#8A95A3] mt-2">28x28 Tensor</span>
+              <span className="text-[9px] text-muted mt-2">28x28 Tensor</span>
             </div>
 
             <div className="col-span-8 space-y-2">
               <div>
-                <div className="flex justify-between text-[10px] text-white mb-0.5">
+                <div className="flex justify-between text-[10px] text-ink mb-0.5">
                   <span>Sneaker</span>
                   <span className="text-[#FF4B4B]">98.6%</span>
                 </div>
-                <div className="h-1.5 bg-[#1E2430] rounded-full overflow-hidden">
+                <div className="h-1.5 bg-line rounded-full overflow-hidden">
                   <div className="h-full bg-[#FF4B4B] w-[98.6%]" />
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-[10px] text-[#8A95A3] mb-0.5">
+                <div className="flex justify-between text-[10px] text-muted mb-0.5">
                   <span>Ankle Boot</span>
                   <span>1.1%</span>
                 </div>
-                <div className="h-1.5 bg-[#1E2430] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#8A95A3] w-[1.1%]" />
+                <div className="h-1.5 bg-line rounded-full overflow-hidden">
+                  <div className="h-full bg-line w-[1.1%]" />
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-[10px] text-[#8A95A3] mb-0.5">
+                <div className="flex justify-between text-[10px] text-muted mb-0.5">
                   <span>Sandal</span>
                   <span>0.3%</span>
                 </div>
-                <div className="h-1.5 bg-[#1E2430] rounded-full overflow-hidden">
-                  <div className="h-full bg-[#8A95A3] w-[0.3%]" />
+                <div className="h-1.5 bg-line rounded-full overflow-hidden">
+                  <div className="h-full bg-line w-[0.3%]" />
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>Streamlit UI / 10 Classes</span>
-            <span className="text-white">Validation Acc: 92.4%</span>
+            <span className="text-ink">Validation Acc: 92.4%</span>
           </div>
         </div>
       );
@@ -209,30 +209,30 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "discord":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#5865F2]" />
-              <span className="text-[#8A95A3]">Discord Bot // Presence Dispatcher</span>
+              <span className="text-muted">Discord Bot // Presence Dispatcher</span>
             </div>
             <span className="px-2 py-0.5 bg-[#5865F2]/20 text-[#5865F2] border border-[#5865F2]/30">Online</span>
           </div>
 
-          <div className="bg-[#181D29] border border-[#2B3245] p-3.5 rounded my-auto space-y-2">
+          <div className="bg-mist border border-line p-3.5 rounded my-auto space-y-2">
             <div className="flex items-center gap-2">
-              <span className="w-6 h-6 rounded-full bg-[#5865F2] flex items-center justify-center text-white text-[10px] font-bold">D</span>
-              <span className="text-white font-semibold text-[11px]">AttendanceBot</span>
-              <span className="px-1.5 py-0.2 bg-[#5865F2] text-[9px] text-white rounded font-sans">BOT</span>
-              <span className="text-[10px] text-[#8A95A3]">Today at 09:00 AM</span>
+              <span className="w-6 h-6 rounded-full bg-[#5865F2] flex items-center justify-center text-ink text-[10px] font-bold">D</span>
+              <span className="text-ink font-semibold text-[11px]">AttendanceBot</span>
+              <span className="px-1.5 py-0.2 bg-[#5865F2] text-[9px] text-ink rounded font-sans">BOT</span>
+              <span className="text-[10px] text-muted">Today at 09:00 AM</span>
             </div>
             <div className="pl-8 text-[11px] text-emerald-400">
               ✓ User @mussab executed <code className="text-[#5865F2] bg-[#5865F2]/10 px-1 rounded">/checkin</code>
             </div>
-            <div className="pl-8 text-[10px] text-[#8A95A3]">
+            <div className="pl-8 text-[10px] text-muted">
               Session started: 09:00:15 UTC • Status: Active Shift
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>Python Asyncio Engine</span>
             <span className="text-emerald-400">SQLite Logged</span>
           </div>
@@ -242,30 +242,30 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "figma":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#F24E1E]" />
-              <span className="text-[#8A95A3]">Figma Webhook → Discord Bridge</span>
+              <span className="text-muted">Figma Webhook → Discord Bridge</span>
             </div>
             <span className="px-2 py-0.5 bg-[#F24E1E]/20 text-[#F24E1E] border border-[#F24E1E]/30">Webhook Sync</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3 my-auto">
-            <div className="p-3 bg-[#131824] border border-[#1E2430] rounded">
+            <div className="p-3 bg-mist border border-line rounded">
               <div className="text-[#F24E1E] text-[10px] mb-1 font-semibold">FIGMA EVENT</div>
-              <div className="text-white text-[11px] truncate">Design Token Updated</div>
-              <div className="text-[9px] text-[#8A95A3] mt-1">Node: #Frame-104:18</div>
+              <div className="text-ink text-[11px] truncate">Design Token Updated</div>
+              <div className="text-[9px] text-muted mt-1">Node: #Frame-104:18</div>
             </div>
-            <div className="p-3 bg-[#131824] border border-[#1E2430] rounded">
+            <div className="p-3 bg-mist border border-line rounded">
               <div className="text-[#5865F2] text-[10px] mb-1 font-semibold">DISCORD EMBED</div>
-              <div className="text-white text-[11px] truncate">#design-feed Broadcast</div>
-              <div className="text-[9px] text-[#8A95A3] mt-1">Deep Link Dispatched</div>
+              <div className="text-ink text-[11px] truncate">#design-feed Broadcast</div>
+              <div className="text-[9px] text-muted mt-1">Deep Link Dispatched</div>
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>Figma REST API v2</span>
-            <span className="text-white">Realtime Broadcast</span>
+            <span className="text-ink">Realtime Broadcast</span>
           </div>
         </div>
       );
@@ -273,17 +273,17 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "ai-assistant":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-[#0ACF83]" />
-              <span className="text-[#8A95A3]">Decode Labs // AI Engineering Assistant</span>
+              <span className="text-muted">Decode Labs // AI Engineering Assistant</span>
             </div>
             <span className="px-2 py-0.5 bg-[#0ACF83]/20 text-[#0ACF83] border border-[#0ACF83]/30">LangChain</span>
           </div>
 
-          <div className="space-y-2 my-auto p-3 bg-[#131824] border border-[#1E2430] rounded">
-            <div className="text-[#8A95A3] text-[10px]">$ decode-ai query --task &quot;API Contract Decomposition&quot;</div>
-            <div className="text-white text-[11px]">
+          <div className="space-y-2 my-auto p-3 bg-mist border border-line rounded">
+            <div className="text-muted text-[10px]">$ decode-ai query --task &quot;API Contract Decomposition&quot;</div>
+            <div className="text-ink text-[11px]">
               &gt; Context loaded from repo knowledge base.
             </div>
             <div className="text-emerald-400 text-[10px]">
@@ -291,7 +291,7 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>OpenAI GPT + LangChain Pipeline</span>
             <span className="text-emerald-400">Stream 200 OK</span>
           </div>
@@ -301,39 +301,39 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
     case "web-platform":
       return (
         <div className="relative w-full h-full p-6 flex flex-col justify-between font-mono text-xs select-none">
-          <div className="flex items-center justify-between border-b border-[#1E2430] pb-3">
+          <div className="flex items-center justify-between border-b border-line pb-3">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#FFBE0B]" />
-              <span className="text-[#8A95A3]">NEIKI Foundation // Production Web</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-accent" />
+              <span className="text-muted">NEIKI Foundation // Production Web</span>
             </div>
-            <span className="px-2 py-0.5 bg-[#FFBE0B]/20 text-[#FFBE0B] border border-[#FFBE0B]/30">Live Platform</span>
+            <span className="px-2 py-0.5 bg-accent/20 text-accent border border-accent/30">Live Platform</span>
           </div>
 
           <div className="grid grid-cols-3 gap-2.5 my-auto">
-            <div className="p-2.5 bg-[#131824] border border-[#1E2430] text-center rounded">
-              <div className="text-[#FFBE0B] font-bold text-sm">Supabase</div>
-              <div className="text-[9px] text-[#8A95A3] mt-0.5">PostgreSQL Auth</div>
+            <div className="p-2.5 bg-mist border border-line text-center rounded">
+              <div className="text-accent font-bold text-sm">Supabase</div>
+              <div className="text-[9px] text-muted mt-0.5">PostgreSQL Auth</div>
             </div>
-            <div className="p-2.5 bg-[#131824] border border-[#1E2430] text-center rounded">
-              <div className="text-white font-bold text-sm">Donations</div>
+            <div className="p-2.5 bg-mist border border-line text-center rounded">
+              <div className="text-ink font-bold text-sm">Donations</div>
               <div className="text-[9px] text-emerald-400 mt-0.5">Automated Flow</div>
             </div>
-            <div className="p-2.5 bg-[#131824] border border-[#1E2430] text-center rounded">
-              <div className="text-[#FFBE0B] font-bold text-sm">Galleries</div>
-              <div className="text-[9px] text-[#8A95A3] mt-0.5">Dynamic CMS</div>
+            <div className="p-2.5 bg-mist border border-line text-center rounded">
+              <div className="text-accent font-bold text-sm">Galleries</div>
+              <div className="text-[9px] text-muted mt-0.5">Dynamic CMS</div>
             </div>
           </div>
 
-          <div className="text-[10px] text-[#8A95A3] flex justify-between pt-2 border-t border-[#1E2430]">
+          <div className="text-[10px] text-muted flex justify-between pt-2 border-t border-line">
             <span>Next.js 14 + Tailwind CSS</span>
-            <span className="text-white">Full Stack Shipped</span>
+            <span className="text-ink">Full Stack Shipped</span>
           </div>
         </div>
       );
 
     default:
       return (
-        <div className="w-full h-full flex items-center justify-center font-mono text-xs text-[#8A95A3]">
+        <div className="w-full h-full flex items-center justify-center font-mono text-xs text-muted">
           {title}
         </div>
       );
@@ -342,23 +342,23 @@ function ProjectVisual({ type, title }: { type: ProjectItem["visualType"]; title
 
 export function FeaturedWork() {
   return (
-    <section className="py-24 lg:py-32 border-b border-[#1E2430]">
+    <section className="py-24 lg:py-32 border-b border-line">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
           <div className="max-w-xl">
             <SectionLabel number="03">Selected Work</SectionLabel>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-white">
-              Real projects,{" "}
-              <span className="text-[#FFBE0B]">proven implementations.</span>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink">
+              Client work,{" "}
+              <span className="text-accent">and what we build to learn.</span>
             </h2>
-            <p className="text-[#8A95A3] text-base leading-relaxed mt-4">
-              A curated selection of shipped systems, AI pipelines, and community automation tools built and open-sourced by our team.
+            <p className="text-muted text-base leading-relaxed mt-4">
+              Delivered client systems shown first, with the problem and the measured result. Below them, open-source engineering from Nimbrix Labs — built in the open, free to inspect.
             </p>
           </div>
           <Link
             href="/work"
-            className="group inline-flex items-center gap-2 font-mono text-sm text-[#FFBE0B] hover:text-[#FB5607] transition-colors flex-shrink-0"
+            className="group inline-flex items-center gap-2 font-mono text-sm text-accent hover:text-cat-amber transition-colors flex-shrink-0"
           >
             View all projects &amp; case studies
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -370,7 +370,7 @@ export function FeaturedWork() {
           {projects.map((p, i) => (
             <div
               key={p.slug}
-              className="group block border border-[#1E2430] hover:border-[#2B3245] transition-all duration-300 bg-[#0A0D14] overflow-hidden"
+              className="group block border border-line hover:border-line transition-all duration-300 bg-paper overflow-hidden"
               style={{
                 "--accent": p.accentColor,
               } as React.CSSProperties}
@@ -378,8 +378,8 @@ export function FeaturedWork() {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                 {/* Visual / Screenshot / Mockup panel */}
                 <div
-                  className={`lg:col-span-6 min-h-[260px] lg:min-h-[320px] relative overflow-hidden bg-[#0D1018] border-b lg:border-b-0 border-[#1E2430] ${
-                    i % 2 === 1 ? "lg:order-2 lg:border-l border-[#1E2430]" : "lg:border-r border-[#1E2430]"
+                  className={`lg:col-span-6 min-h-[260px] lg:min-h-[320px] relative overflow-hidden bg-mist border-b lg:border-b-0 border-line ${
+                    i % 2 === 1 ? "lg:order-2 lg:border-l border-line" : "lg:border-r border-line"
                   }`}
                 >
                   {/* Subtle background mesh */}
@@ -418,30 +418,30 @@ export function FeaturedWork() {
                       >
                         {p.number}
                       </span>
-                      <span className="font-mono text-xs text-[#8A95A3] uppercase tracking-widest">
+                      <span className="font-mono text-xs text-muted uppercase tracking-widest">
                         {p.industry}
                       </span>
-                      <span className="w-1 h-1 rounded-full bg-[#1E2430]" />
-                      <span className="font-mono text-xs text-[#8A95A3] uppercase tracking-widest">
+                      <span className="w-1 h-1 rounded-full bg-line" />
+                      <span className="font-mono text-xs text-muted uppercase tracking-widest">
                         {p.category}
                       </span>
                     </div>
 
-                    <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-white mb-3 group-hover:text-white transition-colors leading-tight">
+                    <h3 className="font-heading text-2xl lg:text-3xl font-semibold text-ink mb-3 group-hover:text-ink transition-colors leading-tight">
                       {p.title}
                     </h3>
 
-                    <p className="text-[#8A95A3] text-sm leading-relaxed mb-6">
+                    <p className="text-muted text-sm leading-relaxed mb-6">
                       {p.description}
                     </p>
 
                     {/* Challenge → Outcome */}
-                    <div className="space-y-2.5 mb-6 p-4 bg-[#0D1018] border border-[#1E2430]/80 rounded">
+                    <div className="space-y-2.5 mb-6 p-4 bg-mist border border-line/80 rounded">
                       <div className="flex gap-3">
-                        <span className="font-mono text-[11px] text-[#8A95A3]/50 uppercase tracking-wider w-18 flex-shrink-0 pt-0.5">
+                        <span className="font-mono text-[11px] text-muted/50 uppercase tracking-wider w-18 flex-shrink-0 pt-0.5">
                           Problem
                         </span>
-                        <p className="font-mono text-xs text-[#8A95A3]">{p.challenge}</p>
+                        <p className="font-mono text-xs text-muted">{p.challenge}</p>
                       </div>
                       <div className="flex gap-3">
                         <span
@@ -450,13 +450,13 @@ export function FeaturedWork() {
                         >
                           Result
                         </span>
-                        <p className="font-mono text-xs text-white/90">{p.outcome}</p>
+                        <p className="font-mono text-xs text-ink/90">{p.outcome}</p>
                       </div>
                     </div>
 
                     {/* Tech stack with logos */}
                     <div className="mb-8">
-                      <div className="font-mono text-[10px] uppercase tracking-wider text-[#8A95A3]/60 mb-2">
+                      <div className="font-mono text-[10px] uppercase tracking-wider text-muted/60 mb-2">
                         Technologies Used:
                       </div>
                       <div className="flex flex-wrap gap-2">
@@ -468,10 +468,10 @@ export function FeaturedWork() {
                   </div>
 
                   {/* Actions: View Case Study & GitHub Repo */}
-                  <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-[#1E2430]">
+                  <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-line">
                     <Link
                       href={`/work/${p.slug}`}
-                      className="inline-flex items-center gap-2 font-mono text-xs font-semibold px-4 py-2 bg-[#FFBE0B] text-[#0A0D14] hover:bg-[#FB5607] hover:text-white transition-colors"
+                      className="inline-flex items-center gap-2 font-mono text-xs font-semibold px-4 py-2 bg-accent text-white hover:bg-cat-amber hover:text-white transition-colors"
                     >
                       View Case Study
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -481,11 +481,11 @@ export function FeaturedWork() {
                       href={p.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 font-mono text-xs border border-[#1E2430] px-4 py-2 text-white hover:border-[#FFBE0B] hover:text-[#FFBE0B] transition-colors"
+                      className="inline-flex items-center gap-2 font-mono text-xs border border-line px-4 py-2 text-ink hover:border-accent hover:text-accent transition-colors"
                     >
-                      <GitBranch className="w-3.5 h-3.5 text-[#8A95A3]" />
+                      <GitBranch className="w-3.5 h-3.5 text-muted" />
                       GitHub Repo
-                      <ExternalLink className="w-3 h-3 text-[#8A95A3]" />
+                      <ExternalLink className="w-3 h-3 text-muted" />
                     </a>
                   </div>
                 </div>

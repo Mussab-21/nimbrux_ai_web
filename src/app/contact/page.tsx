@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 import { ContactForm } from "@/components/contact/ContactForm";
 
-export const metadata: Metadata = {
-  title: "Contact — Start a Project",
-  description:
-    "Tell us about your challenge. We'll give you an honest assessment and a clear path forward.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Contact Nimbrix",
+  description: "Tell us what you are trying to build or automate. We reply within one business day with an honest assessment of scope, timeline and whether we are a fit.",
+  path: "/contact",
+});
 
 export default function ContactPage() {
   return <ContactForm />;

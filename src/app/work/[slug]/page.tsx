@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, GitBranch } from "lucide-react";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getCaseStudies, getCaseStudyBySlug } from "@/lib/content";
 import { TechIcon } from "@/components/ui/TechIcons";
+import { buildMetadata, breadcrumbSchema, JsonLd } from "@/lib/seo";
 
 interface Props {
   params: { slug: string };
@@ -16,11 +17,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const result = getCaseStudyBySlug(params.slug);
-  if (!result) return { title: "Case Study" };
-  return {
+  if (!result) return { title: "Not found", robots: { index: false, follow: false } };
+  return buildMetadata({
     title: result.meta.title,
     description: result.meta.summary,
-  };
+    path: `/work/${params.slug}`,
+    type: "article",
+    publishedTime: result.meta.date,
+  });
 }
 
 export default function CaseStudyPage({ params }: Props) {
@@ -30,9 +34,16 @@ export default function CaseStudyPage({ params }: Props) {
   const { meta, content } = result;
 
   return (
-    <div className="bg-[#0A0D14] min-h-screen">
+    <div className="bg-paper min-h-screen">
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Work", path: "/work" },
+          { name: meta.title, path: `/work/${params.slug}` },
+        ])}
+      />
       {/* Hero */}
-      <section className="pt-[120px] pb-24 border-b border-[#1E2430] relative overflow-hidden">
+      <section className="pt-[120px] pb-24 border-b border-line relative overflow-hidden">
         <div
           className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none opacity-[0.07]"
           style={{ backgroundColor: meta.accentColor }}
@@ -43,23 +54,23 @@ export default function CaseStudyPage({ params }: Props) {
           {/* Back link */}
           <Link
             href="/work"
-            className="inline-flex items-center gap-2 font-mono text-xs text-[#8A95A3] hover:text-white transition-colors mb-12"
+            className="inline-flex items-center gap-2 font-mono text-xs text-muted hover:text-ink transition-colors mb-12"
           >
             <ArrowLeft className="w-3 h-3" />
             All Case Studies
           </Link>
 
           <div className="flex items-center gap-4 mb-6">
-            <span className="font-mono text-xs text-[#8A95A3] uppercase tracking-widest">{meta.industry}</span>
-            <span className="w-px h-4 bg-[#1E2430]" />
-            <span className="font-mono text-xs text-[#8A95A3] uppercase tracking-widest">{meta.category}</span>
+            <span className="font-mono text-xs text-muted uppercase tracking-widest">{meta.industry}</span>
+            <span className="w-px h-4 bg-line" />
+            <span className="font-mono text-xs text-muted uppercase tracking-widest">{meta.category}</span>
           </div>
 
-          <h1 className="font-heading text-5xl md:text-6xl tracking-tight text-white mb-8 leading-[1.05]">
+          <h1 className="font-heading text-5xl md:text-6xl tracking-tight text-ink mb-8 leading-[1.05]">
             {meta.title}
           </h1>
 
-          <p className="text-[#8A95A3] text-xl leading-relaxed mb-6 max-w-2xl">
+          <p className="text-muted text-xl leading-relaxed mb-6 max-w-2xl">
             {meta.summary}
           </p>
 
@@ -69,31 +80,31 @@ export default function CaseStudyPage({ params }: Props) {
                 href={meta.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 font-mono text-xs border border-[#1E2430] px-4 py-2.5 text-white hover:border-[#FFBE0B] hover:text-[#FFBE0B] transition-colors bg-[#0D1018]"
+                className="inline-flex items-center gap-2 font-mono text-xs border border-line px-4 py-2.5 text-ink hover:border-accent hover:text-accent transition-colors bg-mist"
               >
-                <GitBranch className="w-3.5 h-3.5 text-[#8A95A3]" />
+                <GitBranch className="w-3.5 h-3.5 text-muted" />
                 View Repository on GitHub
-                <ExternalLink className="w-3.5 h-3.5 text-[#8A95A3]" />
+                <ExternalLink className="w-3.5 h-3.5 text-muted" />
               </a>
             </div>
           )}
 
           {/* Meta grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-[#1E2430]">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-line">
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3]/50 mb-1">Client</div>
-              <div className="font-mono text-sm text-white">{meta.client}</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-muted/50 mb-1">Client</div>
+              <div className="font-mono text-sm text-ink">{meta.client}</div>
             </div>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3]/50 mb-1">Industry</div>
-              <div className="font-mono text-sm text-white">{meta.industry}</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-muted/50 mb-1">Industry</div>
+              <div className="font-mono text-sm text-ink">{meta.industry}</div>
             </div>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3]/50 mb-1">Outcome</div>
-              <div className="font-mono text-xs text-[#8A95A3] leading-relaxed">{meta.outcome.slice(0, 80)}…</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-muted/50 mb-1">Outcome</div>
+              <div className="font-mono text-xs text-muted leading-relaxed">{meta.outcome.slice(0, 80)}…</div>
             </div>
             <div>
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3]/50 mb-2">Tech</div>
+              <div className="font-mono text-[10px] uppercase tracking-widest text-muted/50 mb-2">Tech</div>
               <div className="flex flex-wrap gap-1.5">
                 {meta.tech.map((t) => (
                   <TechIcon key={t} name={t} />
@@ -105,9 +116,9 @@ export default function CaseStudyPage({ params }: Props) {
       </section>
 
       {/* MDX Content */}
-      <section className="py-24 border-b border-[#1E2430]">
+      <section className="py-24 border-b border-line">
         <div className="max-w-3xl mx-auto px-6">
-          <div className="prose prose-invert prose-headings:font-heading prose-headings:tracking-tight prose-p:text-[#8A95A3] prose-p:leading-relaxed prose-li:text-[#8A95A3] prose-h2:text-3xl prose-h2:text-white prose-h3:text-xl prose-h3:text-white prose-hr:border-[#1E2430] prose-strong:text-white max-w-none">
+          <div className="prose prose-invert prose-headings:font-heading prose-headings:tracking-tight prose-p:text-muted prose-p:leading-relaxed prose-li:text-muted prose-h2:text-3xl prose-h2:text-ink prose-h3:text-xl prose-h3:text-ink prose-hr:border-line prose-strong:text-ink max-w-none">
             <MDXRemote source={content} />
           </div>
         </div>
@@ -117,16 +128,16 @@ export default function CaseStudyPage({ params }: Props) {
       <section className="py-24">
         <div className="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div>
-            <h2 className="font-heading text-3xl md:text-4xl text-white mb-2">
+            <h2 className="font-heading text-3xl md:text-4xl text-ink mb-2">
               Have a similar challenge?
             </h2>
-            <p className="text-[#8A95A3] text-base">
+            <p className="text-muted text-base">
               Tell us what you&apos;re working on. We&apos;ll give you an honest read.
             </p>
           </div>
           <Link
             href="/contact"
-            className="flex-shrink-0 group inline-flex items-center gap-2 px-7 py-4 bg-[#FFBE0B] text-[#0A0D14] font-mono text-sm font-semibold hover:bg-[#FB5607] hover:text-white transition-all duration-300"
+            className="flex-shrink-0 group inline-flex items-center gap-2 px-7 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
           >
             Start a Project
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

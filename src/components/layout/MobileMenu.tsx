@@ -34,7 +34,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
       {/* Backdrop */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-[#0A0D14]/80 backdrop-blur-sm transition-opacity duration-300",
+          "fixed inset-0 z-40 bg-[#FFFFFF]/80 backdrop-blur-sm transition-opacity duration-300",
           isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         onClick={onClose}
@@ -44,7 +44,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
       {/* Drawer */}
       <div
         className={cn(
-          "fixed top-0 right-0 bottom-0 z-50 w-full max-w-sm bg-[#0D1018] border-l border-[#1E2430] flex flex-col transition-transform duration-300 ease-in-out",
+          "fixed top-0 right-0 bottom-0 z-50 w-full max-w-sm bg-[#F4F6F9] border-l border-[#E3E8EF] flex flex-col transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
         role="dialog"
@@ -52,17 +52,17 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
         aria-label="Navigation menu"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 h-[72px] border-b border-[#1E2430]">
+        <div className="flex items-center justify-between px-6 h-[72px] border-b border-line">
           <Link
             href="/"
             onClick={onClose}
-            className="font-heading font-bold text-lg text-white"
+            className="font-heading font-bold text-lg text-ink"
           >
-            Nimbrix<span className="text-[#FFBE0B]">.</span>
+            Nimbrix<span className="text-accent">.</span>
           </Link>
           <button
             onClick={onClose}
-            className="p-2 text-[#8A95A3] hover:text-white transition-colors"
+            className="p-2 text-muted hover:text-ink transition-colors"
             aria-label="Close navigation menu"
           >
             <X className="w-5 h-5" />
@@ -73,7 +73,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
         <nav className="flex-1 overflow-y-auto py-6 px-6 space-y-8">
           {/* Solutions */}
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3] mb-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-muted mb-4">
               Solutions
             </div>
             <div className="space-y-1">
@@ -82,7 +82,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
                   key={s.pillar}
                   href={s.href}
                   onClick={onClose}
-                  className="flex items-center gap-3 p-3 hover:bg-[#1A1F2A] transition-colors group"
+                  className="flex items-center gap-3 p-3 hover:bg-mist transition-colors group"
                 >
                   <span
                     className="w-1 h-8 flex-shrink-0 rounded-full"
@@ -92,8 +92,8 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
                     <div className="font-mono text-xs uppercase tracking-widest mb-0.5" style={{ color: s.color, opacity: 0.7 }}>
                       {s.pillar}
                     </div>
-                    <div className="font-heading font-semibold text-sm text-white">{s.label}</div>
-                    <div className="font-mono text-[11px] text-[#8A95A3]">{s.description}</div>
+                    <div className="font-heading font-semibold text-sm text-ink">{s.label}</div>
+                    <div className="font-mono text-[11px] text-muted">{s.description}</div>
                   </div>
                 </Link>
               ))}
@@ -102,7 +102,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
 
           {/* Other links */}
           <div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-[#8A95A3] mb-4">
+            <div className="font-mono text-[10px] uppercase tracking-widest text-muted mb-4">
               Company
             </div>
             <div className="space-y-1">
@@ -111,7 +111,7 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
                   key={link.href}
                   href={link.href}
                   onClick={onClose}
-                  className="block px-3 py-2.5 font-mono text-sm text-[#8A95A3] hover:text-white transition-colors"
+                  className="block px-3 py-2.5 font-mono text-sm text-muted hover:text-ink transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -121,11 +121,11 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
         </nav>
 
         {/* Footer CTA */}
-        <div className="px-6 py-6 border-t border-[#1E2430]">
+        <div className="px-6 py-6 border-t border-line">
           <Link
             href="/contact"
             onClick={onClose}
-            className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-[#FFBE0B] text-[#0A0D14] font-mono text-sm font-semibold hover:bg-[#FB5607] hover:text-white transition-all duration-300 group"
+            className="flex items-center justify-center gap-2 w-full px-6 py-3.5 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300 group"
           >
             Start a Project
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

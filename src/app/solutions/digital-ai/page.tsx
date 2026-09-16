@@ -1,17 +1,18 @@
 import { PillarPage } from "@/components/solutions/PillarPage";
 import type { Metadata } from "next";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Digital & AI Solutions",
-  description:
-    "Custom AI agents, LLM integrations, enterprise software, data pipelines, and web/mobile products. Nimbrix Digital & AI pillar.",
-};
+export const metadata: Metadata = buildMetadata({
+  title: "Digital and AI services",
+  description: "AI automation, document intelligence, custom software and data analytics — designed around a measurable business outcome, not a technology checklist.",
+  path: "/solutions/digital-ai",
+});
 
 export default function DigitalAIPage() {
   return (
     <PillarPage
       pillar="01"
-      color="#8338EC"
+      color="#4338CA"
       label="Digital & AI"
       tagline="Automate. Augment. Accelerate."
       heroHeading="Intelligent systems that work inside your business."
