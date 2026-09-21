@@ -4,6 +4,8 @@ import { siteConfig } from "@/lib/seo";
 export const alt = "Nimbrix — AI systems and software engineering";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+export const runtime = "edge";
+
 
 export default async function OgImage() {
   return new ImageResponse(

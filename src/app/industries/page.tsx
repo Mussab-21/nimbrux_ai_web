@@ -232,7 +232,8 @@ export default function IndustriesPage() {
             {industries.map((ind, i) => (
               <div
                 key={ind.id}
-                className="border border-line overflow-hidden group hover:border-line transition-colors"
+                id={ind.id}
+                className="scroll-mt-24 border border-line overflow-hidden group hover:border-line transition-colors"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                   {/* Icon + label */}

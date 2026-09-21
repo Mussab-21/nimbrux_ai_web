@@ -4,7 +4,7 @@ import { Hero } from "@/components/home/Hero";
 import { ProblemSection } from "@/components/home/ProblemSection";
 import { CapabilityMap } from "@/components/home/CapabilityMap";
 import { FeaturedWork } from "@/components/home/FeaturedWork";
-import { IndustriesStrip } from "@/components/home/IndustriesStrip";
+import { WhoWeServe } from "@/components/home/WhoWeServe";
 import { HowWeWork } from "@/components/home/HowWeWork";
 import { WhyNimbrix } from "@/components/home/WhyNimbrix";
 import { FinalCTA } from "@/components/home/FinalCTA";
@@ -22,7 +22,7 @@ export default function HomePage() {
       <ProblemSection />
       <CapabilityMap />
       <FeaturedWork />
-      <IndustriesStrip />
+      <WhoWeServe />
       <HowWeWork />
       <WhyNimbrix />
       <FinalCTA />

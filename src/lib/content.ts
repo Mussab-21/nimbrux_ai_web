@@ -74,3 +74,19 @@ export function getInsightBySlug(slug: string): { meta: InsightMeta; content: st
   const { data, content } = matter(raw);
   return { meta: { slug, ...(data as Omit<InsightMeta, "slug">) }, content };
 }
+
+export interface TargetAudience {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  color?: string;
+}
+
+export function getWhoWeServe(): TargetAudience[] {
+  const filePath = path.join(contentDir, "who-we-serve.json");
+  if (!fs.existsSync(filePath)) return [];
+  const raw = fs.readFileSync(filePath, "utf-8");
+  return JSON.parse(raw);
+}
+

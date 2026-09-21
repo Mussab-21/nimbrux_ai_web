@@ -1,0 +1,23 @@
+[
+  {
+    "id": "startups",
+    "icon": "Rocket",
+    "title": "Startups & Growing Businesses",
+    "description": "Launch faster with MVPs, workflow automation and AI features, without building a full engineering team first.",
+    "color": "#4338CA"
+  },
+  {
+    "id": "enterprises",
+    "icon": "Building2",
+    "title": "Established Teams & Companies",
+    "description": "Connect siloed tools, modernise legacy processes and add AI to existing operations, with documented, maintainable engineering.",
+    "color": "#0B57D0"
+  },
+  {
+    "id": "nonprofits",
+    "icon": "HeartHandshake",
+    "title": "Non-profits & Public-Sector Organisations",
+    "description": "Digital platforms, donor and data systems that give small teams a much bigger reach.",
+    "color": "#0F766E"
+  }
+]
