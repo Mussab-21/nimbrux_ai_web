@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
 import { SolutionsHero } from "@/components/solutions/SolutionsHero";
 import { ServicesShowcase } from "@/components/solutions/ServicesShowcase";
+import { ServiceFinder } from "@/components/solutions/ServiceFinder";
+import { EngagementTimeline } from "@/components/solutions/EngagementTimeline";
+import { SolutionsCTA } from "@/components/solutions/SolutionsCTA";
 
 export const metadata: Metadata = buildMetadata({
   title: "Our Services — Nimbrix",
@@ -17,6 +20,16 @@ export default function SolutionsPage() {
 
       {/* Sticky Split Storytelling Showcase */}
       <ServicesShowcase />
+
+      {/* Interactive Starting Point Mini-Finder */}
+      <ServiceFinder />
+
+      {/* 4-Step Engagement Timeline */}
+      <EngagementTimeline />
+
+      {/* High-Impact Solutions CTA */}
+      <SolutionsCTA />
     </div>
   );
 }
+
