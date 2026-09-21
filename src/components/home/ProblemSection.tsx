@@ -1,93 +1,259 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { ArrowRight } from "lucide-react";
+import { FadeUp } from "@/components/motion/FadeUp";
 
 const problems = [
   {
     before: "Manual Work",
+    pain: "Your team wastes hours on repetitive tasks that never end.",
     after: "Automated Workflows",
-    description:
-      "Repetitive processes consuming your team's time get replaced with intelligent automation that works 24/7.",
+    solution: "Intelligent automation that runs 24/7, freeing your team for real work.",
     color: "#4338CA",
-    icon: "→",
+    IconBefore: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <rect x="4" y="8" width="32" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <rect x="4" y="18" width="24" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <rect x="4" y="28" width="28" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      </svg>
+    ),
+    IconAfter: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <rect x="4" y="8" width="32" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <polyline points="8,11 12,15 20,7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="4" y="18" width="24" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" />
+        <polyline points="8,21 12,25 20,17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <rect x="4" y="28" width="28" height="6" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      </svg>
+    ),
   },
   {
     before: "Fragmented Systems",
+    pain: "Your tools don't talk to each other. Data lives in silos.",
     after: "Connected Intelligence",
-    description:
-      "Disconnected tools and siloed data become unified systems that share information in real-time.",
+    solution: "Unified systems sharing information in real-time across your organisation.",
     color: "#0B57D0",
-    icon: "→",
+    IconBefore: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <circle cx="10" cy="10" r="5" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <circle cx="30" cy="10" r="5" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <circle cx="10" cy="30" r="5" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <circle cx="30" cy="30" r="5" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      </svg>
+    ),
+    IconAfter: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <circle cx="10" cy="10" r="5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="30" cy="10" r="5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="10" cy="30" r="5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="30" cy="30" r="5" stroke="currentColor" strokeWidth="1.5" />
+        <line x1="15" y1="10" x2="25" y2="10" stroke="currentColor" strokeWidth="1.5" />
+        <line x1="10" y1="15" x2="10" y2="25" stroke="currentColor" strokeWidth="1.5" />
+        <line x1="30" y1="15" x2="30" y2="25" stroke="currentColor" strokeWidth="1.5" />
+        <line x1="15" y1="30" x2="25" y2="30" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="20" cy="20" r="4" stroke="currentColor" strokeWidth="1.5" />
+      </svg>
+    ),
   },
   {
     before: "Outdated Technology",
+    pain: "Legacy systems that slow you down and block growth.",
     after: "Modern Infrastructure",
-    description:
-      "Legacy systems holding back your growth get modernized with scalable cloud architecture.",
+    solution: "Scalable cloud architecture that grows with your business.",
     color: "#B45309",
-    icon: "→",
+    IconBefore: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <rect x="8" y="8" width="24" height="18" rx="2" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <rect x="14" y="26" width="12" height="4" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+        <line x1="10" y1="30" x2="30" y2="30" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
+      </svg>
+    ),
+    IconAfter: () => (
+      <svg viewBox="0 0 40 40" className="w-8 h-8" fill="none" aria-hidden>
+        <path d="M10 26 Q10 16 20 14 Q30 12 32 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M8 26 Q6 22 10 20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <ellipse cx="22" cy="26" rx="14" ry="5" stroke="currentColor" strokeWidth="1.5" />
+        <polyline points="18,24 22,20 26,24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
   },
 ];
 
+interface ProblemCardProps {
+  p: typeof problems[0];
+  index: number;
+  reduced: boolean | null;
+}
+
+function ProblemCard({ p, index, reduced }: ProblemCardProps) {
+  const delay = index * 0.12;
+
+  if (reduced) {
+    return (
+      <div className="bg-paper p-8 lg:p-10">
+        {/* Before */}
+        <div className="flex items-center gap-3 mb-4">
+          <div className="text-muted" style={{ color: p.color }}>
+            <p.IconAfter />
+          </div>
+          <div
+            className="font-mono text-xs text-muted uppercase tracking-widest px-2.5 py-1 border border-line line-through opacity-50"
+          >
+            {p.before}
+          </div>
+        </div>
+
+        <p className="text-muted text-sm mb-6 italic">{p.pain}</p>
+
+        <div className="h-px mb-6" style={{ backgroundColor: p.color, opacity: 0.3 }} />
+
+        <div className="font-heading text-xl font-semibold mb-3" style={{ color: p.color }}>
+          {p.after}
+        </div>
+        <p className="text-muted text-sm leading-relaxed">{p.solution}</p>
+      </div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="bg-paper p-8 lg:p-10 group relative overflow-hidden cursor-default"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
+      whileHover={{ y: -4, backgroundColor: "var(--mist)" }}
+    >
+      {/* Gradient border sweep on hover */}
+      <motion.div
+        className="absolute inset-x-0 bottom-0 h-px"
+        style={{ backgroundColor: p.color }}
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      />
+
+      {/* Icon */}
+      <div className="flex items-center gap-3 mb-4">
+        <motion.div
+          className="text-muted transition-opacity"
+          style={{ color: p.color }}
+          initial={{ opacity: 0.4 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: delay + 0.3 }}
+          aria-hidden
+        >
+          <p.IconAfter />
+        </motion.div>
+
+        {/* Strikethrough "before" label */}
+        <div className="relative font-mono text-xs text-muted uppercase tracking-widest px-2.5 py-1 border border-line">
+          {p.before}
+          {/* Animated strikethrough line */}
+          <motion.div
+            className="absolute left-0 top-1/2 -translate-y-1/2 h-px origin-left"
+            style={{ backgroundColor: p.color }}
+            initial={{ scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: delay + 0.4, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </div>
+      </div>
+
+      {/* Pain line */}
+      <motion.p
+        className="text-muted text-sm mb-6 italic"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.4, delay: delay + 0.2 }}
+      >
+        {p.pain}
+      </motion.p>
+
+      {/* Animated arrow line */}
+      <div className="flex items-center gap-3 mb-6" style={{ color: p.color }}>
+        <svg className="flex-1 h-px overflow-visible" aria-hidden>
+          <motion.line
+            x1="0" y1="0.5" x2="100%" y2="0.5"
+            stroke={p.color}
+            strokeWidth="1"
+            strokeDasharray="1 0"
+            initial={{ pathLength: 0, opacity: 0.4 }}
+            whileInView={{ pathLength: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: delay + 0.5, ease: [0.22, 1, 0.36, 1] }}
+          />
+        </svg>
+        <motion.svg
+          viewBox="0 0 16 16"
+          className="w-4 h-4 flex-shrink-0"
+          fill="none"
+          stroke={p.color}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ x: -4, opacity: 0 }}
+          whileInView={{ x: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: delay + 0.6 }}
+          whileHover={{ x: 3 }}
+        >
+          <line x1="2" y1="8" x2="14" y2="8" />
+          <polyline points="10,4 14,8 10,12" />
+        </motion.svg>
+      </div>
+
+      {/* After — solution fades up */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: delay + 0.7, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="font-heading text-xl font-semibold mb-3" style={{ color: p.color }}>
+          {p.after}
+        </div>
+        <p className="text-muted text-sm leading-relaxed">{p.solution}</p>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 export function ProblemSection() {
+  const reduced = useReducedMotion();
+
   return (
     <section className="py-24 lg:py-32 border-b border-line bg-mist">
       <div className="max-w-7xl mx-auto px-6">
         <div className="max-w-2xl mb-16">
-          <SectionLabel number="01">The Problem</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-6">
-            Technology shouldn&apos;t create{" "}
-            <span className="text-muted">more complexity.</span>
-          </h2>
-          <p className="text-muted text-lg leading-relaxed">
-            Most businesses are drowning in fragmented tools, manual processes, and systems that don&apos;t talk to each other. We engineer the way out.
-          </p>
+          <FadeUp>
+            <SectionLabel number="01">The Problem</SectionLabel>
+          </FadeUp>
+          <FadeUp delay={0.08}>
+            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-4">
+              Technology shouldn&apos;t create{" "}
+              <span className="text-muted">more complexity.</span>
+            </h2>
+            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
+              <span>The problem</span>
+              <span className="text-cat-indigo">→</span>
+              <span>the Nimbrix way</span>
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.16}>
+            <p className="text-muted text-lg leading-relaxed">
+              Most businesses are drowning in fragmented tools, manual processes, and systems that don&apos;t talk to each other. We engineer the way out.
+            </p>
+          </FadeUp>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line">
-          {problems.map((p) => (
-            <div
-              key={p.before}
-              className="bg-paper p-8 lg:p-10 group hover:bg-mist transition-colors"
-            >
-              {/* Before */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="font-mono text-xs text-muted uppercase tracking-widest px-2.5 py-1 border border-line line-through opacity-60">
-                  {p.before}
-                </div>
-              </div>
-
-              {/* Arrow */}
-              <div
-                className="flex items-center gap-3 mb-6"
-                style={{ color: p.color }}
-              >
-                <div
-                  className="h-px flex-1 opacity-40"
-                  style={{ backgroundColor: p.color }}
-                />
-                <ArrowRight className="w-5 h-5 flex-shrink-0" />
-              </div>
-
-              {/* After */}
-              <div
-                className="font-heading text-xl font-semibold mb-4"
-                style={{ color: p.color }}
-              >
-                {p.after}
-              </div>
-
-              <p className="text-muted text-sm leading-relaxed">
-                {p.description}
-              </p>
-
-              {/* Bottom accent */}
-              <div
-                className="mt-8 h-px opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ backgroundColor: p.color }}
-              />
-            </div>
+          {problems.map((p, i) => (
+            <ProblemCard key={p.before} p={p} index={i} reduced={reduced} />
           ))}
         </div>
       </div>

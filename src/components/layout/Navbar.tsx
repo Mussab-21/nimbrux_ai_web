@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, Menu, ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { MobileMenu } from "./MobileMenu";
 
@@ -65,8 +66,12 @@ export function Navbar() {
   const megaRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Scroll progress for the thin top bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
+
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -85,17 +90,26 @@ export function Navbar() {
     timerRef.current = setTimeout(() => setMegaOpen(false), 120);
   };
 
+  const isScrolledOrOpen = scrolled || megaOpen;
+
   return (
     <>
+      {/* Scroll progress bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-[60] h-[2px] bg-accent origin-left"
+        style={{ scaleX }}
+        aria-hidden
+      />
+
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-          scrolled || megaOpen
-            ? "bg-[#FFFFFF]/95 backdrop-blur-md border-b border-[#E3E8EF]"
+          isScrolledOrOpen
+            ? "bg-paper/95 backdrop-blur-md border-b border-line shadow-elev-1"
             : "bg-transparent"
         )}
       >
-        <div className="max-w-7xl mx-auto px-6 h-18 flex items-center justify-between" style={{ height: "72px" }}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between" style={{ height: "72px" }}>
           {/* Logo */}
           <Link
             href="/"
@@ -116,109 +130,106 @@ export function Navbar() {
               <button
                 className={cn(
                   "flex items-center gap-1.5 px-4 py-2 font-mono text-sm transition-colors rounded-sm",
-                  megaOpen ? "text-white" : "text-[#4B5768] hover:text-white"
+                  isScrolledOrOpen
+                    ? megaOpen ? "text-accent" : "text-muted hover:text-ink"
+                    : megaOpen ? "text-white" : "text-muted hover:text-ink"
                 )}
                 aria-expanded={megaOpen}
                 aria-haspopup="true"
               >
                 Solutions
-                <ChevronDown
-                  className={cn(
-                    "w-3.5 h-3.5 transition-transform duration-200",
-                    megaOpen && "rotate-180"
-                  )}
-                />
+                <motion.span
+                  animate={{ rotate: megaOpen ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                  style={{ display: "flex" }}
+                >
+                  <ChevronDown className="w-3.5 h-3.5" />
+                </motion.span>
               </button>
 
-              {/* Mega menu panel */}
-              <div
-                className={cn(
-                  "absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[760px] bg-[#F4F6F9] border border-[#E3E8EF] shadow-2xl transition-all duration-200 origin-top",
-                  megaOpen ? "opacity-100 scale-y-100 pointer-events-auto" : "opacity-0 scale-y-95 pointer-events-none"
-                )}
-                onMouseEnter={openMega}
-                onMouseLeave={closeMega}
-                role="menu"
-              >
-                {/* Top bar */}
-                <div className="px-8 py-4 border-b border-line flex items-center justify-between">
-                  <span className="font-mono text-xs text-muted uppercase tracking-widest">Our Solutions</span>
-                  <Link
-                    href="/solutions"
-                    className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
+              {/* Animated mega menu panel */}
+              <AnimatePresence>
+                {megaOpen && (
+                  <motion.div
+                    key="mega"
+                    initial={{ opacity: 0, y: -8, scaleY: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                    exit={{ opacity: 0, y: -8, scaleY: 0.96 }}
+                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    style={{ transformOrigin: "top center" }}
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[760px] bg-mist border border-line shadow-elev-3"
+                    onMouseEnter={openMega}
+                    onMouseLeave={closeMega}
+                    role="menu"
                   >
-                    View all <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-
-                {/* Pillar grid */}
-                <div className="grid grid-cols-5 divide-x divide-line p-2">
-                  {solutions.map((s) => (
-                    <Link
-                      key={s.pillar}
-                      href={s.href}
-                      role="menuitem"
-                      className="group p-5 hover:bg-mist transition-colors flex flex-col gap-3"
-                    >
-                      {/* Pillar number */}
-                      <span
-                        className="font-mono text-[10px] uppercase tracking-widest opacity-50"
-                        style={{ color: s.color }}
+                    {/* Top bar */}
+                    <div className="px-8 py-4 border-b border-line flex items-center justify-between">
+                      <span className="font-mono text-xs text-muted uppercase tracking-widest">Our Solutions</span>
+                      <Link
+                        href="/solutions"
+                        className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
                       >
-                        {s.pillar}
-                      </span>
+                        View all <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
 
-                      {/* Label */}
-                      <span
-                        className="font-heading font-semibold text-sm text-ink group-hover:opacity-90 transition-opacity leading-tight"
-                      >
-                        {s.label}
-                      </span>
-
-                      {/* Description */}
-                      <span className="font-mono text-[11px] text-muted leading-snug">
-                        {s.description}
-                      </span>
-
-                      {/* Sub-services */}
-                      <ul className="space-y-1.5 mt-1">
-                        {s.services.map((svc) => (
-                          <li
-                            key={svc}
-                            className="font-mono text-[11px] text-muted group-hover:text-muted/80 flex items-center gap-1.5"
+                    {/* Pillar grid */}
+                    <div className="grid grid-cols-5 divide-x divide-line p-2">
+                      {solutions.map((s) => (
+                        <Link
+                          key={s.pillar}
+                          href={s.href}
+                          role="menuitem"
+                          className="group p-5 hover:bg-paper transition-colors flex flex-col gap-3"
+                        >
+                          <span
+                            className="font-mono text-[10px] uppercase tracking-widest opacity-50"
+                            style={{ color: s.color }}
                           >
-                            <span
-                              className="w-1 h-1 rounded-full flex-shrink-0"
-                              style={{ backgroundColor: s.color, opacity: 0.6 }}
-                            />
-                            {svc}
-                          </li>
-                        ))}
-                      </ul>
+                            {s.pillar}
+                          </span>
+                          <span className="font-heading font-semibold text-sm text-ink group-hover:opacity-90 transition-opacity leading-tight">
+                            {s.label}
+                          </span>
+                          <span className="font-mono text-[11px] text-muted leading-snug">
+                            {s.description}
+                          </span>
+                          <ul className="space-y-1.5 mt-1">
+                            {s.services.map((svc) => (
+                              <li
+                                key={svc}
+                                className="font-mono text-[11px] text-muted group-hover:text-muted/80 flex items-center gap-1.5"
+                              >
+                                <span
+                                  className="w-1 h-1 rounded-full flex-shrink-0"
+                                  style={{ backgroundColor: s.color, opacity: 0.6 }}
+                                />
+                                {svc}
+                              </li>
+                            ))}
+                          </ul>
+                          <div
+                            className="h-px mt-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                            style={{ backgroundColor: s.color }}
+                          />
+                        </Link>
+                      ))}
+                    </div>
 
-                      {/* Bottom accent line */}
-                      <div
-                        className="h-px mt-auto opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ backgroundColor: s.color }}
-                      />
-                    </Link>
-                  ))}
-                </div>
-
-                {/* Bottom CTA row */}
-                <div className="px-8 py-4 border-t border-line bg-paper flex items-center gap-6">
-                  <span className="font-mono text-xs text-muted">
-                    Not sure where to start?
-                  </span>
-                  <Link
-                    href="/contact"
-                    className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
-                  >
-                    Talk to us → we&apos;ll map the right solution
-                    <ArrowRight className="w-3 h-3" />
-                  </Link>
-                </div>
-              </div>
+                    {/* Bottom CTA row */}
+                    <div className="px-8 py-4 border-t border-line bg-paper flex items-center gap-6">
+                      <span className="font-mono text-xs text-muted">Not sure where to start?</span>
+                      <Link
+                        href="/contact"
+                        className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
+                      >
+                        Talk to us → we&apos;ll map the right solution
+                        <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             {/* Regular nav links */}
@@ -229,8 +240,10 @@ export function Navbar() {
                 className={cn(
                   "px-4 py-2 font-mono text-sm transition-colors rounded-sm",
                   pathname === link.href
-                    ? "text-white"
-                    : "text-[#4B5768] hover:text-white"
+                    ? "text-accent"
+                    : isScrolledOrOpen
+                    ? "text-muted hover:text-ink"
+                    : "text-muted hover:text-ink"
                 )}
               >
                 {link.label}

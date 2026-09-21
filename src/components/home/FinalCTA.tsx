@@ -1,15 +1,51 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { FadeUp } from "@/components/motion/FadeUp";
+import { StaggerGroup } from "@/components/motion/StaggerGroup";
+import { StaggerItem } from "@/components/motion/StaggerItem";
+
+const trustBadges = [
+  { label: "AI-first engineering" },
+  { label: "Outcome-focused" },
+  { label: "Global delivery" },
+  { label: "Long-term partnership" },
+];
 
 export function FinalCTA() {
+  const reduced = useReducedMotion();
+
   return (
     <section className="py-24 lg:py-40 bg-paper relative overflow-hidden">
-      {/* Background glow */}
-      <div
-        className="absolute top-1/0 left-1/0 -translate-x-1/0 -translate-y-1/0 w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none"
-        style={{ backgroundColor: "rgba(255, 190, 11, 0.04)" }}
-        aria-hidden
-      />
+      {/* Animated drifting blobs */}
+      {!reduced && (
+        <>
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none"
+            style={{ backgroundColor: "rgba(67,56,202,0.05)" }}
+            animate={{
+              x: [0, 40, -20, 0],
+              y: [0, -30, 20, 0],
+            }}
+            transition={{ duration: 18, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
+            aria-hidden
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none"
+            style={{ backgroundColor: "rgba(180,83,9,0.04)" }}
+            animate={{
+              x: [0, -30, 20, 0],
+              y: [0, 40, -20, 0],
+            }}
+            transition={{ duration: 14, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 3 }}
+            aria-hidden
+          />
+        </>
+      )}
+
+      {/* Dot grid */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -20,53 +56,65 @@ export function FinalCTA() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-        <div className="font-mono text-xs uppercase tracking-[0.3em] text-muted mb-8">
-          Let&apos;s build something
-        </div>
+        <FadeUp>
+          <div className="font-mono text-xs uppercase tracking-[0.3em] text-muted mb-8">
+            Let&apos;s build something
+          </div>
+        </FadeUp>
 
-        <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-ink mb-6 leading-[1.05]">
-          Have a problem{" "}
-          <span className="text-accent">worth solving?</span>
-        </h2>
+        <FadeUp delay={0.08}>
+          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-ink mb-6 leading-[1.05]">
+            Have a problem{" "}
+            <span className="text-accent">worth solving?</span>
+          </h2>
+        </FadeUp>
 
-        <p className="text-muted text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto">
-          Tell us what you&apos;re trying to build, automate, or transform. We&apos;ll map the right approach and give you an honest assessment — no pitch decks, no pressure.
-        </p>
+        <FadeUp delay={0.16}>
+          <p className="text-muted text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto">
+            Tell us what you&apos;re trying to build, automate, or transform. We&apos;ll map the right approach and give you an honest assessment — no pitch decks, no pressure.
+          </p>
+        </FadeUp>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link
-            href="/contact"
-            className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
-          >
-            Start a Conversation
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-
-          <Link
-            href="/solutions"
-            className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
-          >
-            Explore our capabilities
-          </Link>
-        </div>
-
-        {/* Bottom trust strip */}
-        <div className="mt-16 pt-12 border-t border-line flex flex-wrap justify-center gap-8">
-          {[
-            { label: "AI-first engineering" },
-            { label: "Outcome-focused" },
-            { label: "Global delivery" },
-            { label: "Long-term partnership" },
-          ].map((item) => (
-            <div
-              key={item.label}
-              className="flex items-center gap-2 font-mono text-xs text-muted uppercase tracking-wider"
+        <FadeUp delay={0.22}>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.div
+              whileHover={!reduced ? { scale: 1.02 } : {}}
+              whileTap={!reduced ? { scale: 0.98 } : {}}
+              transition={{ duration: 0.15 }}
             >
-              <span className="w-1 h-1 rounded-full bg-accent" />
-              {item.label}
-            </div>
+              <Link
+                href="/contact"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
+              >
+                Start a Conversation
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+
+            <Link
+              href="/solutions"
+              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
+            >
+              Explore our capabilities
+            </Link>
+          </div>
+        </FadeUp>
+
+        {/* Staggered trust badges */}
+        <StaggerGroup
+          className="mt-16 pt-12 border-t border-line flex flex-wrap justify-center gap-8"
+          stagger={0.1}
+          delayChildren={0.1}
+        >
+          {trustBadges.map((item) => (
+            <StaggerItem key={item.label}>
+              <div className="flex items-center gap-2 font-mono text-xs text-muted uppercase tracking-wider">
+                <span className="w-1 h-1 rounded-full bg-accent" />
+                {item.label}
+              </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { FadeUp } from "@/components/motion/FadeUp";
+
+const CYCLE_INTERVAL = 5000;
 
 const pillars = [
   {
@@ -16,19 +20,6 @@ const pillars = [
       "Custom AI agents, LLM integrations, enterprise software, data pipelines, and web/mobile products.",
     services: ["AI & Automation", "Enterprise Software", "Data & Analytics", "Web & Mobile"],
     href: "/solutions/digital-ai",
-    bgPattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
-        <defs>
-          <pattern id="ai-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <circle cx="20" cy="20" r="1" fill="#4338CA" />
-            <line x1="20" y1="20" x2="40" y2="0" stroke="#4338CA" strokeWidth="0.5" />
-            <line x1="20" y1="20" x2="0" y2="40" stroke="#4338CA" strokeWidth="0.5" />
-            <line x1="20" y1="20" x2="40" y2="40" stroke="#4338CA" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#ai-pattern)" />
-      </svg>
-    ),
   },
   {
     id: "cloud-security",
@@ -40,17 +31,6 @@ const pillars = [
       "Cloud architecture, DevOps pipelines, enterprise networks, cybersecurity, and infrastructure design.",
     services: ["Cloud & DevOps", "Enterprise Networks", "Cybersecurity", "Infrastructure"],
     href: "/solutions/cloud-security",
-    bgPattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
-        <defs>
-          <pattern id="cloud-pattern" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
-            <rect x="8" y="8" width="32" height="32" rx="4" fill="none" stroke="#0B57D0" strokeWidth="0.5" />
-            <rect x="16" y="16" width="16" height="16" rx="2" fill="none" stroke="#0B57D0" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#cloud-pattern)" />
-      </svg>
-    ),
   },
   {
     id: "managed-technology",
@@ -62,18 +42,6 @@ const pillars = [
       "Application management, managed cloud operations, IT support, and infrastructure monitoring.",
     services: ["Application Management", "Managed Cloud", "IT Helpdesk", "Monitoring"],
     href: "/solutions/managed-technology",
-    bgPattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
-        <defs>
-          <pattern id="managed-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="20" x2="40" y2="20" stroke="#B45309" strokeWidth="0.5" />
-            <line x1="20" y1="0" x2="20" y2="40" stroke="#B45309" strokeWidth="0.5" />
-            <circle cx="20" cy="20" r="3" fill="none" stroke="#B45309" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#managed-pattern)" />
-      </svg>
-    ),
   },
   {
     id: "consulting-advisory",
@@ -85,17 +53,6 @@ const pillars = [
       "AI advisory, IT strategy, technology audits, and digital transformation roadmaps.",
     services: ["AI Advisory", "IT Strategy", "Technology Audits", "Digital Transformation"],
     href: "/solutions/consulting-advisory",
-    bgPattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
-        <defs>
-          <pattern id="advisory-pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-            <line x1="0" y1="0" x2="40" y2="40" stroke="#0F766E" strokeWidth="0.5" />
-            <line x1="40" y1="0" x2="0" y2="40" stroke="#0F766E" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#advisory-pattern)" />
-      </svg>
-    ),
   },
   {
     id: "products",
@@ -107,150 +64,249 @@ const pillars = [
       "Proprietary SaaS products, AI platforms, automation tools, and Nimbrix Labs research projects.",
     services: ["AI Platforms", "SaaS Products", "Automation Tools", "Nimbrix Labs"],
     href: "/solutions/products",
-    bgPattern: (
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]" aria-hidden>
-        <defs>
-          <pattern id="products-pattern" x="0" y="0" width="32" height="32" patternUnits="userSpaceOnUse">
-            <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="none" stroke="#1E40AF" strokeWidth="0.5" />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#products-pattern)" />
-      </svg>
-    ),
   },
 ];
 
 export function CapabilityMap() {
-  const [active, setActive] = useState<string>(pillars[0].id);
+  const reduced = useReducedMotion();
+  const [activeId, setActiveId] = useState(pillars[0].id);
+  const [isHovered, setIsHovered] = useState(false);
+  const [cycleProgress, setCycleProgress] = useState(0);
 
-  const activePillar = pillars.find((p) => p.id === active);
+  const progressStartRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const activeIndex = pillars.findIndex((p) => p.id === activeId);
+  const activePillar = pillars[activeIndex];
+
+  const goToNext = useCallback(() => {
+    setCycleProgress(0);
+    progressStartRef.current = null;
+    setActiveId(pillars[(activeIndex + 1) % pillars.length].id);
+  }, [activeIndex]);
+
+  const selectPillar = (id: string) => {
+    setActiveId(id);
+    setCycleProgress(0);
+    progressStartRef.current = null;
+  };
+
+  // Auto-cycle via RAF
+  useEffect(() => {
+    if (reduced || isHovered) return;
+
+    const tick = (now: number) => {
+      if (progressStartRef.current === null) progressStartRef.current = now;
+      const elapsed = now - progressStartRef.current;
+      const pct = Math.min(elapsed / CYCLE_INTERVAL, 1);
+      setCycleProgress(pct);
+      if (pct >= 1) {
+        goToNext();
+      } else {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [isHovered, activeId, reduced, goToNext]);
+
+  // Keyboard navigation (arrow keys within tablist)
+  const handleKeyDown = (e: React.KeyboardEvent, i: number) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      e.preventDefault();
+      const next = (i + 1) % pillars.length;
+      selectPillar(pillars[next].id);
+      tabRefs.current[next]?.focus();
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prev = (i - 1 + pillars.length) % pillars.length;
+      selectPillar(pillars[prev].id);
+      tabRefs.current[prev]?.focus();
+    }
+  };
 
   return (
     <section className="py-24 lg:py-32 border-b border-line bg-paper">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
-          {/* Left: label + detail panel */}
-          <div className="lg:w-[340px] flex-shrink-0">
+        {/* Section header */}
+        <div className="max-w-2xl mb-12">
+          <FadeUp>
             <SectionLabel number="02">Capability Map</SectionLabel>
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
+          </FadeUp>
+          <FadeUp delay={0.08}>
+            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-4">
               One partner,{" "}
               <span className="text-accent">five pillars.</span>
             </h2>
-            <p className="text-muted text-base leading-relaxed mb-10">
+          </FadeUp>
+          <FadeUp delay={0.16}>
+            <p className="text-muted text-base leading-relaxed">
               Strategy to software to scale. Select a pillar to explore what we build.
             </p>
+          </FadeUp>
+        </div>
 
-            {/* Detail panel */}
-            <div
-              className="p-6 border transition-all duration-300 min-h-[180px]"
-              style={{
-                borderColor: activePillar ? `${activePillar.color}40` : "#E3E8EF",
-                backgroundColor: activePillar ? `${activePillar.color}08` : "transparent",
-              }}
-            >
-              {activePillar ? (
-                <>
-                  <div
-                    className="font-mono text-xs uppercase tracking-widest mb-3"
-                    style={{ color: activePillar.color, opacity: 0.7 }}
-                  >
-                    Pillar {activePillar.pillar}
-                  </div>
-                  <h3
-                    className="font-heading text-xl font-semibold mb-2"
-                    style={{ color: activePillar.color }}
-                  >
-                    {activePillar.label}
-                  </h3>
-                  <p className="font-mono text-xs text-muted italic mb-4">
-                    {activePillar.tagline}
-                  </p>
-                  <p className="text-muted text-sm leading-relaxed mb-4">
-                    {activePillar.description}
-                  </p>
-                  <Link
-                    href={activePillar.href}
-                    className="inline-flex items-center gap-1.5 font-mono text-xs transition-colors group"
-                    style={{ color: activePillar.color }}
-                  >
-                    Explore {activePillar.label}
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                  </Link>
-                </>
-              ) : (
-                <p className="font-mono text-sm text-muted/50 italic">
-                  Select a pillar to explore our capabilities →
-                </p>
-              )}
-            </div>
-          </div>
-
-          {/* Right: pillar cards */}
-          <div className="flex-1 grid grid-cols-1 gap-3">
-            {pillars.map((p) => (
-              <Link
-                key={p.id}
-                href={p.href}
-                className="relative block border overflow-hidden cursor-pointer transition-all duration-300 group focus:outline-none focus-visible:ring-1 focus-visible:ring-accent"
-                style={{
-                  borderColor: active === p.id ? `${p.color}60` : "#E3E8EF",
-                  backgroundColor: active === p.id ? `${p.color}06` : "transparent",
-                }}
-                onMouseEnter={() => setActive(p.id)}
-                onFocus={() => setActive(p.id)}
-                onTouchStart={() => setActive(p.id)}
-              >
-                {/* Background SVG pattern */}
-                {p.bgPattern}
-
-                <div className="relative z-10 flex items-center gap-6 p-5 md:p-6">
-                  {/* Pillar number */}
-                  <div
-                    className="font-mono text-xs uppercase tracking-widest w-8 text-center flex-shrink-0 transition-opacity"
-                    style={{ color: p.color, opacity: active === p.id ? 1 : 0.4 }}
-                  >
-                    {p.pillar}
-                  </div>
-
-                  {/* Color bar */}
-                  <div
-                    className="w-0.5 h-10 flex-shrink-0 transition-all duration-300"
+        <div
+          className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onFocus={() => setIsHovered(true)}
+          onBlur={() => setIsHovered(false)}
+        >
+          {/* Left: pillar tabs */}
+          <div
+            role="tablist"
+            aria-label="Service pillars"
+            aria-orientation="vertical"
+            className="flex flex-col gap-1 lg:w-[280px] flex-shrink-0 w-full"
+          >
+            {pillars.map((p, i) => {
+              const isActive = p.id === activeId;
+              return (
+                <div key={p.id} className="relative">
+                  <button
+                    ref={(el) => { tabRefs.current[i] = el; }}
+                    role="tab"
+                    aria-selected={isActive}
+                    aria-controls={`panel-${p.id}`}
+                    id={`tab-${p.id}`}
+                    className="w-full flex items-center gap-4 p-4 text-left transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
                     style={{
-                      backgroundColor: p.color,
-                      opacity: active === p.id ? 1 : 0.2,
+                      backgroundColor: isActive ? `${p.color}08` : "transparent",
                     }}
-                  />
+                    onClick={() => selectPillar(p.id)}
+                    onKeyDown={(e) => handleKeyDown(e, i)}
+                    tabIndex={isActive ? 0 : -1}
+                  >
+                    {/* Left border indicator */}
+                    <div className="relative w-0.5 h-10 flex-shrink-0 bg-line overflow-hidden">
+                      {isActive && !reduced && (
+                        <motion.div
+                          className="absolute inset-0 origin-top"
+                          style={{ backgroundColor: p.color }}
+                          initial={{ scaleY: 0 }}
+                          animate={{ scaleY: 1 }}
+                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                        />
+                      )}
+                      {isActive && reduced && (
+                        <div className="absolute inset-0" style={{ backgroundColor: p.color }} />
+                      )}
+                    </div>
 
-                  {/* Label */}
-                  <div className="flex-1 flex items-center justify-between gap-4">
-                    <div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span
+                          className="font-mono text-[10px] uppercase tracking-widest"
+                          style={{ color: p.color, opacity: isActive ? 1 : 0.5 }}
+                        >
+                          {p.pillar}
+                        </span>
+                      </div>
                       <h3
-                        className="font-heading text-lg md:text-xl font-semibold transition-colors duration-300"
-                        style={{ color: active === p.id ? p.color : "var(--ink)" }}
+                        className="font-heading text-sm font-semibold transition-colors duration-200"
+                        style={{ color: isActive ? p.color : "var(--ink)" }}
                       >
                         {p.label}
                       </h3>
-                      <div className="hidden md:flex flex-wrap gap-3 mt-1">
-                        {p.services.map((svc) => (
-                          <span
-                            key={svc}
-                            className="font-mono text-[11px] text-muted transition-colors"
-                            style={{ color: active === p.id ? `${p.color}90` : undefined }}
-                          >
-                            {svc}
-                          </span>
-                        ))}
-                      </div>
                     </div>
 
                     <ArrowRight
-                      className="w-4 h-4 flex-shrink-0 transition-all duration-300 opacity-60 md:opacity-0 group-hover:opacity-100 group-hover:translate-x-1"
-                      style={{ color: p.color }}
+                      className="w-4 h-4 flex-shrink-0 transition-all duration-200"
+                      style={{
+                        color: p.color,
+                        opacity: isActive ? 1 : 0,
+                        transform: isActive ? "translateX(0)" : "translateX(-4px)",
+                      }}
                     />
+                  </button>
+
+                  {/* Auto-cycle progress bar */}
+                  {isActive && !reduced && (
+                    <div className="h-px bg-line overflow-hidden mx-4">
+                      <motion.div
+                        className="h-full origin-left"
+                        style={{ backgroundColor: p.color, scaleX: cycleProgress }}
+                        transition={{ duration: 0 }}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Right: animated detail panel */}
+          <div className="flex-1 min-h-[340px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePillar.id}
+                role="tabpanel"
+                id={`panel-${activePillar.id}`}
+                aria-labelledby={`tab-${activePillar.id}`}
+                initial={reduced ? false : { opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={reduced ? undefined : { opacity: 0, x: -20 }}
+                transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                className="p-8 lg:p-10 border h-full"
+                style={{
+                  borderColor: `${activePillar.color}30`,
+                  backgroundColor: `${activePillar.color}05`,
+                }}
+              >
+                {/* Pillar number + tagline */}
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <div
+                      className="font-mono text-xs uppercase tracking-widest mb-2"
+                      style={{ color: activePillar.color, opacity: 0.7 }}
+                    >
+                      Pillar {activePillar.pillar}
+                    </div>
+                    <h3
+                      className="font-heading text-3xl lg:text-4xl font-semibold mb-1"
+                      style={{ color: activePillar.color }}
+                    >
+                      {activePillar.label}
+                    </h3>
+                    <p className="font-mono text-sm text-muted italic">{activePillar.tagline}</p>
                   </div>
                 </div>
-              </Link>
-            ))}
+
+                <p className="text-muted text-base leading-relaxed mb-6">{activePillar.description}</p>
+
+                {/* Sub-service chips */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {activePillar.services.map((svc) => (
+                    <span
+                      key={svc}
+                      className="font-mono text-xs px-3 py-1.5 border"
+                      style={{
+                        borderColor: `${activePillar.color}40`,
+                        backgroundColor: `${activePillar.color}08`,
+                        color: activePillar.color,
+                      }}
+                    >
+                      {svc}
+                    </span>
+                  ))}
+                </div>
+
+                {/* CTA */}
+                <Link
+                  href={activePillar.href}
+                  className="inline-flex items-center gap-2 font-mono text-sm font-semibold group transition-colors"
+                  style={{ color: activePillar.color }}
+                >
+                  Explore {activePillar.label}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </div>
