@@ -130,21 +130,21 @@ export function CapabilityMap() {
   };
 
   return (
-    <section className="py-24 lg:py-32 border-b border-line bg-paper">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="section-shell border-b border-line bg-paper" id="capabilities">
+      <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Section header */}
-        <div className="max-w-2xl mb-12">
+        <div className="max-w-xl mb-6 lg:mb-8">
           <FadeUp>
             <SectionLabel number="02">Capability Map</SectionLabel>
           </FadeUp>
           <FadeUp delay={0.08}>
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)] tracking-tight text-ink mb-2">
               One partner,{" "}
               <span className="text-accent">five pillars.</span>
             </h2>
           </FadeUp>
           <FadeUp delay={0.16}>
-            <p className="text-muted text-base leading-relaxed">
+            <p className="text-muted text-sm sm:text-base leading-relaxed">
               Strategy to software to scale. Select a pillar to explore what we build.
             </p>
           </FadeUp>
@@ -174,7 +174,7 @@ export function CapabilityMap() {
                     aria-selected={isActive}
                     aria-controls={`panel-${p.id}`}
                     id={`tab-${p.id}`}
-                    className="w-full flex items-center gap-4 p-4 text-left transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                    className="w-full flex items-center gap-3 p-3 text-left transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
                     style={{
                       backgroundColor: isActive ? `${p.color}08` : "transparent",
                     }}
@@ -183,7 +183,7 @@ export function CapabilityMap() {
                     tabIndex={isActive ? 0 : -1}
                   >
                     {/* Left border indicator */}
-                    <div className="relative w-0.5 h-10 flex-shrink-0 bg-line overflow-hidden">
+                    <div className="relative w-0.5 h-8 flex-shrink-0 bg-line overflow-hidden">
                       {isActive && !reduced && (
                         <motion.div
                           className="absolute inset-0 origin-top"
@@ -241,7 +241,7 @@ export function CapabilityMap() {
           </div>
 
           {/* Right: animated detail panel */}
-          <div className="flex-1 min-h-[340px]">
+          <div className="flex-1 min-h-[300px]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activePillar.id}
@@ -252,7 +252,7 @@ export function CapabilityMap() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={reduced ? undefined : { opacity: 0, x: -20 }}
                 transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                className="p-8 lg:p-10 border h-full"
+                className="p-6 lg:p-7 border h-full"
                 style={{
                   borderColor: `${activePillar.color}30`,
                   backgroundColor: `${activePillar.color}05`,

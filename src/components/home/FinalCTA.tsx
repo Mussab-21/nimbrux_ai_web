@@ -18,7 +18,7 @@ export function FinalCTA() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="py-24 lg:py-40 bg-paper relative overflow-hidden">
+    <section className="section-shell bg-paper relative overflow-hidden">
       {/* Animated drifting blobs */}
       {!reduced && (
         <>
@@ -55,28 +55,28 @@ export function FinalCTA() {
         aria-hidden
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <div className="relative z-10 max-w-4xl mx-auto px-6 text-center w-full">
         <FadeUp>
-          <div className="font-mono text-xs uppercase tracking-[0.3em] text-muted mb-8">
+          <div className="font-mono text-xs uppercase tracking-[0.25em] text-muted mb-4">
             Let&apos;s build something
           </div>
         </FadeUp>
 
         <FadeUp delay={0.08}>
-          <h2 className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl tracking-tight text-ink mb-6 leading-[1.05]">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(2.1rem,2.8vw,3.25rem)] tracking-tight text-ink mb-4 leading-[1.1]">
             Have a problem{" "}
             <span className="text-accent">worth solving?</span>
           </h2>
         </FadeUp>
 
         <FadeUp delay={0.16}>
-          <p className="text-muted text-lg md:text-xl leading-relaxed mb-12 max-w-2xl mx-auto">
+          <p className="text-muted text-sm sm:text-base lg:text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
             Tell us what you&apos;re trying to build, automate, or transform. We&apos;ll map the right approach and give you an honest assessment — no pitch decks, no pressure.
           </p>
         </FadeUp>
 
         <FadeUp delay={0.22}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <motion.div
               whileHover={!reduced ? { scale: 1.02 } : {}}
               whileTap={!reduced ? { scale: 0.98 } : {}}
@@ -84,7 +84,7 @@ export function FinalCTA() {
             >
               <Link
                 href="/contact"
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
               >
                 Start a Conversation
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -93,7 +93,7 @@ export function FinalCTA() {
 
             <Link
               href="/solutions"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
+              className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
             >
               Explore our capabilities
             </Link>
@@ -102,7 +102,7 @@ export function FinalCTA() {
 
         {/* Staggered trust badges */}
         <StaggerGroup
-          className="mt-16 pt-12 border-t border-line flex flex-wrap justify-center gap-8"
+          className="mt-10 pt-8 border-t border-line flex flex-wrap justify-center gap-6"
           stagger={0.1}
           delayChildren={0.1}
         >

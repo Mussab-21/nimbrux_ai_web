@@ -142,7 +142,7 @@ export function HeroSystemVisual() {
 
   if (reduced) {
     return (
-      <div className="relative h-[440px] lg:h-[520px] border border-line bg-mist overflow-hidden">
+      <div className="relative h-[360px] lg:h-[400px] xl:h-[420px] border border-line bg-mist overflow-hidden">
         <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #4338CA 1px, transparent 0)", backgroundSize: "24px 24px" }} aria-hidden />
         <StaticOutputState />
       </div>
@@ -157,7 +157,7 @@ export function HeroSystemVisual() {
   return (
     <motion.div
       ref={panelRef}
-      className="relative h-[440px] lg:h-[520px] border border-cat-indigo/20 bg-mist overflow-hidden cursor-default"
+      className="relative h-[360px] lg:h-[400px] xl:h-[420px] border border-cat-indigo/20 bg-mist overflow-hidden cursor-default"
       style={{
         rotateX: rotateX as unknown as number,
         rotateY: rotateY as unknown as number,

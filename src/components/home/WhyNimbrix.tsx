@@ -4,8 +4,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Bot, Code2, Target, Handshake, Globe2 } from "lucide-react";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { FadeUp } from "@/components/motion/FadeUp";
-import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { StaggerItem } from "@/components/motion/StaggerItem";
 
 const differentiators = [
   {
@@ -13,72 +11,59 @@ const differentiators = [
     color: "#4338CA",
     Icon: Bot,
     description:
-      "We look for opportunities to eliminate repetitive work in every engagement — not as an add-on, but as a core design principle. If it can be automated intelligently, we'll architect it that way.",
+      "Core architectural principle, not an afterthought. We eliminate repetitive friction in every system we deliver.",
   },
   {
     label: "Engineering-led",
     color: "#0B57D0",
     Icon: Code2,
     description:
-      "Solutions are built around reliable architecture, not quick hacks. Every system we deliver is designed to hold up as you scale — readable code, documented, properly tested.",
+      "Reliable architectures over quick hacks. Clean, documented, thoroughly tested code built to scale securely.",
   },
   {
     label: "Outcome-driven",
     color: "#B45309",
     Icon: Target,
     description:
-      "We measure success in business results: hours saved, processes automated, systems connected, revenue enabled. Not lines of code shipped.",
+      "We measure success in business outcomes: hours saved, systems unified, and measurable operational velocity.",
   },
   {
     label: "Long-term partner",
     color: "#0F766E",
     Icon: Handshake,
     description:
-      "We build, then we can manage and improve. Most clients start with a project and grow into an ongoing relationship — managed services, advisory, new capabilities as your business evolves.",
+      "From MVP sprint to managed operations and advisory — we build, maintain, and evolve alongside your business.",
   },
   {
-    label: "Global delivery, local insight",
+    label: "Global delivery",
     color: "#1E40AF",
     Icon: Globe2,
     description:
-      "Built from Pakistan for international clients. We combine global-standard engineering practices with the cost efficiency and dedication of a team that genuinely wants your project to succeed.",
+      "International engineering standards delivered with the dedication, responsiveness, and efficiency of our team.",
   },
 ];
 
 function DiffCard({
   d,
-  i,
   reduced,
 }: {
   d: (typeof differentiators)[0];
-  i: number;
   reduced: boolean | null;
 }) {
   const cardContent = (
     <>
-      {/* Icon with micro-animation */}
-      <motion.div
-        className="mb-6"
-        style={{ color: d.color }}
-        whileHover={!reduced ? { scale: 1.15, rotate: 5 } : {}}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        aria-hidden
-      >
-        <d.Icon className="w-7 h-7 opacity-70 group-hover:opacity-100 transition-opacity" />
-      </motion.div>
+      <div className="flex items-center gap-3 mb-2" style={{ color: d.color }}>
+        <d.Icon className="w-5 h-5 opacity-80 group-hover:opacity-100 transition-opacity" />
+        <h3 className="font-heading text-base font-semibold text-ink">
+          {d.label}
+        </h3>
+      </div>
 
-      <h3
-        className="font-heading text-xl font-semibold mb-4 transition-colors"
-        style={{ color: d.color }}
-      >
-        {d.label}
-      </h3>
-
-      <p className="text-muted text-sm leading-relaxed">{d.description}</p>
+      <p className="text-muted text-xs sm:text-sm leading-relaxed">{d.description}</p>
 
       {/* Bottom accent */}
       <div
-        className="mt-8 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="mt-4 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{ backgroundColor: d.color }}
       />
     </>
@@ -86,11 +71,7 @@ function DiffCard({
 
   if (reduced) {
     return (
-      <div
-        className={`bg-mist p-8 lg:p-10 group hover:bg-paper transition-colors ${
-          i === 4 ? "md:col-span-2 lg:col-span-1" : ""
-        }`}
-      >
+      <div className="bg-paper p-5 border border-line group hover:border-cat-indigo/30 transition-colors">
         {cardContent}
       </div>
     );
@@ -98,16 +79,13 @@ function DiffCard({
 
   return (
     <motion.div
-      className={`bg-mist p-8 lg:p-10 group transition-colors cursor-default ${
-        i === 4 ? "md:col-span-2 lg:col-span-1" : ""
-      }`}
+      className="bg-paper p-5 border border-line group transition-all cursor-default"
       whileHover={{
-        y: -4,
-        backgroundColor: "var(--paper)",
-        boxShadow:
-          "0 12px 32px -8px rgba(10,15,28,.10), 0 4px 8px -4px rgba(10,15,28,.06)",
+        y: -3,
+        boxShadow: "0 8px 24px -6px rgba(10,15,28,.08)",
+        borderColor: `${d.color}50`,
       }}
-      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
     >
       {cardContent}
     </motion.div>
@@ -118,35 +96,40 @@ export function WhyNimbrix() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="py-24 lg:py-32 border-b border-line bg-mist">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-2xl mb-16">
+    <section className="section-shell border-b border-line bg-mist">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="max-w-2xl mb-6 lg:mb-8">
           <FadeUp>
             <SectionLabel number="06">Why Nimbrix</SectionLabel>
           </FadeUp>
           <FadeUp delay={0.08}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-6">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)] tracking-tight text-ink mb-2">
               Not another{" "}
               <span className="text-accent">software agency.</span>
             </h2>
           </FadeUp>
           <FadeUp delay={0.16}>
-            <p className="text-muted text-lg leading-relaxed">
-              Any shop can build a website. We&apos;re here for the harder problem: helping organisations use technology to genuinely work smarter.
+            <p className="text-muted text-sm sm:text-base leading-relaxed">
+              Any shop can build a website. We help organisations use technology to genuinely work smarter.
             </p>
           </FadeUp>
         </div>
 
-        <StaggerGroup
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-line"
-          stagger={0.08}
-        >
-          {differentiators.map((d, i) => (
-            <StaggerItem key={d.label}>
-              <DiffCard d={d} i={i} reduced={reduced} />
-            </StaggerItem>
-          ))}
-        </StaggerGroup>
+        {/* 3 + 2 Grid */}
+        <div className="space-y-3">
+          {/* Row 1: 3 cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {differentiators.slice(0, 3).map((d) => (
+              <DiffCard key={d.label} d={d} reduced={reduced} />
+            ))}
+          </div>
+          {/* Row 2: 2 cards centered */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-4xl mx-auto">
+            {differentiators.slice(3, 5).map((d) => (
+              <DiffCard key={d.label} d={d} reduced={reduced} />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

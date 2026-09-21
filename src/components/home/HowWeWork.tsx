@@ -4,8 +4,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { FadeUp } from "@/components/motion/FadeUp";
-import { StaggerGroup } from "@/components/motion/StaggerGroup";
-import { StaggerItem } from "@/components/motion/StaggerItem";
 
 const steps = [
   {
@@ -52,131 +50,129 @@ const steps = [
   },
 ];
 
-function AnimatedTimeline() {
+function CompactTimeline() {
   const reduced = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 80%", "end 30%"],
+    offset: ["start 85%", "end 35%"],
   });
 
-  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
-  if (reduced) {
-    return (
-      <div className="space-y-0">
-        {steps.map((step, i) => (
-          <div key={step.number} className="flex gap-6 pb-8 relative">
-            {i < steps.length - 1 && (
-              <div className="absolute left-[19px] top-10 bottom-0 w-px bg-line" aria-hidden />
-            )}
-            <div
-              className="w-10 h-10 rounded-full border flex-shrink-0 flex items-center justify-center font-mono text-xs font-semibold relative z-10 bg-paper"
-              style={{ borderColor: `${step.color}40`, color: step.color }}
-            >
-              {step.number}
-            </div>
-            <div className="flex-1 pt-1.5">
-              <h3 className="font-heading text-lg font-semibold mb-2" style={{ color: step.color }}>
-                {step.label}
-              </h3>
-              <p className="text-muted text-sm leading-relaxed">{step.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-  }
+  const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div className="relative" ref={containerRef}>
-      {/* Static full-height track */}
-      <div
-        className="absolute left-[19px] top-10 w-px bg-line"
-        style={{ height: `calc(100% - 80px)` }}
-        aria-hidden
-      />
-      {/* Animated fill */}
-      <motion.div
-        className="absolute left-[19px] top-10 w-px bg-gradient-to-b from-cat-indigo to-cat-amber origin-top"
-        style={{ height: `calc(100% - 80px)`, scaleY: lineHeight as unknown as number }}
-        aria-hidden
-      />
+    <div className="relative w-full" ref={containerRef}>
+      {/* 4 + 3 Grid */}
+      <div className="space-y-4">
+        {/* Row 1: Steps 01 - 04 */}
+        <div className="relative">
+          {/* Horizontal connecting track across Row 1 */}
+          <div className="hidden lg:block absolute top-5 left-6 right-6 h-px bg-line" aria-hidden />
+          {!reduced && (
+            <motion.div
+              className="hidden lg:block absolute top-5 left-6 right-6 h-px bg-gradient-to-r from-cat-indigo via-cat-blue to-cat-amber origin-left"
+              style={{ scaleX: lineWidth as unknown as number }}
+              aria-hidden
+            />
+          )}
 
-      <StaggerGroup stagger={0.1} delayChildren={0}>
-        {steps.map((step, i) => (
-          <StaggerItem key={step.number}>
-            <div className="flex gap-6 pb-8 relative group">
-              {/* Number circle */}
-              <motion.div
-                className="w-10 h-10 rounded-full border flex-shrink-0 flex items-center justify-center font-mono text-xs font-semibold relative z-10 bg-paper transition-all duration-300"
-                style={{ borderColor: `${step.color}40`, color: step.color }}
-                whileInView={{
-                  borderColor: step.color,
-                  backgroundColor: `${step.color}10`,
-                }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.4, delay: i * 0.08 }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            {steps.slice(0, 4).map((step) => (
+              <div
+                key={step.number}
+                className="bg-mist p-4 border border-line hover:border-cat-indigo/40 transition-colors group relative"
               >
-                {step.number}
-              </motion.div>
-
-              {/* Content */}
-              <div className="flex-1 pt-1.5">
-                <h3
-                  className="font-heading text-lg font-semibold mb-2"
-                  style={{ color: step.color }}
-                >
-                  {step.label}
-                </h3>
-                <p className="text-muted text-sm leading-relaxed">{step.description}</p>
+                <div className="flex items-center gap-3 mb-2">
+                  <div
+                    className="w-8 h-8 rounded-full border flex-shrink-0 flex items-center justify-center font-mono text-xs font-semibold relative z-10 bg-paper transition-all"
+                    style={{ borderColor: `${step.color}60`, color: step.color }}
+                  >
+                    {step.number}
+                  </div>
+                  <h3 className="font-heading text-sm font-semibold" style={{ color: step.color }}>
+                    {step.label}
+                  </h3>
+                </div>
+                <p className="text-muted text-xs leading-relaxed line-clamp-3">{step.description}</p>
               </div>
-            </div>
-          </StaggerItem>
-        ))}
-      </StaggerGroup>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2: Steps 05 - 07 */}
+        <div className="relative">
+          {/* Horizontal connecting track across Row 2 */}
+          <div className="hidden lg:block absolute top-5 left-6 right-6 h-px bg-line" aria-hidden />
+          {!reduced && (
+            <motion.div
+              className="hidden lg:block absolute top-5 left-6 right-6 h-px bg-gradient-to-r from-cat-teal via-cat-indigo to-cat-amber origin-left"
+              style={{ scaleX: lineWidth as unknown as number }}
+              aria-hidden
+            />
+          )}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {steps.slice(4, 7).map((step) => (
+              <div
+                key={step.number}
+                className="bg-mist p-4 border border-line hover:border-cat-indigo/40 transition-colors group relative"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div
+                    className="w-8 h-8 rounded-full border flex-shrink-0 flex items-center justify-center font-mono text-xs font-semibold relative z-10 bg-paper transition-all"
+                    style={{ borderColor: `${step.color}60`, color: step.color }}
+                  >
+                    {step.number}
+                  </div>
+                  <h3 className="font-heading text-sm font-semibold" style={{ color: step.color }}>
+                    {step.label}
+                  </h3>
+                </div>
+                <p className="text-muted text-xs leading-relaxed line-clamp-3">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
 
 export function HowWeWork() {
   return (
-    <section className="py-24 lg:py-32 border-b border-line bg-paper">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-          {/* Left: heading — sticky */}
-          <div className="lg:sticky lg:top-32 lg:h-fit">
+    <section className="section-shell border-b border-line bg-paper">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 lg:mb-8 gap-4">
+          <div>
             <FadeUp>
               <SectionLabel number="05">How We Work</SectionLabel>
             </FadeUp>
             <FadeUp delay={0.08}>
-              <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-6">
+              <h2 className="font-heading text-3xl md:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)] tracking-tight text-ink mb-1">
                 From problem{" "}
                 <span className="text-accent">to impact.</span>
               </h2>
             </FadeUp>
-            <FadeUp delay={0.16}>
-              <p className="text-muted text-lg leading-relaxed mb-8">
-                A structured process that connects advisory, engineering, and managed services — so every engagement has a clear path from discovery to scale.
-              </p>
-              <div className="font-mono text-sm text-muted">
-                <span className="text-accent">Advise</span>
-                {" → "}
-                <span className="text-cat-amber">Build</span>
-                {" → "}
-                <span className="text-cat-indigo">Deploy</span>
-                {" → "}
-                <span className="text-cat-teal">Manage</span>
-                {" → "}
-                <span className="text-ink">Scale</span>
-              </div>
-            </FadeUp>
           </div>
-
-          {/* Right: animated steps */}
-          <AnimatedTimeline />
+          <FadeUp delay={0.16}>
+            <div className="font-mono text-xs text-muted">
+              <span className="text-accent">Advise</span>
+              {" → "}
+              <span className="text-cat-amber">Build</span>
+              {" → "}
+              <span className="text-cat-indigo">Deploy</span>
+              {" → "}
+              <span className="text-cat-teal">Manage</span>
+              {" → "}
+              <span className="text-ink font-semibold">Scale</span>
+            </div>
+          </FadeUp>
         </div>
+
+        {/* 4 + 3 Timeline Grid */}
+        <CompactTimeline />
       </div>
     </section>
   );

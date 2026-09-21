@@ -106,34 +106,34 @@ export function IndustriesStrip() {
   const activeIndustry = industries.find((i) => i.id === active)!;
 
   return (
-    <section className="py-24 lg:py-32 border-b border-line bg-mist">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="mb-12">
+    <section className="section-shell border-b border-line bg-paper">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="mb-6 lg:mb-8 max-w-xl">
           <FadeUp>
             <SectionLabel number="04">Industries</SectionLabel>
           </FadeUp>
           <FadeUp delay={0.08}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)] tracking-tight text-ink mb-2">
               We work across{" "}
               <span className="text-accent">every sector.</span>
             </h2>
           </FadeUp>
           <FadeUp delay={0.16}>
-            <p className="text-muted text-lg max-w-xl">
+            <p className="text-muted text-sm sm:text-base max-w-xl">
               Select an industry to see the problems we solve and the systems we build.
             </p>
           </FadeUp>
         </div>
 
-        {/* Scrollable industry strip */}
-        <div className="overflow-x-auto -mx-6 px-6 pb-4">
-          <div className="flex gap-2 min-w-max">
+        {/* Industry chips in 1-2 rows */}
+        <div className="overflow-x-auto lg:overflow-visible pb-2">
+          <div className="flex flex-nowrap lg:flex-wrap gap-2 min-w-max lg:min-w-0">
             {industries.map((ind) => {
               const isActive = active === ind.id;
               return (
                 <button
                   key={ind.id}
-                  className="flex-shrink-0 flex flex-col items-center gap-2 px-5 py-4 border transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                  className="flex items-center gap-2 px-3.5 py-2.5 border transition-all duration-200 cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
                   style={{
                     borderColor: isActive ? `${ind.color}60` : "#E3E8EF",
                     backgroundColor: isActive ? `${ind.color}08` : "transparent",
@@ -145,12 +145,12 @@ export function IndustriesStrip() {
                   aria-label={`${ind.label} industry`}
                 >
                   <ind.Icon
-                    className="w-5 h-5 transition-colors duration-200"
+                    className="w-4 h-4 transition-colors duration-200"
                     style={{ color: isActive ? ind.color : "#4B5768" }}
                     aria-hidden
                   />
                   <span
-                    className="font-mono text-xs uppercase tracking-widest whitespace-nowrap transition-colors duration-200"
+                    className="font-mono text-xs uppercase tracking-wider whitespace-nowrap transition-colors duration-200"
                     style={{ color: isActive ? ind.color : "#4B5768" }}
                   >
                     {ind.label}
@@ -169,7 +169,7 @@ export function IndustriesStrip() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? undefined : { opacity: 0, y: -6 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-4 p-6 lg:p-8 border grid grid-cols-1 md:grid-cols-3 gap-8"
+            className="mt-3 p-5 lg:p-6 border grid grid-cols-1 md:grid-cols-3 gap-6"
             style={{
               borderColor: `${activeIndustry.color}40`,
               backgroundColor: `${activeIndustry.color}06`,
@@ -177,7 +177,7 @@ export function IndustriesStrip() {
           >
             <div>
               <div
-                className="font-heading text-xl font-semibold mb-1"
+                className="font-heading text-lg font-semibold mb-1"
                 style={{ color: activeIndustry.color }}
               >
                 {activeIndustry.label}
@@ -185,8 +185,8 @@ export function IndustriesStrip() {
               <div className="font-mono text-xs text-muted italic">{activeIndustry.tagline}</div>
             </div>
             <div>
-              <div className="font-mono text-[10px] text-muted uppercase tracking-widest mb-3">Common Challenges</div>
-              <ul className="space-y-1.5">
+              <div className="font-mono text-[10px] text-muted uppercase tracking-widest mb-2">Common Challenges</div>
+              <ul className="space-y-1">
                 {activeIndustry.problems.map((p) => (
                   <li key={p} className="flex items-center gap-2 font-mono text-xs text-muted">
                     <span className="w-1 h-1 rounded-full bg-cat-navy/60 flex-shrink-0" />
@@ -197,12 +197,12 @@ export function IndustriesStrip() {
             </div>
             <div>
               <div
-                className="font-mono text-[10px] uppercase tracking-widest mb-3"
+                className="font-mono text-[10px] uppercase tracking-widest mb-2"
                 style={{ color: activeIndustry.color, opacity: 0.7 }}
               >
                 What We Build
               </div>
-              <ul className="space-y-1.5">
+              <ul className="space-y-1">
                 {activeIndustry.solutions.map((s) => (
                   <li key={s} className="flex items-center gap-2 font-mono text-xs text-ink/70">
                     <span

@@ -91,9 +91,9 @@ function ProblemCard({ p, index, reduced }: ProblemCardProps) {
 
   if (reduced) {
     return (
-      <div className="bg-paper p-8 lg:p-10">
+      <div className="bg-paper p-6 lg:p-7">
         {/* Before */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3">
           <div className="text-muted" style={{ color: p.color }}>
             <p.IconAfter />
           </div>
@@ -104,21 +104,21 @@ function ProblemCard({ p, index, reduced }: ProblemCardProps) {
           </div>
         </div>
 
-        <p className="text-muted text-sm mb-6 italic">{p.pain}</p>
+        <p className="text-muted text-xs sm:text-sm mb-4 italic">{p.pain}</p>
 
-        <div className="h-px mb-6" style={{ backgroundColor: p.color, opacity: 0.3 }} />
+        <div className="h-px mb-4" style={{ backgroundColor: p.color, opacity: 0.3 }} />
 
-        <div className="font-heading text-xl font-semibold mb-3" style={{ color: p.color }}>
+        <div className="font-heading text-lg font-semibold mb-2" style={{ color: p.color }}>
           {p.after}
         </div>
-        <p className="text-muted text-sm leading-relaxed">{p.solution}</p>
+        <p className="text-muted text-xs sm:text-sm leading-relaxed">{p.solution}</p>
       </div>
     );
   }
 
   return (
     <motion.div
-      className="bg-paper p-8 lg:p-10 group relative overflow-hidden cursor-default"
+      className="bg-paper p-6 lg:p-7 group relative overflow-hidden cursor-default"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
@@ -135,7 +135,7 @@ function ProblemCard({ p, index, reduced }: ProblemCardProps) {
       />
 
       {/* Icon */}
-      <div className="flex items-center gap-3 mb-4">
+      <div className="flex items-center gap-3 mb-3">
         <motion.div
           className="text-muted transition-opacity"
           style={{ color: p.color }}
@@ -163,61 +163,38 @@ function ProblemCard({ p, index, reduced }: ProblemCardProps) {
         </div>
       </div>
 
-      {/* Pain line */}
+      {/* Pain sentence */}
       <motion.p
-        className="text-muted text-sm mb-6 italic"
+        className="text-muted text-xs sm:text-sm mb-4 italic"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.4, delay: delay + 0.2 }}
+        transition={{ duration: 0.5, delay: delay + 0.5 }}
       >
         {p.pain}
       </motion.p>
 
-      {/* Animated arrow line */}
-      <div className="flex items-center gap-3 mb-6" style={{ color: p.color }}>
-        <svg className="flex-1 h-px overflow-visible" aria-hidden>
-          <motion.line
-            x1="0" y1="0.5" x2="100%" y2="0.5"
-            stroke={p.color}
-            strokeWidth="1"
-            strokeDasharray="1 0"
-            initial={{ pathLength: 0, opacity: 0.4 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: delay + 0.5, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </svg>
-        <motion.svg
-          viewBox="0 0 16 16"
-          className="w-4 h-4 flex-shrink-0"
-          fill="none"
-          stroke={p.color}
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ x: -4, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4, delay: delay + 0.6 }}
-          whileHover={{ x: 3 }}
-        >
-          <line x1="2" y1="8" x2="14" y2="8" />
-          <polyline points="10,4 14,8 10,12" />
-        </motion.svg>
-      </div>
-
-      {/* After — solution fades up */}
+      {/* Divider */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        className="h-px mb-4 origin-left"
+        style={{ backgroundColor: p.color }}
+        initial={{ scaleX: 0, opacity: 0.15 }}
+        whileInView={{ scaleX: 1, opacity: 0.3 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: delay + 0.6 }}
+      />
+
+      {/* After — the Nimbrix solution */}
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: delay + 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="font-heading text-xl font-semibold mb-3" style={{ color: p.color }}>
+        <div className="font-heading text-lg font-semibold mb-2" style={{ color: p.color }}>
           {p.after}
         </div>
-        <p className="text-muted text-sm leading-relaxed">{p.solution}</p>
+        <p className="text-muted text-xs sm:text-sm leading-relaxed">{p.solution}</p>
       </motion.div>
     </motion.div>
   );
@@ -227,25 +204,25 @@ export function ProblemSection() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="py-24 lg:py-32 border-b border-line bg-mist">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="max-w-2xl mb-16">
+    <section className="section-shell border-b border-line bg-mist">
+      <div className="max-w-7xl mx-auto px-6 w-full">
+        <div className="max-w-2xl mb-8 lg:mb-10">
           <FadeUp>
             <SectionLabel number="01">The Problem</SectionLabel>
           </FadeUp>
           <FadeUp delay={0.08}>
-            <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl tracking-tight text-ink mb-4">
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-[clamp(1.75rem,2.4vw,2.5rem)] tracking-tight text-ink mb-2">
               Technology shouldn&apos;t create{" "}
               <span className="text-muted">more complexity.</span>
             </h2>
-            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-6 flex items-center gap-2">
+            <p className="font-mono text-xs text-muted uppercase tracking-widest mb-3 flex items-center gap-2">
               <span>The problem</span>
               <span className="text-cat-indigo">→</span>
               <span>the Nimbrix way</span>
             </p>
           </FadeUp>
           <FadeUp delay={0.16}>
-            <p className="text-muted text-lg leading-relaxed">
+            <p className="text-muted text-sm sm:text-base leading-relaxed">
               Most businesses are drowning in fragmented tools, manual processes, and systems that don&apos;t talk to each other. We engineer the way out.
             </p>
           </FadeUp>

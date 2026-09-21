@@ -41,7 +41,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden pt-[72px]">
+    <section className="relative min-h-[90svh] lg:h-[90svh] flex flex-col justify-between overflow-hidden pt-[72px] snap-start">
       {/* Animated mesh gradient background */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
         {/* Base dot grid */}
@@ -74,8 +74,8 @@ export function Hero() {
         )}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-6 lg:py-3 w-full flex-1 flex items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center w-full">
           {/* Left — copy with staggered entrance */}
           <div>
             {/* Badge */}
@@ -85,14 +85,14 @@ export function Hero() {
               animate="visible"
               custom={0}
             >
-              <Badge pillar="ai" dot className="mb-8">
+              <Badge pillar="ai" dot className="mb-4">
                 AI-first Technology Partner
               </Badge>
             </motion.div>
 
             {/* Headline with rotating word */}
             <motion.h1
-              className="font-heading text-5xl md:text-6xl lg:text-7xl xl:text-8xl leading-[1.05] tracking-tight mb-8 text-ink"
+              className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[clamp(2.1rem,2.8vw,3.25rem)] leading-[1.12] tracking-tight mb-4 text-ink"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -104,7 +104,7 @@ export function Hero() {
               {reduced ? (
                 <span className="text-accent">advantage.</span>
               ) : (
-                <span className="inline-flex items-baseline" style={{ minWidth: "220px" }}>
+                <span className="inline-flex items-baseline" style={{ minWidth: "180px" }}>
                   <AnimatePresence mode="wait">
                     <motion.span
                       key={rotatingWords[wordIndex]}
@@ -123,7 +123,7 @@ export function Hero() {
 
             {/* Paragraph */}
             <motion.p
-              className="text-muted text-lg md:text-xl leading-relaxed mb-4 max-w-lg"
+              className="text-muted text-sm sm:text-base lg:text-lg leading-relaxed mb-4 max-w-lg"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -134,7 +134,7 @@ export function Hero() {
 
             {/* Capability strip */}
             <motion.div
-              className="flex flex-wrap gap-2 mb-10"
+              className="flex flex-wrap gap-x-2 gap-y-1 mb-6"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -149,7 +149,7 @@ export function Hero() {
 
             {/* Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3"
               variants={fadeUp}
               initial="hidden"
               animate="visible"
@@ -162,7 +162,7 @@ export function Hero() {
               >
                 <Link
                   href="/contact"
-                  className="group inline-flex items-center justify-center gap-2 px-7 py-4 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
+                  className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-white font-mono text-sm font-semibold hover:bg-cat-amber hover:text-white transition-all duration-300"
                 >
                   Start a Project
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -170,7 +170,7 @@ export function Hero() {
               </motion.div>
               <Link
                 href="/solutions"
-                className="group inline-flex items-center justify-center gap-2 px-7 py-4 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
+                className="group inline-flex items-center justify-center gap-2 px-6 py-3.5 border border-line text-muted font-mono text-sm hover:border-cat-indigo hover:text-cat-indigo transition-all duration-300"
               >
                 Explore Capabilities
               </Link>
@@ -183,6 +183,7 @@ export function Hero() {
             initial="hidden"
             animate="visible"
             custom={0.2}
+            className="w-full"
           >
             <HeroSystemVisual />
           </motion.div>
@@ -190,7 +191,7 @@ export function Hero() {
       </div>
 
       {/* Tech strip marquee */}
-      <div className="relative border-t border-line bg-mist py-4">
+      <div className="relative border-t border-line bg-mist py-3">
         <Marquee speed={35} className="py-0">
           {techStrip.map((tech) => (
             <span
