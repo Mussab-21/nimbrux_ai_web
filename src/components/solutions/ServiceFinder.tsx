@@ -54,7 +54,7 @@ const finderOptions: StartingPointOption[] = [
     category: "Cloud & Cyber",
     icon: Cloud,
     pillarTitle: "Cloud, Infrastructure & Cyber Security",
-    pillarSlug: "cloud-infrastructure-cyber",
+    pillarSlug: "cloud-security",
     pillarNumber: "02",
     summary:
       "Migrate legacy monolithic systems to resilient, auto-scaling multi-cloud architectures hardened with zero-trust network policies and automated compliance guardrails.",
@@ -72,7 +72,7 @@ const finderOptions: StartingPointOption[] = [
     category: "SRE & Managed Tech",
     icon: Activity,
     pillarTitle: "Managed Technology Services",
-    pillarSlug: "managed-tech",
+    pillarSlug: "managed-technology",
     pillarNumber: "03",
     summary:
       "Prevent downtime and offload operational toil with 24/7/365 SRE monitoring, automated incident remediation, and proactive performance optimization backed by strict SLAs.",
@@ -90,7 +90,7 @@ const finderOptions: StartingPointOption[] = [
     category: "Advisory & Strategy",
     icon: Compass,
     pillarTitle: "Technology & Advisory Consulting",
-    pillarSlug: "tech-consulting",
+    pillarSlug: "consulting-advisory",
     pillarNumber: "04",
     summary:
       "Independent technical leadership to evaluate technical debt, audit architecture risks, assess AI viability, and deliver actionable executive blueprints before capital allocation.",
@@ -108,7 +108,7 @@ const finderOptions: StartingPointOption[] = [
     category: "Accelerators & IP",
     icon: Layers,
     pillarTitle: "Products, Platforms & Proprietary IP",
-    pillarSlug: "products-platforms",
+    pillarSlug: "products",
     pillarNumber: "05",
     summary:
       "Fast-track time-to-market using battle-tested modular engines, data ingestion pipelines, and governance frameworks adapted specifically to your proprietary domain.",

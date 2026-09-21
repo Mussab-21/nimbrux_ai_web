@@ -65,6 +65,7 @@ export const servicePillars: ServicePillar[] = [
     id: "managed-technology",
     color: "#B45309",
     label: "Managed Technology",
+    href: "/solutions/managed-technology",
     tagline: "We run it, so you don't have to.",
     description:
       "24/7 ongoing systems operations, maintenance, database management, and active infrastructure monitoring so your team stays focused.",
@@ -83,6 +84,7 @@ export const servicePillars: ServicePillar[] = [
     id: "consulting-advisory",
     color: "#0F766E",
     label: "Consulting & Advisory",
+    href: "/solutions/consulting-advisory",
     tagline: "Strategy before execution.",
     description:
       "Independent technical audits, AI strategy roadmaps, and fractional engineering leadership before you commit capital to build.",
@@ -101,6 +103,7 @@ export const servicePillars: ServicePillar[] = [
     id: "products",
     color: "#1E40AF",
     label: "Products & IP",
+    href: "/solutions/products",
     tagline: "Building what we wish existed.",
     description:
       "Proprietary SaaS platforms, document intelligence systems, internal automation tools, and research from Nimbrix Labs.",
