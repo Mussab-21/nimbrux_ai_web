@@ -3,7 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SectionLabel } from "@/components/ui/SectionLabel";
-import { Badge } from "@/components/ui/Badge";
+import { SolutionsHero } from "@/components/solutions/SolutionsHero";
 
 export const metadata: Metadata = buildMetadata({
   title: "Our Services — Nimbrix",
@@ -67,23 +67,8 @@ const pillars = [
 export default function SolutionsPage() {
   return (
     <div className="bg-paper min-h-screen">
-      {/* Hero */}
-      <section className="pt-[120px] pb-24 border-b border-line">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl">
-            <Badge pillar="ai" dot className="mb-8">
-              Our Services
-            </Badge>
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-ink leading-[1.05] mb-8">
-              Five pillars,{" "}
-              <span className="text-accent">one partner.</span>
-            </h1>
-            <p className="text-muted text-xl leading-relaxed">
-              From AI and software to cloud, managed services, and advisory — Nimbrix covers the full technology stack, so you can work with one partner instead of five vendors.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Premium Animated Hero with Service Constellation */}
+      <SolutionsHero />
 
       {/* Pillar grid */}
       <section className="py-24">
