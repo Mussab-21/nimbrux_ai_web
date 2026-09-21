@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useInView } from "framer-motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { FadeUp } from "@/components/motion/FadeUp";
 
@@ -69,50 +69,35 @@ const pillars = [
 
 export function CapabilityMap() {
   const reduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { margin: "50px" });
+
   const [activeId, setActiveId] = useState(pillars[0].id);
   const [isHovered, setIsHovered] = useState(false);
-  const [cycleProgress, setCycleProgress] = useState(0);
 
-  const progressStartRef = useRef<number | null>(null);
-  const rafRef = useRef<number | null>(null);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   const activeIndex = pillars.findIndex((p) => p.id === activeId);
   const activePillar = pillars[activeIndex];
 
   const goToNext = useCallback(() => {
-    setCycleProgress(0);
-    progressStartRef.current = null;
     setActiveId(pillars[(activeIndex + 1) % pillars.length].id);
   }, [activeIndex]);
 
   const selectPillar = (id: string) => {
     setActiveId(id);
-    setCycleProgress(0);
-    progressStartRef.current = null;
   };
 
-  // Auto-cycle via RAF
+  // Auto-cycle only when in view, no per-frame React setState
   useEffect(() => {
-    if (reduced || isHovered) return;
+    if (reduced || isHovered || !isInView) return;
 
-    const tick = (now: number) => {
-      if (progressStartRef.current === null) progressStartRef.current = now;
-      const elapsed = now - progressStartRef.current;
-      const pct = Math.min(elapsed / CYCLE_INTERVAL, 1);
-      setCycleProgress(pct);
-      if (pct >= 1) {
-        goToNext();
-      } else {
-        rafRef.current = requestAnimationFrame(tick);
-      }
-    };
+    const timer = setTimeout(() => {
+      goToNext();
+    }, CYCLE_INTERVAL);
 
-    rafRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    };
-  }, [isHovered, activeId, reduced, goToNext]);
+    return () => clearTimeout(timer);
+  }, [isHovered, activeId, reduced, isInView, goToNext]);
 
   // Keyboard navigation (arrow keys within tablist)
   const handleKeyDown = (e: React.KeyboardEvent, i: number) => {
@@ -130,7 +115,7 @@ export function CapabilityMap() {
   };
 
   return (
-    <section className="section-shell border-b border-line bg-paper" id="capabilities">
+    <section ref={sectionRef} className="section-shell border-b border-line bg-paper" id="capabilities">
       <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Section header */}
         <div className="max-w-xl mb-6 lg:mb-8">
@@ -154,49 +139,41 @@ export function CapabilityMap() {
           className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          onFocus={() => setIsHovered(true)}
-          onBlur={() => setIsHovered(false)}
         >
-          {/* Left: pillar tabs */}
+          {/* Left: Tab list */}
           <div
             role="tablist"
-            aria-label="Service pillars"
-            aria-orientation="vertical"
-            className="flex flex-col gap-1 lg:w-[280px] flex-shrink-0 w-full"
+            aria-label="Capabilities"
+            className="w-full lg:w-80 flex-shrink-0 flex flex-col gap-1.5"
           >
             {pillars.map((p, i) => {
               const isActive = p.id === activeId;
               return (
                 <div key={p.id} className="relative">
                   <button
-                    ref={(el) => { tabRefs.current[i] = el; }}
+                    ref={(el) => {
+                      tabRefs.current[i] = el;
+                    }}
                     role="tab"
+                    id={`tab-${p.id}`}
                     aria-selected={isActive}
                     aria-controls={`panel-${p.id}`}
-                    id={`tab-${p.id}`}
-                    className="w-full flex items-center gap-3 p-3 text-left transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
-                    style={{
-                      backgroundColor: isActive ? `${p.color}08` : "transparent",
-                    }}
+                    tabIndex={isActive ? 0 : -1}
                     onClick={() => selectPillar(p.id)}
                     onKeyDown={(e) => handleKeyDown(e, i)}
-                    tabIndex={isActive ? 0 : -1}
+                    className="w-full text-left p-3.5 border transition-all duration-200 flex items-center justify-between gap-3 group focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                    style={{
+                      borderColor: isActive ? `${p.color}40` : "#E3E8EF",
+                      backgroundColor: isActive ? `${p.color}08` : "transparent",
+                    }}
                   >
-                    {/* Left border indicator */}
-                    <div className="relative w-0.5 h-8 flex-shrink-0 bg-line overflow-hidden">
-                      {isActive && !reduced && (
-                        <motion.div
-                          className="absolute inset-0 origin-top"
-                          style={{ backgroundColor: p.color }}
-                          initial={{ scaleY: 0 }}
-                          animate={{ scaleY: 1 }}
-                          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                        />
-                      )}
-                      {isActive && reduced && (
-                        <div className="absolute inset-0" style={{ backgroundColor: p.color }} />
-                      )}
-                    </div>
+                    {/* Active accent pill */}
+                    <div
+                      className="w-1 h-6 rounded-full flex-shrink-0 transition-all duration-200"
+                      style={{
+                        backgroundColor: isActive ? p.color : "transparent",
+                      }}
+                    />
 
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-0.5">
@@ -225,13 +202,16 @@ export function CapabilityMap() {
                     />
                   </button>
 
-                  {/* Auto-cycle progress bar */}
-                  {isActive && !reduced && (
+                  {/* Auto-cycle progress bar (compositor-driven) */}
+                  {isActive && !reduced && isInView && !isHovered && (
                     <div className="h-px bg-line overflow-hidden mx-4">
                       <motion.div
+                        key={activeId}
                         className="h-full origin-left"
-                        style={{ backgroundColor: p.color, scaleX: cycleProgress }}
-                        transition={{ duration: 0 }}
+                        style={{ backgroundColor: p.color }}
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: 5, ease: "linear" }}
                       />
                     </div>
                   )}

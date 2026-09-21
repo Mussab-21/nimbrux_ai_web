@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useId } from "react";
+import { useState, useEffect, useCallback, useId, useRef } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -14,7 +14,7 @@ import {
   Heart,
   Sparkles,
 } from "lucide-react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion, useInView } from "framer-motion";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { FadeUp } from "@/components/motion/FadeUp";
 
@@ -500,6 +500,9 @@ export function FeaturedWork() {
   const total = projects.length;
   const currentProject = projects[index];
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { margin: "100px" });
+
   const next = useCallback(() => {
     setIndex((i) => (i + 1) % total);
     setProgress(0);
@@ -510,9 +513,9 @@ export function FeaturedWork() {
     setProgress(0);
   }, [total]);
 
-  // Autoplay loop with smooth timer progress
+  // Autoplay loop with smooth timer progress (paused when off-screen)
   useEffect(() => {
-    if (reduced || paused) return;
+    if (reduced || paused || !isInView) return;
 
     const interval = 100;
     const step = (interval / AUTOPLAY_INTERVAL) * 100;
@@ -528,7 +531,7 @@ export function FeaturedWork() {
     }, interval);
 
     return () => clearInterval(timer);
-  }, [paused, reduced, next]);
+  }, [paused, reduced, isInView, next]);
 
   // Keyboard navigation
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -538,6 +541,7 @@ export function FeaturedWork() {
 
   return (
     <section
+      ref={sectionRef}
       className="section-shell border-b border-line bg-mist"
       id="work"
       onKeyDown={handleKeyDown}

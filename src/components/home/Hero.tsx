@@ -52,26 +52,21 @@ export function Hero() {
             backgroundSize: "32px 32px",
           }}
         />
-        {/* Ambient blobs */}
-        {!reduced ? (
-          <>
-            <motion.div
-              className="absolute top-20 left-[10%] w-[500px] h-[500px] bg-cat-indigo/10 rounded-full blur-[120px]"
-              animate={{ x: [0, 20, -10, 0], y: [0, -15, 10, 0] }}
-              transition={{ duration: 20, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-            />
-            <motion.div
-              className="absolute bottom-20 right-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]"
-              animate={{ x: [0, -20, 15, 0], y: [0, 20, -10, 0] }}
-              transition={{ duration: 16, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 4 }}
-            />
-          </>
-        ) : (
-          <>
-            <div className="absolute top-20 left-[10%] w-[500px] h-[500px] bg-cat-indigo/10 rounded-full blur-[120px]" />
-            <div className="absolute bottom-20 right-[5%] w-[400px] h-[400px] bg-accent/5 rounded-full blur-[100px]" />
-          </>
-        )}
+        {/* Ambient radial gradients (zero blur re-rasterization) */}
+        <div
+          className="absolute top-10 left-[10%] w-[550px] h-[550px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, rgba(67, 56, 202, 0.08) 0%, rgba(67, 56, 202, 0) 70%)",
+          }}
+          aria-hidden
+        />
+        <div
+          className="absolute bottom-10 right-[5%] w-[450px] h-[450px] pointer-events-none"
+          style={{
+            background: "radial-gradient(circle, rgba(11, 87, 208, 0.05) 0%, rgba(11, 87, 208, 0) 70%)",
+          }}
+          aria-hidden
+        />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-6 lg:py-3 w-full flex-1 flex items-center">

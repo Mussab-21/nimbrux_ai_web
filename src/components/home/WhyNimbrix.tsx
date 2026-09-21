@@ -96,7 +96,7 @@ export function WhyNimbrix() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="section-shell border-b border-line bg-mist">
+    <section className="section-shell border-b border-line bg-mist content-auto">
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="max-w-2xl mb-6 lg:mb-8">
           <FadeUp>

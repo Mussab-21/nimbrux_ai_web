@@ -40,7 +40,7 @@ export function WhoWeServe() {
   const reduced = useReducedMotion();
 
   return (
-    <section className="section-shell border-b border-line bg-paper" id="who-we-serve">
+    <section className="section-shell border-b border-line bg-paper content-auto" id="who-we-serve">
       <div className="max-w-7xl mx-auto px-6 w-full py-4 lg:py-6 flex flex-col justify-center">
         {/* Section Header: Centered label, heading, and subtitle */}
         <div className="text-center max-w-3xl mx-auto mb-6 lg:mb-8">

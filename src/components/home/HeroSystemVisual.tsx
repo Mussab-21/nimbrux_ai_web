@@ -1,7 +1,14 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { motion, AnimatePresence, useReducedMotion, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  useMotionValue,
+  useSpring,
+  useInView,
+} from "framer-motion";
 
 type Phase = "chaos" | "converge" | "processing" | "output";
 
@@ -35,43 +42,25 @@ const orbitLabels = [
   { id: "software", label: "Software", angle: 270 },
 ];
 
-function usePhase(reduced: boolean | null): { phase: Phase; subProgress: number } {
+function usePhase(reduced: boolean | null, inView: boolean): Phase {
   const [phase, setPhase] = useState<Phase>("chaos");
-  const [subProgress, setSubProgress] = useState(0);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || !inView) return;
 
-    let elapsed = 0;
-    let lastTime: number | null = null;
-    let rafId: number;
     const phases: Phase[] = ["chaos", "converge", "processing", "output"];
-    let phaseIdx = 0;
+    const currentIdx = phases.indexOf(phase);
+    const nextIdx = (currentIdx + 1) % phases.length;
+    const dur = PHASE_DURATIONS[phase];
 
-    const tick = (now: number) => {
-      if (lastTime === null) lastTime = now;
-      const delta = now - lastTime;
-      lastTime = now;
-      elapsed += delta;
+    const timer = setTimeout(() => {
+      setPhase(phases[nextIdx]);
+    }, dur);
 
-      const currentDur = PHASE_DURATIONS[phases[phaseIdx]];
-      const phasePct = Math.min(elapsed / currentDur, 1);
-      setSubProgress(phasePct);
+    return () => clearTimeout(timer);
+  }, [phase, reduced, inView]);
 
-      if (phasePct >= 1) {
-        elapsed = 0;
-        phaseIdx = (phaseIdx + 1) % phases.length;
-        setPhase(phases[phaseIdx]);
-      }
-
-      rafId = requestAnimationFrame(tick);
-    };
-
-    rafId = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafId);
-  }, [reduced]);
-
-  return { phase, subProgress };
+  return phase;
 }
 
 /* ─────────────────────────────────────────────────────── */
@@ -106,10 +95,11 @@ function StaticOutputState() {
 /* ─────────────────────────────────────────────────────── */
 export function HeroSystemVisual() {
   const reduced = useReducedMotion();
-  const { phase, subProgress } = usePhase(reduced);
-
-  // Mouse parallax tilt (desktop only)
   const panelRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(panelRef, { margin: "100px" });
+  const phase = usePhase(reduced, isInView);
+
+  // Mouse parallax tilt (desktop only with cached bounds to avoid layout thrash)
   const rotateX = useSpring(useMotionValue(0), { stiffness: 80, damping: 20 });
   const rotateY = useSpring(useMotionValue(0), { stiffness: 80, damping: 20 });
 
@@ -118,23 +108,34 @@ export function HeroSystemVisual() {
     const panel = panelRef.current;
     if (!panel) return;
 
-    const onMove = (e: MouseEvent) => {
-      const rect = panel.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dx = (e.clientX - cx) / (rect.width / 2);
-      const dy = (e.clientY - cy) / (rect.height / 2);
-      rotateX.set(-dy * 5);
-      rotateY.set(dx * 5);
+    let cachedRect: DOMRect | null = null;
+
+    const onEnter = () => {
+      cachedRect = panel.getBoundingClientRect();
     };
+
+    const onMove = (e: MouseEvent) => {
+      if (!cachedRect) cachedRect = panel.getBoundingClientRect();
+      const cx = cachedRect.left + cachedRect.width / 2;
+      const cy = cachedRect.top + cachedRect.height / 2;
+      const dx = (e.clientX - cx) / (cachedRect.width / 2);
+      const dy = (e.clientY - cy) / (cachedRect.height / 2);
+      rotateX.set(-dy * 4);
+      rotateY.set(dx * 4);
+    };
+
     const onLeave = () => {
+      cachedRect = null;
       rotateX.set(0);
       rotateY.set(0);
     };
 
-    panel.addEventListener("mousemove", onMove);
-    panel.addEventListener("mouseleave", onLeave);
+    panel.addEventListener("mouseenter", onEnter, { passive: true });
+    panel.addEventListener("mousemove", onMove, { passive: true });
+    panel.addEventListener("mouseleave", onLeave, { passive: true });
+
     return () => {
+      panel.removeEventListener("mouseenter", onEnter);
       panel.removeEventListener("mousemove", onMove);
       panel.removeEventListener("mouseleave", onLeave);
     };
@@ -143,7 +144,14 @@ export function HeroSystemVisual() {
   if (reduced) {
     return (
       <div className="relative h-[360px] lg:h-[400px] xl:h-[420px] border border-line bg-mist overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #4338CA 1px, transparent 0)", backgroundSize: "24px 24px" }} aria-hidden />
+        <div
+          className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage: "radial-gradient(circle at 1px 1px, #4338CA 1px, transparent 0)",
+            backgroundSize: "24px 24px",
+          }}
+          aria-hidden
+        />
         <StaticOutputState />
       </div>
     );
@@ -162,25 +170,49 @@ export function HeroSystemVisual() {
         rotateX: rotateX as unknown as number,
         rotateY: rotateY as unknown as number,
         transformPerspective: 1000,
-        boxShadow: "0 0 40px rgba(67,56,202,0.06), 0 0 80px rgba(67,56,202,0.04)",
+        boxShadow: "0 0 30px rgba(67,56,202,0.06)",
       }}
     >
       {/* Dot grid */}
-      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: "radial-gradient(circle at 1px 1px, #4338CA 1px, transparent 0)", backgroundSize: "24px 24px" }} aria-hidden />
+      <div
+        className="absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage: "radial-gradient(circle at 1px 1px, #4338CA 1px, transparent 0)",
+          backgroundSize: "24px 24px",
+        }}
+        aria-hidden
+      />
 
-      {/* Ambient glow */}
-      <div className="absolute top-0 left-0 w-40 h-40 bg-cat-indigo/10 rounded-full blur-3xl" aria-hidden />
-      <div className="absolute bottom-0 right-0 w-40 h-40 bg-accent/10 rounded-full blur-3xl" aria-hidden />
+      {/* Ambient glow (radial gradients, zero filter blur) */}
+      <div
+        className="absolute top-0 left-0 w-48 h-48 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(67,56,202,0.12) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute bottom-0 right-0 w-48 h-48 pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(11,87,208,0.10) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
 
       {/* SVG canvas — full size */}
-      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 400 440" preserveAspectRatio="xMidYMid meet" aria-hidden>
-        {/* Chaotic tangled lines from inputs to centre */}
+      <svg
+        className="absolute inset-0 w-full h-full"
+        viewBox="0 0 400 440"
+        preserveAspectRatio="xMidYMid meet"
+        aria-hidden
+      >
+        {/* Tangled lines from inputs to centre */}
         {inputChips.map((chip, i) => {
           const x1 = (chip.x / 100) * 400;
           const y1 = (chip.y / 100) * 440;
           const cx2 = 200;
           const cy2 = 220;
-          const opacity = isChaos ? 0.25 : isConverge ? 0.5 * (1 - subProgress) : 0;
+          const opacity = isChaos ? 0.25 : isConverge ? 0.4 : 0;
           const cp1x = x1 + (i % 2 === 0 ? 40 : -40);
           const cp1y = y1 + (i % 3 === 0 ? 30 : -30);
           return (
@@ -198,40 +230,40 @@ export function HeroSystemVisual() {
         })}
 
         {/* Clean output lines from centre to right */}
-        {isOutput && outputItems.map((item, i) => {
-          const yOut = 160 + i * 36;
-          return (
-            <motion.line
-              key={item.id}
-              x1="240"
-              y1="220"
-              x2="290"
-              y2={yOut}
-              stroke="#4338CA"
-              strokeWidth="1.5"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.6 }}
-              transition={{ duration: 0.5, delay: i * 0.18 + 0.2 }}
-            />
-          );
-        })}
+        {isOutput &&
+          outputItems.map((item, i) => {
+            const yOut = 160 + i * 36;
+            return (
+              <motion.line
+                key={item.id}
+                x1="240"
+                y1="220"
+                x2="290"
+                y2={yOut}
+                stroke="#4338CA"
+                strokeWidth="1.5"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 0.6 }}
+                transition={{ duration: 0.5, delay: i * 0.18 + 0.2 }}
+              />
+            );
+          })}
       </svg>
 
       {/* ── Left — input chips ── */}
       <div className="absolute left-3 top-0 bottom-0 flex flex-col justify-around py-4">
-        {inputChips.map((chip, i) => {
-          const targetX = isChaos ? 0 : isConverge ? 40 * subProgress : 80;
-          const jitter = isChaos ? Math.sin(Date.now() / 400 + i) * 3 : 0;
+        {inputChips.map((chip) => {
+          const targetX = isChaos ? 0 : isConverge ? 28 : 60;
           return (
             <motion.div
               key={chip.id}
-              className="text-[9px] font-mono text-muted/70 border border-line/60 px-2 py-1 bg-paper/80 backdrop-blur-sm whitespace-nowrap"
+              className="text-[9px] font-mono text-muted/80 border border-line/80 px-2 py-1 bg-paper shadow-sm whitespace-nowrap"
               animate={{
-                x: targetX + jitter,
+                x: targetX,
                 opacity: isOutput ? 0 : 1,
-                scale: isConverge ? 1 - subProgress * 0.15 : 1,
+                scale: isConverge ? 0.95 : 1,
               }}
-              transition={{ duration: isConverge ? 0.3 : 0.15 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               {chip.label}
             </motion.div>
@@ -242,51 +274,60 @@ export function HeroSystemVisual() {
       {/* ── Centre — core node ── */}
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="relative flex items-center justify-center">
-          {/* Rotating ring */}
-          <motion.div
-            className="absolute w-28 h-28 border border-cat-indigo/30 rounded-full"
-            animate={{
-              rotate: 360,
-              opacity: isOutput ? 0.8 : isChaos ? 0.2 : 0.5,
-              scale: isProcessing ? [1, 1.05, 1] : 1,
-            }}
-            transition={{
-              rotate: { duration: 8, repeat: Infinity, ease: "linear" },
-              opacity: { duration: 0.5 },
-              scale: { duration: 1.5, repeat: Infinity },
-            }}
-          />
+          {/* Rotating ring (paused off-screen) */}
+          {isInView && (
+            <motion.div
+              className="absolute w-28 h-28 border border-cat-indigo/30 rounded-full"
+              animate={{
+                rotate: 360,
+                opacity: isOutput ? 0.8 : isChaos ? 0.2 : 0.5,
+                scale: isProcessing ? [1, 1.05, 1] : 1,
+              }}
+              transition={{
+                rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+                opacity: { duration: 0.5 },
+                scale: { duration: 1.5, repeat: Infinity },
+              }}
+            />
+          )}
 
           {/* Second ring */}
-          <motion.div
-            className="absolute w-20 h-20 border border-cat-indigo/20 rounded-full"
-            animate={{ rotate: -360 }}
-            transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-          />
+          {isInView && (
+            <motion.div
+              className="absolute w-20 h-20 border border-accent/25 rounded-full"
+              animate={{
+                rotate: -360,
+                scale: isProcessing ? [1.05, 1, 1.05] : 1,
+              }}
+              transition={{
+                rotate: { duration: 12, repeat: Infinity, ease: "linear" },
+                scale: { duration: 2, repeat: Infinity },
+              }}
+            />
+          )}
 
-          {/* Pulsing glow */}
+          {/* Core box */}
           <motion.div
-            className="absolute w-16 h-16 rounded-full bg-cat-indigo/15"
+            className="w-12 h-12 rounded-xl border-2 border-cat-indigo/60 bg-paper flex items-center justify-center shadow-md z-10"
             animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.4, 0.7, 0.4],
+              borderColor: isOutput ? "#0F766E" : "#4338CA",
+              boxShadow: isProcessing
+                ? "0 0 20px rgba(67,56,202,0.25)"
+                : "0 0 8px rgba(67,56,202,0.1)",
             }}
-            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-          />
-
-          {/* Core */}
-          <motion.div
-            className="relative w-10 h-10 rounded-full border-2 border-cat-indigo/60 bg-cat-indigo/20 flex items-center justify-center"
-            animate={{
-              borderColor: isOutput ? "rgba(11,87,208,0.8)" : "rgba(67,56,202,0.4)",
-              backgroundColor: isOutput ? "rgba(67,56,202,0.2)" : "rgba(67,56,202,0.1)",
-            }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="font-mono text-[9px] text-cat-indigo font-bold">N</span>
+            <motion.span
+              className="font-heading font-bold text-base"
+              animate={{
+                color: isOutput ? "#0F766E" : "#4338CA",
+              }}
+            >
+              {isOutput ? "✓" : "N"}
+            </motion.span>
           </motion.div>
 
-          {/* Orbit labels */}
+          {/* Orbiting capability markers */}
           {orbitLabels.map((orb, i) => {
             const rad = (orb.angle * Math.PI) / 180;
             const r = 52;
@@ -295,8 +336,8 @@ export function HeroSystemVisual() {
             return (
               <motion.div
                 key={orb.id}
-                className="absolute font-mono text-[8px] text-muted/60 uppercase tracking-widest"
-                style={{ x: ox - 12, y: oy - 6 }}
+                className="absolute text-[8px] font-mono text-cat-indigo/70 font-semibold bg-paper px-1 border border-cat-indigo/20 rounded shadow-xs"
+                style={{ left: `calc(50% + ${ox}px - 14px)`, top: `calc(50% + ${oy}px - 8px)` }}
                 animate={{ opacity: isProcessing || isOutput ? 1 : 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
               >
@@ -322,7 +363,7 @@ export function HeroSystemVisual() {
             outputItems.map((item, i) => (
               <motion.div
                 key={item.id}
-                className="flex items-center gap-2 font-mono text-[10px] border border-cat-indigo/30 bg-paper/90 px-3 py-2 backdrop-blur-sm"
+                className="flex items-center gap-2 font-mono text-[10px] border border-cat-indigo/30 bg-paper px-3 py-2 shadow-sm"
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 10 }}

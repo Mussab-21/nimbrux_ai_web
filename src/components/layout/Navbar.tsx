@@ -87,7 +87,17 @@ export function Navbar() {
   const scaleX = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const isOver = window.scrollY > 24;
+          setScrolled((prev) => (prev !== isOver ? isOver : prev));
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
@@ -142,7 +152,7 @@ export function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolledOrOpen
-            ? "bg-paper/90 backdrop-blur-md border-b border-line shadow-elev-1"
+            ? "bg-paper/95 border-b border-line shadow-elev-1"
             : "bg-transparent"
         )}
       >

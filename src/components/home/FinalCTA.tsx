@@ -19,31 +19,21 @@ export function FinalCTA() {
 
   return (
     <section className="section-shell bg-paper relative overflow-hidden">
-      {/* Animated drifting blobs */}
-      {!reduced && (
-        <>
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none"
-            style={{ backgroundColor: "rgba(67,56,202,0.05)" }}
-            animate={{
-              x: [0, 40, -20, 0],
-              y: [0, -30, 20, 0],
-            }}
-            transition={{ duration: 18, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" }}
-            aria-hidden
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full blur-[120px] pointer-events-none"
-            style={{ backgroundColor: "rgba(180,83,9,0.04)" }}
-            animate={{
-              x: [0, -30, 20, 0],
-              y: [0, 40, -20, 0],
-            }}
-            transition={{ duration: 14, repeat: Infinity, repeatType: "reverse", ease: "easeInOut", delay: 3 }}
-            aria-hidden
-          />
-        </>
-      )}
+      {/* Ambient static radial gradients (zero filter blur re-rasterization) */}
+      <div
+        className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(67,56,202,0.06) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <div
+        className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full pointer-events-none"
+        style={{
+          background: "radial-gradient(circle, rgba(180,83,9,0.04) 0%, transparent 70%)",
+        }}
+        aria-hidden
+      />
 
       {/* Dot grid */}
       <div

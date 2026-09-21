@@ -69,12 +69,8 @@ body {
   .glow-mango, .glow-violet, .glow-pink { box-shadow: 0 12px 24px -8px rgba(10,15,28,.12); }
 }
 
-/* 10/80/10 Viewport Section Shell & Desktop Proximity Snap */
+/* 10/80/10 Viewport Section Shell (Smooth Natural Scroll) */
 @media (min-width: 1024px) {
-  html {
-    scroll-snap-type: y proximity;
-  }
-
   .section-shell {
     min-height: calc((100svh - var(--header-h, 72px)) * 0.8);
     padding-top: max(3rem, 6svh);
@@ -83,7 +79,6 @@ body {
     flex-direction: column;
     justify-content: center;
     scroll-margin-top: var(--header-h, 72px);
-    scroll-snap-align: center;
   }
 }
 
@@ -93,6 +88,12 @@ body {
     padding-bottom: 4rem;
   }
 }
+
+.content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 650px;
+}
+
 
 @keyframes marquee {
   0%   { transform: translateX(0); }

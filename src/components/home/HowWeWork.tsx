@@ -141,7 +141,7 @@ function CompactTimeline() {
 
 export function HowWeWork() {
   return (
-    <section className="section-shell border-b border-line bg-paper">
+    <section className="section-shell border-b border-line bg-paper content-auto">
       <div className="max-w-7xl mx-auto px-6 w-full">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-6 lg:mb-8 gap-4">
