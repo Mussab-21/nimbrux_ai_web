@@ -137,7 +137,7 @@ export function Navbar() {
                 aria-expanded={megaOpen}
                 aria-haspopup="true"
               >
-                Solutions
+                Our Services
                 <motion.span
                   animate={{ rotate: megaOpen ? 180 : 0 }}
                   transition={{ duration: 0.2 }}
@@ -164,12 +164,12 @@ export function Navbar() {
                   >
                     {/* Top bar */}
                     <div className="px-8 py-4 border-b border-line flex items-center justify-between">
-                      <span className="font-mono text-xs text-muted uppercase tracking-widest">Our Solutions</span>
+                      <span className="font-mono text-xs text-muted uppercase tracking-widest">Our Services</span>
                       <Link
                         href="/solutions"
                         className="font-mono text-xs text-accent hover:text-cat-amber transition-colors flex items-center gap-1"
                       >
-                        View all <ArrowRight className="w-3 h-3" />
+                        View all services <ArrowRight className="w-3 h-3" />
                       </Link>
                     </div>
 

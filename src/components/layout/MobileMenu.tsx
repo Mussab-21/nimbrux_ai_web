@@ -71,10 +71,10 @@ export function MobileMenu({ isOpen, onClose, solutions, navLinks }: MobileMenuP
 
         {/* Scrollable body */}
         <nav className="flex-1 overflow-y-auto py-6 px-6 space-y-8">
-          {/* Solutions */}
+          {/* Our Services */}
           <div>
             <div className="font-mono text-[10px] uppercase tracking-widest text-muted mb-4">
-              Solutions
+              Our Services
             </div>
             <div className="space-y-1">
               {solutions.map((s) => (

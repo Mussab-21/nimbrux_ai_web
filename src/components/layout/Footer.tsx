@@ -76,11 +76,11 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Solutions */}
-        <FooterColumn title="Solutions" links={footerSolutions} />
+        {/* Our Services */}
+        <FooterColumn title="Our Services" links={footerSolutions} />
 
-        {/* Services */}
-        <FooterColumn title="Services" links={footerServices} />
+        {/* Capabilities */}
+        <FooterColumn title="Capabilities" links={footerServices} />
 
         {/* Industries */}
         <FooterColumn title="Industries" links={footerIndustries} />

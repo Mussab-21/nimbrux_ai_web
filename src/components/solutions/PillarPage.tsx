@@ -94,7 +94,7 @@ export function PillarPage({
                 href="/solutions"
                 className="group inline-flex items-center gap-2 px-7 py-4 border border-line text-muted font-mono text-sm hover:border-line hover:text-ink transition-all duration-300"
               >
-                All Solutions
+                All Services
               </Link>
             </div>
           </div>

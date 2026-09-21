@@ -6,7 +6,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 import { Badge } from "@/components/ui/Badge";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Solutions and capabilities",
+  title: "Our Services — Nimbrix",
   description: "Our service lines across AI and automation, software engineering, data, cloud and advisory — with what each engagement includes and what it delivers.",
   path: "/solutions",
 });
@@ -72,7 +72,7 @@ export default function SolutionsPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl">
             <Badge pillar="ai" dot className="mb-8">
-              Our Solutions
+              Our Services
             </Badge>
             <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-ink leading-[1.05] mb-8">
               Five pillars,{" "}
