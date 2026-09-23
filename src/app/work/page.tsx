@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
 import { buildMetadata } from "@/lib/seo";
-import Link from "next/link";
-import { ArrowRight, ExternalLink, GitBranch } from "lucide-react";
 import { getCaseStudies } from "@/lib/content";
-import { Badge } from "@/components/ui/Badge";
-import { TechIcon } from "@/components/ui/TechIcons";
+import { WorkHero } from "@/components/work/WorkHero";
+import { PortfolioGrid } from "@/components/work/PortfolioGrid";
 
 export const metadata: Metadata = buildMetadata({
   title: "Client work and case studies",
-  description: "Shipped client projects with the problem, the approach and the measured outcome for each — plus open-source engineering work from the Nimbrix lab.",
+  description:
+    "Shipped client projects with the problem, the approach and the measured outcome for each — plus open-source engineering work from the Nimbrix lab.",
   path: "/work",
 });
 
@@ -17,113 +16,11 @@ export default function WorkPage() {
 
   return (
     <div className="bg-paper min-h-screen">
-      {/* Hero */}
-      <section className="pt-[120px] pb-20 border-b border-line">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl">
-            <Badge pillar="software" dot className="mb-6">
-              Portfolio &amp; Case Studies
-            </Badge>
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-ink leading-[1.05] mb-6">
-              Client work,{" "}
-              <span className="text-accent">proven outcomes.</span>
-            </h1>
-            <p className="text-muted text-lg md:text-xl leading-relaxed">
-              We engineer scalable software, AI pipelines, and workflow automation bots. Explore our open-source repositories and production case studies below.
-            </p>
-          </div>
-        </div>
-      </section>
+      {/* Hero with Results Board Visual */}
+      <WorkHero caseStudies={caseStudies} />
 
-      {/* Case studies list */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          {caseStudies.length === 0 ? (
-            <div className="text-center py-24">
-              <p className="font-mono text-muted">Case studies coming soon.</p>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {caseStudies.map((cs, i) => (
-                <div
-                  key={cs.slug}
-                  className="group block border border-line p-8 lg:p-10 hover:border-line bg-mist transition-all duration-300 relative overflow-hidden"
-                >
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div className="lg:col-span-8">
-                      <div className="flex flex-wrap items-center gap-3 mb-4">
-                        <span
-                          className="font-mono text-xs uppercase tracking-widest font-bold"
-                          style={{ color: cs.accentColor }}
-                        >
-                          {String(i + 1).padStart(2, "0")}
-                        </span>
-                        <span className="w-1 h-1 rounded-full bg-line" />
-                        <span className="font-mono text-xs text-muted uppercase tracking-widest">
-                          {cs.industry}
-                        </span>
-                        <span className="w-1 h-1 rounded-full bg-line" />
-                        <span className="font-mono text-xs text-muted uppercase tracking-widest">
-                          {cs.category}
-                        </span>
-                      </div>
-
-                      <Link href={`/work/${cs.slug}`}>
-                        <h2
-                          className="font-heading text-2xl lg:text-3xl font-semibold text-ink mb-3 hover:underline transition-colors"
-                        >
-                          {cs.title}
-                        </h2>
-                      </Link>
-
-                      <p className="text-muted text-sm md:text-base leading-relaxed mb-6 max-w-2xl">
-                        {cs.summary}
-                      </p>
-
-                      {/* Tech stack with icons */}
-                      <div className="flex flex-wrap gap-2">
-                        {cs.tech.map((t) => (
-                          <TechIcon key={t} name={t} />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Actions */}
-                    <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col items-start lg:items-end justify-center gap-3">
-                      <Link
-                        href={`/work/${cs.slug}`}
-                        className="inline-flex items-center gap-2 font-mono text-xs font-semibold px-4 py-2.5 bg-accent text-white hover:bg-cat-amber hover:text-white transition-colors w-full sm:w-auto justify-center"
-                      >
-                        View Case Study
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </Link>
-
-                      {cs.githubUrl && (
-                        <a
-                          href={cs.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 font-mono text-xs border border-line px-4 py-2.5 text-ink hover:border-accent hover:text-accent transition-colors w-full sm:w-auto justify-center"
-                        >
-                          <GitBranch className="w-3.5 h-3.5 text-muted" />
-                          GitHub Repo
-                          <ExternalLink className="w-3 h-3 text-muted" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Bottom accent indicator */}
-                  <div
-                    className="absolute bottom-0 left-0 right-0 h-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    style={{ backgroundColor: cs.accentColor }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
+      {/* Responsive Portfolio Grid */}
+      <PortfolioGrid caseStudies={caseStudies} />
     </div>
   );
 }
