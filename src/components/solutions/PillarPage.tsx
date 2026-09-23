@@ -1,7 +1,13 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/Badge";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { PillarHeroVisual } from "./PillarHeroVisual";
+import { servicePillars } from "@/lib/services-data";
 
 interface Service {
   name: string;
@@ -25,6 +31,39 @@ interface PillarPageProps {
   services: Service[];
   included: string[];
   caseStudies: CaseStudyRef[];
+  tech?: string[];
+  highlightPhrase?: string;
+}
+
+function renderHeroHeading(heading: string, pillar: string, customHighlight?: string) {
+  // Determine key phrase for brand-blue gradient treatment
+  let phraseToHighlight = customHighlight;
+  if (!phraseToHighlight) {
+    if (heading.includes("Intelligent systems")) phraseToHighlight = "Intelligent systems";
+    else if (heading.includes("Infrastructure")) phraseToHighlight = "Infrastructure";
+    else if (heading.includes("reliably managed")) phraseToHighlight = "reliably managed";
+    else if (heading.includes("actually help you")) phraseToHighlight = "actually help you";
+    else {
+      // fallback to first two words
+      const parts = heading.split(" ");
+      phraseToHighlight = parts.slice(0, 2).join(" ");
+    }
+  }
+
+  if (!heading.includes(phraseToHighlight)) {
+    return heading;
+  }
+
+  const parts = heading.split(phraseToHighlight);
+  return (
+    <>
+      {parts[0]}
+      <span className="inline-block bg-gradient-to-r from-accent via-cat-blue to-cat-indigo bg-clip-text text-transparent pb-1">
+        {phraseToHighlight}
+      </span>
+      {parts.slice(1).join(phraseToHighlight)}
+    </>
+  );
 }
 
 export function PillarPage({
@@ -37,65 +76,199 @@ export function PillarPage({
   services,
   included,
   caseStudies,
+  tech,
+  highlightPhrase,
 }: PillarPageProps) {
+  const reduced = useReducedMotion();
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Fallback to tech from servicePillars if not explicitly provided
+  const pillarData = servicePillars.find((p) => p.pillar === pillar);
+  const techStack = tech || pillarData?.tech || [];
+
+  // Spotlight cursor tracking via CSS variables in rAF (Zero React state overhead)
+  useEffect(() => {
+    if (reduced) return;
+    const hero = heroRef.current;
+    if (!hero) return;
+
+    let rafId: number;
+    const onMouseMove = (e: MouseEvent) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        const rect = hero.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        hero.style.setProperty("--spotlight-x", `${x}px`);
+        hero.style.setProperty("--spotlight-y", `${y}px`);
+      });
+    };
+
+    hero.addEventListener("mousemove", onMouseMove, { passive: true });
+    return () => {
+      hero.removeEventListener("mousemove", onMouseMove);
+      cancelAnimationFrame(rafId);
+    };
+  }, [reduced]);
+
+  const taglineWords = tagline.split(" ");
+
   return (
     <div className="bg-paper min-h-screen">
       {/* Hero */}
-      <section className="pt-[120px] pb-24 border-b border-line relative overflow-hidden">
-        {/* Bg blob */}
-        <div
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] pointer-events-none opacity-[0.07]"
-          style={{ backgroundColor: color }}
-          aria-hidden
-        />
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 1px 1px, ${color} 1px, transparent 0)`,
-            backgroundSize: "32px 32px",
-          }}
-          aria-hidden
-        />
+      <section
+        ref={heroRef}
+        className="relative min-h-[90svh] lg:h-[90svh] flex flex-col justify-between overflow-hidden pt-[72px] bg-paper border-b border-line"
+        style={{
+          ["--spotlight-x" as string]: "50%",
+          ["--spotlight-y" as string]: "40%",
+        }}
+      >
+        {/* Background dot grid + cursor spotlight */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden>
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: `radial-gradient(circle at 1px 1px, ${color} 1px, transparent 0)`,
+              backgroundSize: "28px 28px",
+            }}
+          />
+          <div
+            className="absolute inset-0 opacity-40 transition-opacity duration-500"
+            style={{
+              background: `radial-gradient(650px circle at var(--spotlight-x) var(--spotlight-y), ${color}14, transparent 70%)`,
+            }}
+          />
+        </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="max-w-3xl">
-            <Badge pillar={pillar.toLowerCase()} dot className="mb-8">
-              Pillar {pillar} — {label}
-            </Badge>
+        {/* Content Container */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-8 lg:py-4 w-full flex-1 flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center w-full">
+            {/* Left copy */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              <motion.div
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Badge pillar={pillar.toLowerCase()} dot className="mb-4">
+                  PILLAR {pillar} — {label.toUpperCase()}
+                </Badge>
+              </motion.div>
 
-            <div
-              className="font-mono text-sm italic mb-4"
-              style={{ color: color, opacity: 0.8 }}
-            >
-              {tagline}
+              {/* Tagline staggered per word */}
+              <div
+                className="font-mono text-sm italic mb-3 flex flex-wrap"
+                style={{ color, opacity: 0.9 }}
+              >
+                {taglineWords.map((word, i) => (
+                  <motion.span
+                    key={i}
+                    initial={reduced ? false : { opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{
+                      duration: 0.35,
+                      delay: reduced ? 0 : 0.08 + i * 0.06,
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
+                    className="inline-block mr-1.5"
+                  >
+                    {word}
+                  </motion.span>
+                ))}
+              </div>
+
+              {/* Line-by-line reveal H1 with brand-blue gradient on key word/phrase */}
+              <div className="overflow-hidden mb-5">
+                <motion.h1
+                  initial={reduced ? false : { y: "100%", opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{
+                    duration: 0.65,
+                    delay: reduced ? 0 : 0.12,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-[clamp(2.2rem,3.2vw,3.6rem)] tracking-tight text-ink leading-[1.1]"
+                >
+                  {renderHeroHeading(heroHeading, pillar, highlightPhrase)}
+                </motion.h1>
+              </div>
+
+              {/* Paragraph fade up */}
+              <motion.p
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.55,
+                  delay: reduced ? 0 : 0.22,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="text-muted text-base sm:text-lg leading-relaxed mb-8 max-w-2xl"
+              >
+                {heroDescription}
+              </motion.p>
+
+              {/* Buttons with shine sweep and arrow nudge */}
+              <motion.div
+                initial={reduced ? false : { opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: reduced ? 0 : 0.3,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="flex flex-col sm:flex-row gap-3 mb-6"
+              >
+                <Link
+                  href="/contact"
+                  className="relative group inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gradient-to-r from-accent to-cat-indigo text-white font-mono text-sm font-semibold shadow-elev-1 hover:shadow-elev-2 active:scale-[0.98] transition-all duration-200 overflow-hidden rounded-sm"
+                >
+                  {/* Shine sweep effect */}
+                  <span
+                    className="absolute top-0 bottom-0 left-0 w-8 bg-white/20 -skew-x-12 -translate-x-16 group-hover:translate-x-64 transition-transform duration-700 ease-in-out pointer-events-none"
+                    aria-hidden
+                  />
+                  <span className="relative z-10">Start a Project</span>
+                  <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
+                </Link>
+
+                <Link
+                  href="/solutions"
+                  className="group inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-line text-muted font-mono text-sm hover:border-accent hover:text-accent bg-paper/60 transition-all duration-300 rounded-sm"
+                >
+                  <span>All Services</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform opacity-70 group-hover:opacity-100" />
+                </Link>
+              </motion.div>
+
+              {/* STACK chips row */}
+              {techStack.length > 0 && (
+                <motion.div
+                  initial={reduced ? false : { opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: reduced ? 0 : 0.4 }}
+                  className="flex items-center gap-2 pt-2 border-t border-line/60"
+                >
+                  <span className="font-mono text-[10px] uppercase text-muted/70 tracking-wider">
+                    Stack:
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {techStack.map((t) => (
+                      <span
+                        key={t}
+                        className="font-mono text-[11px] text-muted bg-paper px-2 py-0.5 rounded border border-line shadow-2xs"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
-            <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl tracking-tight text-ink leading-[1.05] mb-8">
-              {heroHeading}
-            </h1>
-
-            <p className="text-muted text-xl leading-relaxed mb-10 max-w-2xl">
-              {heroDescription}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2 px-7 py-4 font-mono text-sm font-semibold transition-all duration-300"
-                style={{
-                  backgroundColor: color,
-                  color: "#FFFFFF",
-                }}
-              >
-                Start a Project
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link
-                href="/solutions"
-                className="group inline-flex items-center gap-2 px-7 py-4 border border-line text-muted font-mono text-sm hover:border-line hover:text-ink transition-all duration-300"
-              >
-                All Services
-              </Link>
+            {/* Right visual side */}
+            <div className="lg:col-span-5 flex items-center justify-center">
+              <PillarHeroVisual pillar={pillar} color={color} label={label} />
             </div>
           </div>
         </div>

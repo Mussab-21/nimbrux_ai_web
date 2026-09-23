@@ -30,8 +30,8 @@ function VisualDigitalAI({ inView, reduced }: { inView: boolean; reduced: boolea
           <Sparkles className="w-4 h-4 text-cat-indigo" />
           <span className="font-semibold text-ink text-[11px]">AI Workflow Pipeline</span>
         </div>
-        <span className="text-[10px] text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
-          Live System
+        <span className="text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+          Sample Output (Illustrative)
         </span>
       </div>
 
@@ -72,7 +72,7 @@ function VisualDigitalAI({ inView, reduced }: { inView: boolean; reduced: boolea
       <div className="grid grid-cols-2 gap-2 pt-2 border-t border-line/60 text-[10px]">
         <div className="flex items-center gap-1.5 text-muted">
           <span className="text-emerald-500 font-bold">✓</span>
-          <span>Entity extraction: 99.4%</span>
+          <span>Sample output: Validated</span>
         </div>
         <div className="flex items-center gap-1.5 text-muted">
           <span className="text-emerald-500 font-bold">✓</span>
@@ -143,7 +143,7 @@ function VisualCloudSecurity({ inView, reduced }: { inView: boolean; reduced: bo
         </div>
         <div className="flex items-center gap-1.5 text-muted">
           <span className="text-emerald-500 font-bold">✓</span>
-          <span>Failover &lt; 300ms</span>
+          <span>Automated failover (Illustrative)</span>
         </div>
       </div>
     </div>
@@ -160,15 +160,15 @@ function VisualManagedTechnology() {
           <span className="font-semibold text-ink text-[11px]">Telemetry &amp; Uptime Monitor</span>
         </div>
         <span className="text-[10px] text-cat-amber bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
-          99.98% SLA
+          Target SLA (Illustrative)
         </span>
       </div>
 
       {/* Latency Sparkline Graph */}
       <div className="my-auto py-2">
         <div className="flex items-center justify-between text-[10px] text-muted mb-1.5">
-          <span>Global Latency Trend</span>
-          <span className="text-emerald-600 font-bold">38ms avg</span>
+          <span>Latency Metric (Sample)</span>
+          <span className="text-emerald-600 font-bold">Healthy avg</span>
         </div>
 
         <div className="h-14 bg-paper rounded border border-line p-2 relative overflow-hidden flex items-end">
