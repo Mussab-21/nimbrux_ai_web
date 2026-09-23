@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import {
   Sparkles,
   Shield,
@@ -18,6 +19,7 @@ import {
   Zap,
   CheckCircle2,
   ChevronRight,
+  ArrowRight,
   LucideIcon,
 } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion, useInView } from "framer-motion";
@@ -304,6 +306,27 @@ export function PillarServicesExplorer({
               </AnimatePresence>
             </div>
           </div>
+        </div>
+
+        {/* Bottom Explorer Action Strip */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 mt-8 border-t border-line/70">
+          <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-muted text-center sm:text-left">
+            <span>Not sure which service fits your roadmap?</span>
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-1 font-semibold text-accent hover:text-cat-amber transition-colors"
+            >
+              Talk to us → we&apos;ll map the right solution
+            </Link>
+          </div>
+
+          <Link
+            href="/solutions"
+            className="group inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-ink transition-colors px-3.5 py-2 rounded border border-line bg-paper hover:border-line shadow-2xs"
+          >
+            <span>View all services</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
         </div>
       </div>
     </section>

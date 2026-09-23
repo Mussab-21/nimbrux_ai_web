@@ -367,6 +367,90 @@ export function PillarPage({
         </section>
       )}
 
+      {/* Other Pillars Navigator */}
+      <section className="py-20 lg:py-24 border-b border-line bg-mist/30">
+        <div className="max-w-7xl mx-auto px-6">
+          <SectionLabel>Cross-discipline capability</SectionLabel>
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <h2 className="font-heading text-3xl sm:text-4xl tracking-tight text-ink">
+                Other <span style={{ color }}>service pillars</span>
+              </h2>
+            </div>
+            <Link
+              href="/solutions"
+              className="group inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-accent transition-colors"
+            >
+              <span>View all services overview</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+            {servicePillars
+              .filter((p) => p.pillar !== pillar)
+              .map((p) => (
+                <Link
+                  key={p.id}
+                  href={p.href}
+                  className="group bg-paper border border-line/80 hover:border-line p-6 rounded-xl flex flex-col justify-between hover:shadow-elev-1 transition-all"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span
+                        className="font-mono text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border"
+                        style={{
+                          color: p.color,
+                          backgroundColor: `${p.color}10`,
+                          borderColor: `${p.color}30`,
+                        }}
+                      >
+                        Pillar {p.pillar}
+                      </span>
+                    </div>
+
+                    <h3 className="font-heading text-base font-semibold text-ink group-hover:text-accent transition-colors mb-1.5">
+                      {p.label}
+                    </h3>
+                    <p className="text-muted text-xs leading-relaxed line-clamp-2 mb-4">
+                      {p.description}
+                    </p>
+                  </div>
+
+                  <div
+                    className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold pt-3 border-t border-line/60"
+                    style={{ color: p.color }}
+                  >
+                    <span>Explore {p.label}</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+          </div>
+
+          {/* Bottom Strip */}
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-line/70">
+            <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono text-muted text-center sm:text-left">
+              <span>Have a cross-functional project?</span>
+              <Link
+                href="/contact"
+                className="inline-flex items-center gap-1 font-semibold text-accent hover:text-cat-amber transition-colors"
+              >
+                Talk to us → we&apos;ll map the right solution
+              </Link>
+            </div>
+
+            <Link
+              href="/solutions"
+              className="group inline-flex items-center gap-1.5 font-mono text-xs text-muted hover:text-ink transition-colors px-3.5 py-2 rounded border border-line bg-paper hover:border-line shadow-2xs"
+            >
+              <span>View all services</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="py-20 lg:py-24 bg-paper">
         <div className="max-w-7xl mx-auto px-6 text-center">

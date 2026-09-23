@@ -8,6 +8,9 @@ import {
   Compass,
   Server,
   Cloud,
+  Lock,
+  Layers,
+  Terminal,
 } from "lucide-react";
 import { useReducedMotion, useInView } from "framer-motion";
 
@@ -68,6 +71,8 @@ export function PillarHeroVisual({ pillar, color, label }: PillarHeroVisualProps
     };
   }, [reduced]);
 
+  const pKey = pillar.toLowerCase();
+
   return (
     <div className="relative w-full max-w-[480px] mx-auto lg:max-w-none flex items-center justify-center">
       {/* Ambient background glow behind glass panel */}
@@ -91,17 +96,20 @@ export function PillarHeroVisual({ pillar, color, label }: PillarHeroVisualProps
           boxShadow: `0 8px 30px -4px rgba(10, 15, 28, 0.08), 0 0 0 1px ${color}15`,
         }}
       >
-        {pillar === "01" && (
+        {(pKey === "01" || pKey === "ai" || pKey === "digital-ai") && (
           <VisualPillar01 color={color} inView={isInView} reduced={reduced} />
         )}
-        {pillar === "02" && (
+        {(pKey === "02" || pKey === "cloud" || pKey === "cloud-security") && (
           <VisualPillar02 color={color} inView={isInView} reduced={reduced} />
         )}
-        {pillar === "03" && (
+        {(pKey === "03" || pKey === "managed" || pKey === "managed-technology") && (
           <VisualPillar03 color={color} inView={isInView} reduced={reduced} />
         )}
-        {pillar === "04" && (
+        {(pKey === "04" || pKey === "consulting" || pKey === "consulting-advisory") && (
           <VisualPillar04 color={color} inView={isInView} reduced={reduced} />
+        )}
+        {(pKey === "05" || pKey === "products" || pKey === "labs") && (
+          <VisualPillar05 color={color} inView={isInView} reduced={reduced} />
         )}
       </div>
     </div>
@@ -195,7 +203,7 @@ function VisualPillar01({
 }
 
 /* ─────────────────────────────────────────────────────────────────── */
-/* 02: Cloud & Security Visualizer                                    */
+/* 02: Cloud & Security Visualizer (Pulsing nodes, shield/lock, traffic)*/
 /* ─────────────────────────────────────────────────────────────────── */
 function VisualPillar02({
   color,
@@ -221,59 +229,81 @@ function VisualPillar02({
             borderColor: `${color}30`,
           }}
         >
-          Sample Architecture
+          Architecture Preview (Illustrative)
         </span>
       </div>
 
-      <div className="relative my-auto flex items-center justify-between px-2 py-3">
+      <div className="relative my-auto flex items-center justify-between px-2 py-2">
+        {/* Animated connection line with traveling packets */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" aria-hidden>
           <path
-            d="M 50 50 Q 160 12 270 50"
+            id="traffic-path-upper"
+            d="M 60 50 Q 170 12 280 50"
             fill="none"
             stroke={color}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            opacity="0.4"
+            opacity="0.35"
           />
           <path
-            d="M 50 50 Q 160 88 270 50"
+            id="traffic-path-lower"
+            d="M 60 50 Q 170 88 280 50"
             fill="none"
             stroke={color}
             strokeWidth="1.5"
             strokeDasharray="3 3"
-            opacity="0.4"
+            opacity="0.35"
           />
           {!reduced && inView && (
-            <circle r="3.5" fill={color}>
-              <animateMotion path="M 50 50 Q 160 12 270 50" dur="2.8s" repeatCount="indefinite" />
-            </circle>
+            <>
+              <circle r="3.5" fill={color}>
+                <animateMotion path="M 60 50 Q 170 12 280 50" dur="2.4s" repeatCount="indefinite" />
+              </circle>
+              <circle r="3.5" fill="#059669">
+                <animateMotion path="M 280 50 Q 170 88 60 50" dur="2.4s" begin="1.2s" repeatCount="indefinite" />
+              </circle>
+            </>
           )}
         </svg>
 
-        {/* Primary region node */}
-        <div className="relative z-10 bg-paper p-3 rounded-lg border border-line shadow-xs text-center min-w-[80px]">
-          <Server className="w-4 h-4 mx-auto mb-1" style={{ color }} />
+        {/* Primary region node with pulsing green status dot */}
+        <div className="relative z-10 bg-paper p-3 rounded-xl border border-line shadow-xs text-center min-w-[84px]">
+          <Server className="w-4 h-4 mx-auto mb-1.5" style={{ color }} />
           <div className="text-[10px] font-bold text-ink">us-east-1</div>
-          <div className="text-[9px] text-emerald-600 flex items-center justify-center gap-1 mt-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <div className="text-[9px] text-emerald-600 flex items-center justify-center gap-1.5 mt-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Active
           </div>
         </div>
 
-        {/* Security Shield Hub */}
-        <div
-          className="relative z-10 w-12 h-12 rounded-full border-2 bg-paper shadow-md flex items-center justify-center"
-          style={{ borderColor: `${color}60` }}
-        >
-          <Shield className="w-5 h-5" style={{ color }} />
+        {/* Security Shield / Zero-Trust Lock Hub */}
+        <div className="relative z-10 flex flex-col items-center">
+          <div
+            className="w-13 h-13 rounded-2xl border-2 bg-paper shadow-md flex items-center justify-center relative p-2.5"
+            style={{
+              borderColor: `${color}60`,
+              boxShadow: `0 0 20px ${color}15`,
+            }}
+          >
+            <Shield className="w-5 h-5" style={{ color }} />
+            <span
+              className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-paper border flex items-center justify-center"
+              style={{ borderColor: `${color}40`, color }}
+            >
+              <Lock className="w-2.5 h-2.5" />
+            </span>
+          </div>
+          <span className="text-[9px] font-mono font-medium text-muted mt-1 bg-paper/90 px-1.5 py-0.5 rounded border border-line/60">
+            TLS 1.3 · 24ms sync
+          </span>
         </div>
 
-        {/* Replica region node */}
-        <div className="relative z-10 bg-paper p-3 rounded-lg border border-line shadow-xs text-center min-w-[80px]">
-          <Cloud className="w-4 h-4 mx-auto mb-1" style={{ color }} />
+        {/* Replica region node with pulsing green status dot */}
+        <div className="relative z-10 bg-paper p-3 rounded-xl border border-line shadow-xs text-center min-w-[84px]">
+          <Cloud className="w-4 h-4 mx-auto mb-1.5" style={{ color }} />
           <div className="text-[10px] font-bold text-ink">eu-west-1</div>
-          <div className="text-[9px] text-emerald-600 flex items-center justify-center gap-1 mt-0.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          <div className="text-[9px] text-emerald-600 flex items-center justify-center gap-1.5 mt-0.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
             Replica
           </div>
         </div>
@@ -286,7 +316,7 @@ function VisualPillar02({
         </div>
         <div className="flex items-center gap-1.5 text-muted">
           <span className="text-emerald-500 font-bold">✓</span>
-          <span>Zero-Trust IAM Policy</span>
+          <span>Automated failover (Illustrative)</span>
         </div>
       </div>
     </div>
@@ -325,7 +355,10 @@ function VisualPillar03({
       <div className="my-auto py-2">
         <div className="flex items-center justify-between text-[11px] text-muted mb-2">
           <span>Latency Metric (Illustrative)</span>
-          <span className="font-semibold text-emerald-600">Sample Healthy</span>
+          <span className="font-semibold text-emerald-600 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            Healthy avg
+          </span>
         </div>
 
         <div className="h-16 bg-mist/60 rounded-lg border border-line p-2 relative overflow-hidden flex items-end">
@@ -348,15 +381,24 @@ function VisualPillar03({
       <div className="grid grid-cols-3 gap-2 pt-3 border-t border-line/70 text-[10px] text-center">
         <div className="bg-paper py-1.5 px-2 rounded border border-line">
           <div className="text-muted text-[9px]">API Gateway</div>
-          <div className="text-emerald-600 font-bold">Operational</div>
+          <div className="text-emerald-600 font-bold flex items-center justify-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-emerald-500" />
+            Operational
+          </div>
         </div>
         <div className="bg-paper py-1.5 px-2 rounded border border-line">
           <div className="text-muted text-[9px]">Databases</div>
-          <div className="text-emerald-600 font-bold">Healthy</div>
+          <div className="text-emerald-600 font-bold flex items-center justify-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-emerald-500" />
+            Healthy
+          </div>
         </div>
         <div className="bg-paper py-1.5 px-2 rounded border border-line">
           <div className="text-muted text-[9px]">Queues</div>
-          <div className="text-emerald-600 font-bold">0 Pending</div>
+          <div className="text-emerald-600 font-bold flex items-center justify-center gap-1">
+            <span className="w-1 h-1 rounded-full bg-emerald-500" />
+            0 Pending
+          </div>
         </div>
       </div>
     </div>
@@ -431,6 +473,72 @@ function VisualPillar04({
         <div className="flex items-center gap-1.5 text-muted">
           <span className="text-emerald-500 font-bold">✓</span>
           <span>Vendor Neutral</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────── */
+/* 05: Products & IP Visualizer (Mock Terminal / API Engine Stack)    */
+/* ─────────────────────────────────────────────────────────────────── */
+function VisualPillar05({
+  color,
+}: {
+  color: string;
+  inView: boolean;
+  reduced: boolean | null;
+}) {
+  return (
+    <div className="flex flex-col justify-between h-[280px] font-mono text-xs">
+      <div className="flex items-center justify-between border-b border-line/70 pb-3">
+        <div className="flex items-center gap-2">
+          <Layers className="w-4 h-4" style={{ color }} />
+          <span className="font-semibold text-ink text-[12px]">Nimbrix Labs &amp; IP Stack</span>
+        </div>
+        <span
+          className="text-[10px] font-medium px-2 py-0.5 rounded border"
+          style={{
+            color,
+            backgroundColor: `${color}10`,
+            borderColor: `${color}30`,
+          }}
+        >
+          Labs Preview (Illustrative)
+        </span>
+      </div>
+
+      {/* Mock Terminal / API Block */}
+      <div className="my-auto bg-[#0A0F1C] text-slate-300 p-3.5 rounded-xl border border-slate-800 text-[10px] space-y-1.5 shadow-sm">
+        <div className="flex items-center justify-between text-slate-400 border-b border-slate-800 pb-1.5">
+          <div className="flex items-center gap-1.5 text-emerald-400 font-mono">
+            <Terminal className="w-3 h-3" />
+            <span>POST /api/v1/extract</span>
+          </div>
+          <span className="text-[9px] text-slate-400 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            200 OK · 142ms
+          </span>
+        </div>
+        <div className="text-slate-400 pt-0.5">
+          <span style={{ color }}>&gt;</span> parsing document buffer...
+        </div>
+        <div className="text-emerald-400 font-medium">
+          <span style={{ color }}>&gt;</span> 42 entities mapped with 0 schemas broken
+        </div>
+        <div className="text-slate-400 text-[9px]">
+          <span style={{ color }}>&gt;</span> webhook dispatched to client endpoint
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 pt-3 border-t border-line/70 text-[11px]">
+        <div className="flex items-center gap-1.5 text-muted">
+          <span className="text-emerald-500 font-bold">✓</span>
+          <span>Developer SDKs &amp; APIs</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-muted">
+          <span className="text-emerald-500 font-bold">✓</span>
+          <span>Turnkey SaaS Deployment</span>
         </div>
       </div>
     </div>
