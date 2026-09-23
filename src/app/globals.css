@@ -10,10 +10,11 @@
 
 :root {
   /* Surfaces */
-  --paper: #FFFFFF;   /* page + card background            */
-  --mist:  #F4F6F9;   /* alternating section background    */
-  --line:  #E3E8EF;   /* hairline borders, dividers        */
-  --navy:  #0A2540;   /* inverted band (footer, dark CTA)  */
+  --paper:     #FFFFFF;   /* page + card background            */
+  --paper-rgb: 255 255 255;
+  --mist:      #F4F6F9;   /* alternating section background    */
+  --line:      #E3E8EF;   /* hairline borders, dividers        */
+  --navy:      #0A2540;   /* inverted band (footer, dark CTA)  */
 
   /* Text */
   --ink:   #0A0F1C;   /* headings / primary  17.9:1 on white */

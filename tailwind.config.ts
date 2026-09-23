@@ -10,7 +10,7 @@ const config: Config = {
     extend: {
       colors: {
         /* Surfaces */
-        paper: "var(--paper)",
+        paper: "rgb(var(--paper-rgb, 255 255 255) / <alpha-value>)",
         mist:  "var(--mist)",
         line:  "var(--line)",
         navy:  "var(--navy)",
