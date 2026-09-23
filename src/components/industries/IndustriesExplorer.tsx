@@ -28,6 +28,7 @@ export function IndustriesExplorer({
 }: IndustriesExplorerProps) {
   const containerRef = useRef<HTMLElement>(null);
   const tabListRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
   const [internalIdx, setInternalIdx] = useState(() => {
@@ -96,6 +97,16 @@ export function IndustriesExplorer({
     }
   }, [activeIdx]);
 
+  // Spotlight mouse tracking on the active detail panel
+  const handlePanelMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (reduced || !panelRef.current) return;
+    const rect = panelRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    panelRef.current.style.setProperty("--panel-spotlight-x", `${x}px`);
+    panelRef.current.style.setProperty("--panel-spotlight-y", `${y}px`);
+  };
+
   return (
     <section
       id="explorer"
@@ -119,13 +130,13 @@ export function IndustriesExplorer({
         </div>
 
         {/* Desktop & Tablet: 9-Tile Selector Row / Wrap Grid */}
-        {/* Mobile: Horizontally scrollable sticky pill bar */}
+        {/* Mobile: Horizontally scrollable sticky pill bar (pinned below header at top-[62px] with solid backdrop) */}
         <div className="relative mb-6 sm:mb-8">
           <div
             ref={tabListRef}
             role="tablist"
             aria-label="Industries and sectors"
-            className="sticky top-[62px] lg:static z-30 lg:z-auto bg-paper/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none border-b lg:border-b-0 border-line py-2.5 lg:py-0 -mx-6 px-6 lg:mx-0 lg:px-0 flex lg:grid lg:grid-cols-9 gap-2 overflow-x-auto no-scrollbar scroll-smooth"
+            className="sticky top-[62px] lg:static z-30 lg:z-auto bg-white/95 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-none border-b lg:border-b-0 border-line py-2.5 lg:py-0 -mx-6 px-6 lg:mx-0 lg:px-0 flex lg:grid lg:grid-cols-9 gap-2 overflow-x-auto no-scrollbar scroll-smooth"
           >
             {INDUSTRIES_DATA.map((ind, idx) => {
               const isActive = activeIdx === idx;
@@ -141,15 +152,26 @@ export function IndustriesExplorer({
                   tabIndex={isActive ? 0 : -1}
                   onClick={() => handleSelect(idx)}
                   onKeyDown={(e) => handleKeyDown(e, idx)}
-                  className="group relative flex-shrink-0 lg:flex-shrink p-2.5 sm:p-3 rounded-xl border transition-all duration-200 flex flex-col items-center justify-center text-center cursor-pointer min-w-[124px] sm:min-w-[140px] lg:min-w-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="group relative flex-shrink-0 lg:flex-shrink p-2.5 sm:p-3 rounded-xl border transition-all duration-200 flex flex-col items-center justify-center text-center cursor-pointer min-w-[124px] sm:min-w-[140px] lg:min-w-0 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                   style={{
                     backgroundColor: isActive ? `${ind.color}0D` : "#FFFFFF",
                     borderColor: isActive ? ind.color : "#E3E8EF",
                     boxShadow: isActive
-                      ? `0 4px 16px ${ind.color}1E`
+                      ? `0 4px 20px ${ind.color}25`
                       : "0 1px 2px rgba(10,15,28,0.03)",
                   }}
                 >
+                  {/* Position indicator ("03 / 09") */}
+                  <span
+                    className="absolute top-1.5 right-1.5 font-mono text-[8px] font-semibold px-1 py-0.2 rounded transition-all"
+                    style={{
+                      color: isActive ? ind.color : "#94A3B8",
+                      backgroundColor: isActive ? `${ind.color}18` : "transparent",
+                    }}
+                  >
+                    {ind.num}/09
+                  </span>
+
                   {/* Sliding highlight animation */}
                   {isActive && (
                     <motion.div
@@ -165,7 +187,7 @@ export function IndustriesExplorer({
 
                   {/* Icon with fill and lift */}
                   <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 transition-all duration-200 group-hover:scale-110"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center mb-1.5 transition-all duration-200 group-hover:scale-110 shadow-2xs"
                     style={{
                       backgroundColor: isActive ? ind.color : `${ind.color}15`,
                       color: isActive ? "#FFFFFF" : ind.color,
@@ -195,14 +217,29 @@ export function IndustriesExplorer({
           </div>
         </div>
 
-        {/* Detail Panel: Single-view ~80% viewport card */}
+        {/* Detail Panel: Single-view ~80% viewport card with spotlight-on-hover hairline border */}
         <div
+          ref={panelRef}
+          onMouseMove={handlePanelMouseMove}
           id={`sector-panel-${activeIndustry.id}`}
           role="tabpanel"
           aria-labelledby={`sector-tab-${activeIdx}`}
-          className="relative bg-paper border border-line rounded-2xl p-6 sm:p-8 lg:p-10 shadow-elev-1 overflow-hidden"
+          className="relative bg-paper border border-line rounded-2xl p-6 sm:p-8 lg:p-10 shadow-elev-1 hover:shadow-elev-2 transition-shadow duration-300 overflow-hidden"
+          style={{
+            ["--panel-spotlight-x" as string]: "50%",
+            ["--panel-spotlight-y" as string]: "30%",
+          }}
         >
-          {/* Subtle corner brand glow */}
+          {/* Subtle cursor-driven spotlight glow */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-40 transition-opacity duration-300"
+            style={{
+              background: `radial-gradient(550px circle at var(--panel-spotlight-x) var(--panel-spotlight-y), ${activeIndustry.color}14, transparent 70%)`,
+            }}
+            aria-hidden
+          />
+
+          {/* Corner brand color ambiance */}
           <div
             className="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl pointer-events-none opacity-10 transition-colors duration-500"
             style={{ backgroundColor: activeIndustry.color }}
