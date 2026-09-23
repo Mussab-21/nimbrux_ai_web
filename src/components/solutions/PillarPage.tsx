@@ -7,6 +7,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Badge } from "@/components/ui/Badge";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 import { PillarHeroVisual } from "./PillarHeroVisual";
+import { PillarServicesExplorer } from "./PillarServicesExplorer";
 import { servicePillars } from "@/lib/services-data";
 
 interface Service {
@@ -274,37 +275,13 @@ export function PillarPage({
         </div>
       </section>
 
-      {/* Services */}
-      <section className="py-24 border-b border-line">
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionLabel>Services in this pillar</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-16">
-            What we <span style={{ color }}>build</span>
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-line">
-            {services.map((svc) => (
-              <div key={svc.name} className="bg-paper p-8 lg:p-10 group hover:bg-mist transition-colors">
-                <h3
-                  className="font-heading text-xl font-semibold mb-3 group-hover:opacity-90 transition-opacity"
-                  style={{ color }}
-                >
-                  {svc.name}
-                </h3>
-                <p className="text-muted text-sm leading-relaxed mb-6">{svc.description}</p>
-                <ul className="space-y-2">
-                  {svc.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 font-mono text-xs text-muted">
-                      <span className="w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: color, opacity: 0.6 }} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Services Explorer (Interactive Tabbed Navigator) */}
+      <PillarServicesExplorer
+        pillar={pillar}
+        color={color}
+        label={label}
+        services={services}
+      />
 
       {/* What's included */}
       <section className="py-24 border-b border-line bg-mist">
