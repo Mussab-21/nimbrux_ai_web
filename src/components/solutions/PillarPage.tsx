@@ -284,39 +284,59 @@ export function PillarPage({
       />
 
       {/* What's included */}
-      <section className="py-24 border-b border-line bg-mist">
+      <section className="py-20 lg:py-24 border-b border-line bg-mist/50">
         <div className="max-w-7xl mx-auto px-6">
           <SectionLabel>Engagement scope</SectionLabel>
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl tracking-tight text-ink mb-4">
             What&apos;s included
           </h2>
-          <p className="text-muted text-lg mb-12 max-w-xl">
+          <p className="text-muted text-base sm:text-lg mb-10 max-w-xl">
             Our engagements are clear-scoped from the start. Here&apos;s what every {label} project includes.
           </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
             {included.map((item) => (
               <div
                 key={item}
-                className="flex items-start gap-3 p-5 border border-line"
+                className="flex items-start gap-3 p-5 bg-paper border border-line/80 rounded-xl shadow-2xs hover:border-line transition-all"
               >
                 <CheckCircle
                   className="w-4 h-4 flex-shrink-0 mt-0.5"
-                  style={{ color, opacity: 0.7 }}
+                  style={{ color }}
                 />
-                <span className="font-mono text-sm text-muted">{item}</span>
+                <span className="font-mono text-sm text-body font-medium">{item}</span>
               </div>
             ))}
+          </div>
+
+          {/* Action Row: explore other pillars / talk to us */}
+          <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-line/70">
+            <Link
+              href="/solutions"
+              className="group inline-flex items-center gap-2 font-mono text-sm font-semibold hover:underline"
+              style={{ color }}
+            >
+              <span>Explore all solution pillars</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+
+            <Link
+              href="/contact"
+              className="inline-flex items-center gap-2 px-5 py-2.5 border border-line rounded text-xs font-mono text-muted hover:border-accent hover:text-accent bg-paper transition-colors shadow-2xs"
+            >
+              <span>Talk to us about {label}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Case studies */}
       {caseStudies.length > 0 && (
-        <section className="py-24 border-b border-line">
+        <section className="py-20 lg:py-24 border-b border-line">
           <div className="max-w-7xl mx-auto px-6">
             <SectionLabel>Real projects</SectionLabel>
-            <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-12">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl tracking-tight text-ink mb-10">
               Related work
             </h2>
 
@@ -325,22 +345,20 @@ export function PillarPage({
                 <Link
                   key={cs.slug}
                   href={`/work/${cs.slug}`}
-                  className="group border border-line p-8 hover:border-line transition-all"
-                  style={{ borderColor: `#E3E8EF` }}
+                  className="group bg-paper border border-line/80 p-8 rounded-xl hover:border-line hover:shadow-elev-1 transition-all"
                 >
                   <h3
-                    className="font-heading text-xl mb-3 transition-colors group-hover:opacity-80"
-                    style={{ color }}
+                    className="font-heading text-xl font-bold mb-3 transition-colors text-ink group-hover:text-accent"
                   >
                     {cs.title}
                   </h3>
                   <p className="text-muted text-sm leading-relaxed mb-6">{cs.description}</p>
                   <div
-                    className="inline-flex items-center gap-2 font-mono text-xs transition-colors group"
+                    className="inline-flex items-center gap-2 font-mono text-xs font-semibold transition-all group-hover:translate-x-1"
                     style={{ color }}
                   >
-                    View case study
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                    <span>View case study</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                   </div>
                 </Link>
               ))}
@@ -350,22 +368,29 @@ export function PillarPage({
       )}
 
       {/* CTA */}
-      <section className="py-24">
+      <section className="py-20 lg:py-24 bg-paper">
         <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="font-heading text-4xl md:text-5xl tracking-tight text-ink mb-6">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl tracking-tight text-ink mb-5">
             Ready to{" "}
-            <span style={{ color }}>get started?</span>
+            <span
+              className="inline-block bg-gradient-to-r from-accent via-cat-blue to-cat-indigo bg-clip-text text-transparent"
+            >
+              get started?
+            </span>
           </h2>
-          <p className="text-muted text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-muted text-base sm:text-lg mb-8 max-w-xl mx-auto">
             Tell us about your challenge. We&apos;ll give you an honest assessment and a clear path forward.
           </p>
           <Link
             href="/contact"
-            className="group inline-flex items-center gap-2 px-8 py-4 font-mono text-sm font-semibold transition-all duration-300"
-            style={{ backgroundColor: color, color: "#FFFFFF" }}
+            className="relative group inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-accent to-cat-indigo text-white font-mono text-sm font-semibold shadow-elev-1 hover:shadow-elev-2 active:scale-[0.98] transition-all duration-200 overflow-hidden rounded-sm"
           >
-            Start a Project
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span
+              className="absolute top-0 bottom-0 left-0 w-8 bg-white/20 -skew-x-12 -translate-x-16 group-hover:translate-x-64 transition-transform duration-700 ease-in-out pointer-events-none"
+              aria-hidden
+            />
+            <span className="relative z-10">Start a Project</span>
+            <ArrowRight className="w-4 h-4 relative z-10 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </section>
